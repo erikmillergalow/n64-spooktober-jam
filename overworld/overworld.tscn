@@ -1,0 +1,46 @@
+[gd_scene load_steps=11 format=3 uid="uid://l5vl4ias6edp"]
+
+[ext_resource type="Script" path="res://Overworld.gd" id="1_cdfcf"]
+[ext_resource type="Texture2D" uid="uid://crxcjkepo20a3" path="res://overworld/tree4.png" id="2_200q8"]
+[ext_resource type="PackedScene" uid="uid://d1w51ia4nwluc" path="res://player/player.tscn" id="3_kw6ax"]
+[ext_resource type="Texture2D" uid="uid://citavidpluk3j" path="res://overworld/IMG_9652.jpg" id="4_roomm"]
+[ext_resource type="PackedScene" uid="uid://bsw4mblduv1je" path="res://room/room.tscn" id="5_4cqbf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dxtds"]
+albedo_texture = ExtResource("2_200q8")
+uv1_scale = Vector3(0.439, 0.439, 0.439)
+uv1_offset = Vector3(0.468, 0.299, 0.121)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_k6csp"]
+lightmap_size_hint = Vector2i(5002, 5002)
+material = SubResource("StandardMaterial3D_dxtds")
+size = Vector2(100, 100)
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_2t6h8"]
+panorama = ExtResource("4_roomm")
+
+[sub_resource type="Sky" id="Sky_sdeel"]
+sky_material = SubResource("PanoramaSkyMaterial_2t6h8")
+
+[sub_resource type="Environment" id="Environment_7fdbm"]
+background_mode = 2
+sky = SubResource("Sky_sdeel")
+sky_custom_fov = 30.2
+
+[node name="Overworld" type="Node3D"]
+script = ExtResource("1_cdfcf")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_k6csp")
+
+[node name="Player" parent="." instance=ExtResource("3_kw6ax")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -28.9302)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_7fdbm")
+
+[node name="RoomSpawner" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 0, 50)
+
+[node name="Room" parent="." instance=ExtResource("5_4cqbf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 100)

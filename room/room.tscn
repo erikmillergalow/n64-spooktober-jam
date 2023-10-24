@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://bsw4mblduv1je"]
+
+[ext_resource type="Script" path="res://room/room.gd" id="1_mijuu"]
+[ext_resource type="PackedScene" uid="uid://bg3e318qf7atc" path="res://room/room_wall.tscn" id="2_swirm"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_2py83"]
+size = Vector2(100, 100)
+
+[node name="Room" type="Node3D"]
+script = ExtResource("1_mijuu")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_2py83")
+
+[node name="RoomWall" parent="." instance=ExtResource("2_swirm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 50)
+
+[node name="RoomWall2" parent="." instance=ExtResource("2_swirm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -50)
+
+[node name="RoomWall3" parent="." instance=ExtResource("2_swirm")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 50, 1, 0)
+
+[node name="RoomWall4" parent="." instance=ExtResource("2_swirm")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -50, 1, 0)

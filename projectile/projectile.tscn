@@ -1,0 +1,90 @@
+[gd_scene load_steps=13 format=3 uid="uid://ebyqrl2y7ohx"]
+
+[ext_resource type="Script" path="res://projectile/projectile.gd" id="1_21x2v"]
+[ext_resource type="Texture2D" uid="uid://6f1n8pqxbriv" path="res://projectile/magic-ball-scatter-sheet.png" id="2_hwh58"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_t828x"]
+radius = 0.3
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7w8my"]
+atlas = ExtResource("2_hwh58")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2rnnk"]
+atlas = ExtResource("2_hwh58")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6t7vt"]
+atlas = ExtResource("2_hwh58")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g8smt"]
+atlas = ExtResource("2_hwh58")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3auqf"]
+atlas = ExtResource("2_hwh58")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v8f54"]
+atlas = ExtResource("2_hwh58")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y5v2c"]
+atlas = ExtResource("2_hwh58")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_48aff"]
+atlas = ExtResource("2_hwh58")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wpu2u"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7w8my")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2rnnk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6t7vt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g8smt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3auqf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v8f54")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y5v2c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_48aff")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Projectile" type="Area3D"]
+script = ExtResource("1_21x2v")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+visible = false
+billboard = 1
+texture = ExtResource("2_hwh58")
+hframes = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_t828x")
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+billboard = 1
+sprite_frames = SubResource("SpriteFrames_wpu2u")
+frame = 3
+frame_progress = 0.577812
+speed_scale = 3.0

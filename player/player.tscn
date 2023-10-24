@@ -1,0 +1,130 @@
+[gd_scene load_steps=19 format=3 uid="uid://d1w51ia4nwluc"]
+
+[ext_resource type="Script" path="res://player/player.gd" id="1_lx0as"]
+[ext_resource type="PackedScene" uid="uid://camlvvjyl5u3g" path="res://blender/player_spooky.blend" id="1_viixk"]
+[ext_resource type="PackedScene" uid="uid://tj837phb2kfp" path="res://shield/shield.tscn" id="3_imjhw"]
+[ext_resource type="Texture2D" uid="uid://bociqye04gv3g" path="res://shield/blurred-shield.png" id="4_8vdka"]
+[ext_resource type="Texture2D" uid="uid://bpq5u3loojfgl" path="res://shield/anim-shield.png" id="5_dv8vu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mxffn"]
+transparency = 1
+albedo_texture = ExtResource("4_8vdka")
+uv1_scale = Vector3(1.227, 1.227, 1.227)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ocjjy"]
+material = SubResource("StandardMaterial3D_mxffn")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2oweu"]
+atlas = ExtResource("5_dv8vu")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oitrh"]
+atlas = ExtResource("5_dv8vu")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7ich0"]
+atlas = ExtResource("5_dv8vu")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kewt8"]
+atlas = ExtResource("5_dv8vu")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g2imi"]
+atlas = ExtResource("5_dv8vu")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w4gf3"]
+atlas = ExtResource("5_dv8vu")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u8rlt"]
+atlas = ExtResource("5_dv8vu")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bbb83"]
+atlas = ExtResource("5_dv8vu")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5sd0r"]
+atlas = ExtResource("5_dv8vu")
+region = Rect2(512, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k5ihm"]
+atlas = ExtResource("5_dv8vu")
+region = Rect2(576, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hyahn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2oweu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oitrh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7ich0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kewt8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g2imi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w4gf3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u8rlt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bbb83")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5sd0r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k5ihm")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_lx0as")
+
+[node name="player_spooky" parent="." instance=ExtResource("1_viixk")]
+
+[node name="CamRoot" type="Node3D" parent="."]
+
+[node name="h" type="Node3D" parent="CamRoot"]
+
+[node name="v" type="Node3D" parent="CamRoot/h"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.55411, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CamRoot/h/v"]
+transform = Transform3D(-1, 6.06191e-08, -6.29926e-08, 0, 0.720551, 0.693402, 8.74228e-08, 0.693402, -0.720551, 0, 0, 0)
+spring_length = 12.0
+
+[node name="Camera" type="Camera3D" parent="CamRoot/h/v/SpringArm3D"]
+
+[node name="ShieldPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88097, 0)
+
+[node name="Shield" parent="ShieldPivot" instance=ExtResource("3_imjhw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.11891)
+visible = false
+
+[node name="EnergyShield" type="MeshInstance3D" parent="ShieldPivot"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0.969798)
+visible = false
+mesh = SubResource("CylinderMesh_ocjjy")
+
+[node name="EnergyShield---2" type="AnimatedSprite3D" parent="ShieldPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25283, 1.20745)
+visible = false
+pixel_size = 0.04
+sprite_frames = SubResource("SpriteFrames_hyahn")
+speed_scale = 4.0

@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://csd4gi4meqi16"]
+
+[ext_resource type="Shader" path="res://shaders/n64_lit.gdshader" id="1"]
+[ext_resource type="Texture2D" uid="uid://c7yqmbdcqkcw0" path="res://world/floor/floor.png" id="2"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1")
+shader_parameter/modulate_color = Color(0.662745, 0.701961, 0.796078, 1)
+shader_parameter/uv_scale = Vector2(12, 12)
+shader_parameter/uv_offset = Vector2(0, 0)
+shader_parameter/uv_pan_velocity = Vector2(0, 0)
+shader_parameter/albedoTex = ExtResource("2")

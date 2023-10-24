@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://dv26w14qirikq"]
+
+[ext_resource type="PackedScene" uid="uid://camlvvjyl5u3g" path="res://blender/player_spooky.blend" id="1_hx7b4"]
+
+[node name="player_spooky" instance=ExtResource("1_hx7b4")]

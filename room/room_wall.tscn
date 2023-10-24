@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://bg3e318qf7atc"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_atqy2"]
+size = Vector3(45, 2, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_i6dsc"]
+size = Vector2(100, 100)
+
+[node name="RoomWall" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.4757, 0, 0)
+mesh = SubResource("BoxMesh_atqy2")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5055, 0, 0)
+mesh = SubResource("BoxMesh_atqy2")
+
+[node name="FakeFloor" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("PlaneMesh_i6dsc")
