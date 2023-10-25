@@ -11,7 +11,7 @@
 [ext_resource type="ArrayMesh" uid="uid://cng2y3he7v7b8" path="res://world/light-shaft/light-shaft_Mesh.mesh" id="12"]
 [ext_resource type="ArrayMesh" uid="uid://dh4nw5qd6jcdp" path="res://world/stairs/stairs_Mesh.mesh" id="14"]
 [ext_resource type="Texture2D" uid="uid://c7yqmbdcqkcw0" path="res://world/floor/floor.png" id="14_ep1q3"]
-[ext_resource type="Environment" path="res://world/world_env.tres" id="15"]
+[ext_resource type="Environment" uid="uid://cw6ddwwbnli2q" path="res://world/world_env.tres" id="15"]
 [ext_resource type="Script" path="res://world/scene_controls.gd" id="16"]
 [ext_resource type="Material" path="res://world/stairs/stairs_side_mat.tres" id="19"]
 [ext_resource type="Material" path="res://world/stairs/stairs_top_mat.tres" id="20"]

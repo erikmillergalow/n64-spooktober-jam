@@ -1,25 +1,40 @@
-[gd_scene load_steps=4 format=3 uid="uid://bsw4mblduv1je"]
+[gd_scene load_steps=7 format=3 uid="uid://bsw4mblduv1je"]
 
 [ext_resource type="Script" path="res://room/room.gd" id="1_mijuu"]
+[ext_resource type="Texture2D" uid="uid://dngs87m3by166" path="res://room/asphalt.png" id="2_nftmj"]
 [ext_resource type="PackedScene" uid="uid://bg3e318qf7atc" path="res://room/room_wall.tscn" id="2_swirm"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3exv8"]
+albedo_texture = ExtResource("2_nftmj")
+
 [sub_resource type="PlaneMesh" id="PlaneMesh_2py83"]
+material = SubResource("StandardMaterial3D_3exv8")
 size = Vector2(100, 100)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0aqaj"]
+size = Vector3(80, 1, 80)
 
 [node name="Room" type="Node3D"]
 script = ExtResource("1_mijuu")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50.2695, 0, 49.917)
 mesh = SubResource("PlaneMesh_2py83")
 
 [node name="RoomWall" parent="." instance=ExtResource("2_swirm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 50)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50.2695, 1, 99.917)
 
 [node name="RoomWall2" parent="." instance=ExtResource("2_swirm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -50)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50.2695, 1, -0.0829697)
 
 [node name="RoomWall3" parent="." instance=ExtResource("2_swirm")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 50, 1, 0)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 100.27, 1, 49.917)
 
 [node name="RoomWall4" parent="." instance=ExtResource("2_swirm")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -50, 1, 0)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.269512, 1, 49.917)
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="SpawnZone" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 0, 50)
+shape = SubResource("BoxShape3D_0aqaj")

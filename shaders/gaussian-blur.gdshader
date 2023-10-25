@@ -1,7 +1,7 @@
 shader_type canvas_item;
 
-uniform float h = 1;
-uniform float v = 0;
+uniform float h = 0.6;
+uniform float v = 0.8;
 uniform bool enabled = true;
 
 void fragment()

@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://bjjd7b4hgud60"]
+
+[ext_resource type="Script" path="res://ghost/Ghost.gd" id="1_g17vj"]
+[ext_resource type="PackedScene" uid="uid://brws4cvg7k8y8" path="res://ghost/ghost-blend.tscn" id="2_4343o"]
+
+[node name="Ghost" type="Node3D"]
+script = ExtResource("1_g17vj")
+
+[node name="ghost" parent="." instance=ExtResource("2_4343o")]

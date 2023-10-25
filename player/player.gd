@@ -5,6 +5,8 @@ const GROUND_LERP = .1
 
 var horizontal_cam_speed = 2
 
+var health = 100
+
 @onready var spring_arm = $CamRoot/h/v/SpringArm3D
 @onready var h = $CamRoot/h
 @onready var v = $CamRoot/h/v
@@ -22,6 +24,13 @@ var horizontal_cam_speed = 2
 func _ready():
 #	energy_shield.play()
 	pass # Replace with function body.
+
+func _process(delta):
+	if Input.is_action_just_pressed('zoom'):
+		if spring_arm.spring_length == 12:
+			spring_arm.spring_length = 7#lerp(spring_arm.spring_length, 7.0, 0.4)
+		else:
+			spring_arm.spring_length = 12#lerp(spring_arm.spring_length, 12.0, 0.4)
 
 
 func get_input_direction():
@@ -79,9 +88,11 @@ func _physics_process(delta):
 		
 	if (Input.is_action_pressed('shield')):
 		shield.visible = true
+		shield.monitorable = true
 #		energy_shield.visible = true
 	else:
 		shield.visible = false
+		shield.monitorable = false
 #		energy_shield.visible = false
 		
 	if abs(velocity.x) <= 1.0 and abs(velocity.z) <= 1.0:

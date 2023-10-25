@@ -1,10 +1,51 @@
-[gd_scene load_steps=13 format=3 uid="uid://ebyqrl2y7ohx"]
+[gd_scene load_steps=24 format=3 uid="uid://ebyqrl2y7ohx"]
 
 [ext_resource type="Script" path="res://projectile/projectile.gd" id="1_21x2v"]
 [ext_resource type="Texture2D" uid="uid://6f1n8pqxbriv" path="res://projectile/magic-ball-scatter-sheet.png" id="2_hwh58"]
+[ext_resource type="Texture2D" uid="uid://262wwt21pnnn" path="res://projectile/magic-ball-collide-sheet.png" id="3_5bhuc"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_t828x"]
-radius = 0.3
+radius = 0.4
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8gpci"]
+atlas = ExtResource("3_5bhuc")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ythar"]
+atlas = ExtResource("3_5bhuc")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qwqm8"]
+atlas = ExtResource("3_5bhuc")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xgnwj"]
+atlas = ExtResource("3_5bhuc")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_71nfv"]
+atlas = ExtResource("3_5bhuc")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p5ygf"]
+atlas = ExtResource("3_5bhuc")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nhn17"]
+atlas = ExtResource("3_5bhuc")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j1tjk"]
+atlas = ExtResource("3_5bhuc")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e1qxu"]
+atlas = ExtResource("3_5bhuc")
+region = Rect2(512, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_si5dr"]
+atlas = ExtResource("3_5bhuc")
+region = Rect2(576, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7w8my"]
 atlas = ExtResource("2_hwh58")
@@ -42,6 +83,41 @@ region = Rect2(448, 0, 64, 64)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_8gpci")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ythar")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qwqm8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xgnwj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_71nfv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p5ygf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nhn17")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j1tjk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e1qxu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_si5dr")
+}],
+"loop": false,
+"name": &"collide",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_7w8my")
 }, {
 "duration": 1.0,
@@ -71,6 +147,8 @@ animations = [{
 }]
 
 [node name="Projectile" type="Area3D"]
+collision_layer = 0
+collision_mask = 4
 script = ExtResource("1_21x2v")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
@@ -79,12 +157,14 @@ billboard = 1
 texture = ExtResource("2_hwh58")
 hframes = 8
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." groups=["player_projectile"]]
 shape = SubResource("SphereShape3D_t828x")
 
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
 billboard = 1
 sprite_frames = SubResource("SpriteFrames_wpu2u")
-frame = 3
-frame_progress = 0.577812
 speed_scale = 3.0
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="animation_finished" from="AnimatedSprite3D" to="." method="_on_animated_sprite_3d_animation_finished"]

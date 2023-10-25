@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://crxcjkepo20a3" path="res://overworld/tree4.png" id="2_200q8"]
 [ext_resource type="PackedScene" uid="uid://d1w51ia4nwluc" path="res://player/player.tscn" id="3_kw6ax"]
 [ext_resource type="Texture2D" uid="uid://citavidpluk3j" path="res://overworld/IMG_9652.jpg" id="4_roomm"]
-[ext_resource type="PackedScene" uid="uid://bsw4mblduv1je" path="res://room/room.tscn" id="5_4cqbf"]
+[ext_resource type="Script" path="res://overworld/RoomSpawner.gd" id="5_v5s1o"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dxtds"]
 albedo_texture = ExtResource("2_200q8")
@@ -34,13 +34,16 @@ script = ExtResource("1_cdfcf")
 mesh = SubResource("PlaneMesh_k6csp")
 
 [node name="Player" parent="." instance=ExtResource("3_kw6ax")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -28.9302)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 40.8249)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_7fdbm")
 
 [node name="RoomSpawner" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 0, 50)
+script = ExtResource("5_v5s1o")
 
-[node name="Room" parent="." instance=ExtResource("5_4cqbf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 100)
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, 4.40183, 47.631, 2.57139)
+light_bake_mode = 0
+sky_mode = 1

@@ -1,10 +1,15 @@
-[gd_scene load_steps=19 format=3 uid="uid://d1w51ia4nwluc"]
+[gd_scene load_steps=21 format=3 uid="uid://d1w51ia4nwluc"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_lx0as"]
 [ext_resource type="PackedScene" uid="uid://camlvvjyl5u3g" path="res://blender/player_spooky.blend" id="1_viixk"]
 [ext_resource type="PackedScene" uid="uid://tj837phb2kfp" path="res://shield/shield.tscn" id="3_imjhw"]
 [ext_resource type="Texture2D" uid="uid://bociqye04gv3g" path="res://shield/blurred-shield.png" id="4_8vdka"]
 [ext_resource type="Texture2D" uid="uid://bpq5u3loojfgl" path="res://shield/anim-shield.png" id="5_dv8vu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lhkwu"]
+bg_color = Color(0, 0.658824, 0.243137, 1)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s3l46"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mxffn"]
 transparency = 1
@@ -95,6 +100,38 @@ animations = [{
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_lx0as")
 
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 32.0
+offset_top = 14.0
+offset_right = 190.0
+offset_bottom = 54.0
+
+[node name="HealthBar" type="ProgressBar" parent="Control"]
+layout_mode = 0
+offset_left = 174.0
+offset_top = -6.0
+offset_right = 350.0
+offset_bottom = 21.0
+scale = Vector2(0.588, 0.588)
+theme_override_styles/background = SubResource("StyleBoxFlat_lhkwu")
+value = 100.0
+show_percentage = false
+
+[node name="ExpLabel" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = 174.0
+offset_top = 15.0
+offset_right = 278.0
+offset_bottom = 41.0
+text = "0 EXP"
+horizontal_alignment = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.00518, 0)
+shape = SubResource("CapsuleShape3D_s3l46")
+
 [node name="player_spooky" parent="." instance=ExtResource("1_viixk")]
 
 [node name="CamRoot" type="Node3D" parent="."]
@@ -105,7 +142,7 @@ script = ExtResource("1_lx0as")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.55411, 0)
 
 [node name="SpringArm3D" type="SpringArm3D" parent="CamRoot/h/v"]
-transform = Transform3D(-1, 6.06191e-08, -6.29926e-08, 0, 0.720551, 0.693402, 8.74228e-08, 0.693402, -0.720551, 0, 0, 0)
+transform = Transform3D(-1, -1.33744e-08, 8.63937e-08, 0, 0.988228, 0.152986, -8.74228e-08, 0.152986, -0.988228, 0, 0, 0)
 spring_length = 12.0
 
 [node name="Camera" type="Camera3D" parent="CamRoot/h/v/SpringArm3D"]
