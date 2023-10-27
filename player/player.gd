@@ -4,6 +4,7 @@ const SPEED = 17
 const GROUND_LERP = .1
 
 var horizontal_cam_speed = 2
+var dead = false
 
 @onready var global = get_node('/root/global')
 
@@ -12,6 +13,7 @@ var horizontal_cam_speed = 2
 @onready var hit_animation = $HitAnimation
 @onready var exp_label = $Control/ExpLabel
 @onready var win_label = $Control/WinLabel
+@onready var dead_label = $Control/DeadLabel
 
 var knockback = Vector3(0, 0, 0)
 
@@ -68,11 +70,12 @@ func add_exp(amount):
 
 
 func take_damage(amount):
-	print(hit_animation.is_playing())
 	if not hit_animation.is_playing():
 		global.player_health -= amount
 		health_bar.value -= amount
 		hit_animation.play("hit_flicker")
+		if global.player_health <= 0.0:
+			dead = true
 
 
 func add_knockback(direction):
@@ -97,85 +100,102 @@ func get_cam_input_direction():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	
-	if Input.is_action_just_pressed("start"):
-		global.paused = true
-		get_tree().paused = true
-	
-	if global.win == true:
-		win_label.visible = true
-		health_bar.visible = false
-		exp_label.visible = false
-	
-	
-	if (health_bar.value != global.player_health):
-		health_bar.value = global.player_health
-	inner_health_bar.value = lerp(inner_health_bar.value, health_bar.value, 0.05)
-	
-	# gather inputs
-	var direction = get_input_direction()
-	var cam_direction = get_cam_input_direction()
-	
-	velocity += knockback
-	knockback = lerp(knockback, Vector3.ZERO, 1.0)
-	
-	# handle movement
-	if direction != Vector3(0, 1, 0):
-		animation_player.play('run', -1, 1 + abs(velocity.length()) / 17)
+	if not dead:
+		if Input.is_action_just_pressed("start"):
+			global.paused = true
+			get_tree().paused = true
 		
-		velocity.x = lerp(velocity.x, -direction.x * (SPEED + global.run_speed_modifier * 3), GROUND_LERP)
-		velocity.z = lerp(velocity.z, -direction.z * (SPEED + global.run_speed_modifier * 3), GROUND_LERP)
+		if global.win == true:
+			win_label.visible = true
+			health_bar.visible = false
+			exp_label.visible = false
 		
-		shield_pivot.rotation.y = atan2(velocity.x, velocity.z)
+		if (health_bar.value != global.player_health):
+			health_bar.value = global.player_health
+		inner_health_bar.value = lerp(inner_health_bar.value, health_bar.value, 0.05)
 		
-		if not Input.is_action_pressed('strafe'):
-			$player_spooky.rotation.y = lerp_angle($player_spooky.rotation.y, atan2(velocity.x, velocity.z), 1)
-	else:
-		velocity.x = lerp(velocity.x, 0.0, GROUND_LERP)
-		velocity.z = lerp(velocity.z, 0.0, GROUND_LERP)
-	
-	# handle camera movement
-	if cam_direction and (not Input.is_action_pressed('shield')):
-		h.rotation_degrees.y -= cam_direction.x * horizontal_cam_speed
-		v.rotation_degrees.x += cam_direction.z * horizontal_cam_speed
-	
-	# handle shield movement
-	if cam_direction != Vector3(0, 1, 0) and Input.is_action_pressed('shield'):
-#		Vector3(dx, 1, dz).rotated(Vector3.UP, h.rotation.y)
-		var converted = Vector3(cam_direction.x, 1, cam_direction.z).rotated(Vector3.UP, h.rotation.y)
-		shield_pivot.rotation.y = atan2(-converted.x, -converted.z) 
-	
-	# handle magic attack
-	if (Input.is_action_pressed('magic') and not Input.is_action_pressed('shield')) and magic_cooldown.is_stopped():
-		magic_cooldown.start()
-		if (global.double_blaster):
-			var projectileA = projectile_scene.instantiate()
-			projectileA.global_transform.origin = v.global_transform.origin - Vector3(0.5, 0, 0)
-			projectileA.rotation.y = $player_spooky.rotation.y
-			projectileA.rotation.x = 0
-			var projectileB = projectile_scene.instantiate()
-			projectileB.global_transform.origin = v.global_transform.origin + Vector3(0.5, 0, 0)
-			projectileB.rotation.y = $player_spooky.rotation.y
-			projectileB.rotation.x = 0
-			owner.add_child(projectileA)
-			owner.add_child(projectileB)
+		# gather inputs
+		var direction = get_input_direction()
+		var cam_direction = get_cam_input_direction()
+		
+		velocity += knockback
+		knockback = lerp(knockback, Vector3.ZERO, 1.0)
+		
+		if Input.is_action_pressed("strafe"):
+			h.rotation.y = lerp(h.rotation.y, $player_spooky.rotation.y, 0.25)
+		
+		# handle movement
+		if direction != Vector3(0, 1, 0):
+			animation_player.play('run', -1, 1 + abs(velocity.length()) / 17)
+			
+			velocity.x = lerp(velocity.x, -direction.x * (SPEED + global.run_speed_modifier * 3), GROUND_LERP)
+			velocity.z = lerp(velocity.z, -direction.z * (SPEED + global.run_speed_modifier * 3), GROUND_LERP)
+			
+			shield_pivot.rotation.y = atan2(velocity.x, velocity.z)
+			
+			if not Input.is_action_pressed('strafe'):
+				$player_spooky.rotation.y = lerp_angle($player_spooky.rotation.y, atan2(velocity.x, velocity.z), 1)
 		else:
-			var projectile = projectile_scene.instantiate()
-			projectile.global_transform = v.global_transform
-			projectile.rotation.y = $player_spooky.rotation.y
-			projectile.rotation.x = 0
-			owner.add_child(projectile)
+			velocity.x = lerp(velocity.x, 0.0, GROUND_LERP)
+			velocity.z = lerp(velocity.z, 0.0, GROUND_LERP)
+		
+		# handle camera movement
+		if cam_direction and (not Input.is_action_pressed('shield')):
+			h.rotation_degrees.y -= cam_direction.x * horizontal_cam_speed
+			if global.invert:
+				v.rotation_degrees.x -= cam_direction.z * horizontal_cam_speed
+			else:
+				v.rotation_degrees.x += cam_direction.z * horizontal_cam_speed
+			v.rotation_degrees.x = clamp(v.rotation_degrees.x, -15.0, 180.0)
+		
+		# handle shield movement
+		if cam_direction != Vector3(0, 1, 0) and Input.is_action_pressed('shield'):
+			var converted = Vector3(cam_direction.x, 1, cam_direction.z).rotated(Vector3.UP, h.rotation.y)
+			shield_pivot.rotation.y = atan2(-converted.x, -converted.z) 
+		
+		# handle magic attack
+		if (Input.is_action_pressed('magic') and not Input.is_action_pressed('shield')) and magic_cooldown.is_stopped():
+			magic_cooldown.start()
+			if (global.double_blaster):
+				var projectileA = projectile_scene.instantiate()
+				projectileA.global_transform.origin = v.global_transform.origin - Vector3(0.5, 0, 0)
+				projectileA.rotation.y = $player_spooky.rotation.y
+				projectileA.rotation.x = 0
+				var projectileB = projectile_scene.instantiate()
+				projectileB.global_transform.origin = v.global_transform.origin + Vector3(0.5, 0, 0)
+				projectileB.rotation.y = $player_spooky.rotation.y
+				projectileB.rotation.x = 0
+				owner.add_child(projectileA)
+				owner.add_child(projectileB)
+			else:
+				var projectile = projectile_scene.instantiate()
+				projectile.global_transform = v.global_transform
+				projectile.rotation.y = $player_spooky.rotation.y
+				projectile.rotation.x = 0
+				owner.add_child(projectile)
 
+
+		if (Input.is_action_pressed('shield')):
+			shield.visible = true
+			shield.monitorable = true
+		else:
+			shield.visible = false
+			shield.monitorable = false
+			
+		if abs(velocity.x) <= 1.0 and abs(velocity.z) <= 1.0:
+			animation_player.play('idle')
+			
+#		velocity.y = 0.0
+		move_and_slide()
 		
-	if (Input.is_action_pressed('shield')):
-		shield.visible = true
-		shield.monitorable = true
-#		energy_shield.visible = true
 	else:
-		shield.visible = false
-		shield.monitorable = false
-#		energy_shield.visible = false
+		$player_spooky.rotation.x = lerp(rotation_degrees.x, 90.0, 0.2)
+		velocity = Vector3.ZERO
+		v.rotation = lerp(v.rotation, Vector3(PI/2, 0.0, 0.0) , 0.008)
+		h.rotation = lerp(h.rotation, Vector3(0.0, PI/2, 0.0) , 0.008)
+		spring_arm.spring_length = lerp(spring_arm.spring_length, 60.0, 0.008)
+		dead_label.visible = true
 		
-	if abs(velocity.x) <= 1.0 and abs(velocity.z) <= 1.0:
-		animation_player.play('idle')
+		if Input.is_action_just_pressed("start"):
+			get_tree().change_scene_to_file('res://main.tscn')
 		
-	move_and_slide()

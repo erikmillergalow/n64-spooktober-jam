@@ -14,25 +14,49 @@ func _ready():
 func _process(delta):
 	$Floor.mesh.material.uv1_offset.z -= 0.03
 	$WorldEnvironment.environment.sky_rotation.y -= 0.002
-	
-#	if Input.is_action_just_pressed('jump'):
-#		get_tree().get_focus_owner().pressed = true
-#	if Input.is_action_pressed('start'):
-#		print('pressed')
-#		var overworld = overworld_scene.instantiate()
-#		print(get_parent())
-#		get_parent().add_child(overworld)
-#		self.queue_free()
 
 
 func _on_begin_button_pressed():
-	print('pressed')
-	global.win = false
+	global.initialize()
+	
 	var overworld = overworld_scene.instantiate()
 	get_parent().add_child(overworld)
 	self.queue_free()
 
 
+func _on_done_button_pressed():
+	$Control/SettingsRect.visible = false
+	$Control/BeginButton.grab_focus()
+
+
+func _on_settings_button_pressed():
+	$Control/SettingsRect.visible = true
+	$Control/SettingsRect/MusicSlider.grab_focus()
+
+# settings signals
+func _on_invert_check_toggled(button_pressed):
+	global.invert = button_pressed
+
+
+func _on_quit_button_pressed():
+	get_tree().quit()
+
+
+func _on_quality_check_toggled(button_pressed):
+	global.quality = button_pressed
+
+
+func _on_music_slider_value_changed(value):
+	print(linear_to_db(value))
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("music"), linear_to_db(value))
+
+
+func _on_fx_slider_value_changed(value):
+	print(linear_to_db(value))
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("fx"), linear_to_db(value))
+
+
+# button animations
 func _on_begin_button_focus_entered():
 	$Control/AnimationPlayer.play("begin")
 
@@ -47,7 +71,3 @@ func _on_settings_button_focus_entered():
 
 func _on_quit_button_focus_entered():
 	$Control/AnimationPlayer.play("quit")
-
-
-func _on_quit_button_pressed():
-	get_tree().quit()

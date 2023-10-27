@@ -131,6 +131,7 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody3D" groups=["player"]]
+axis_lock_linear_y = true
 script = ExtResource("1_lx0as")
 
 [node name="HitAnimation" type="AnimationPlayer" parent="."]
@@ -211,6 +212,22 @@ theme_override_fonts/font = ExtResource("2_cibyo")
 theme_override_font_sizes/font_size = 7
 text = "YOU FOUND THE KEY,
 NOW FIND THE DOOR"
+
+[node name="DeadLabel" type="Label" parent="Control"]
+visible = false
+layout_mode = 0
+offset_left = -98.0
+offset_top = 72.0
+offset_right = 352.0
+offset_bottom = 144.0
+theme_override_fonts/font = ExtResource("2_cibyo")
+theme_override_font_sizes/font_size = 14
+text = "YOU'VE PERISHED
+
+PRESS START TO RETURN
+TO MAIN MENU"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="KeyAlertTimer" type="Timer" parent="Control"]
 wait_time = 4.364

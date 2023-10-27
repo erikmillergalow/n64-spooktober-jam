@@ -34,23 +34,22 @@ size = Vector3(10, 10, 2)
 script = ExtResource("1_ltqil")
 
 [node name="Floor" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 0, 50)
 mesh = SubResource("PlaneMesh_6gpmg")
 
 [node name="RoomWall" parent="." instance=ExtResource("2_hpceo")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 100, 1, 50)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 50, 1, 0)
 
 [node name="RoomWall2" parent="." instance=ExtResource("2_hpceo")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1, 50)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -50, 1, 0)
 
 [node name="RoomWall3" parent="." instance=ExtResource("2_hpceo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 1, 100)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 50)
 
 [node name="RoomWall4" parent="." instance=ExtResource("2_hpceo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.021, 1, -50)
 
 [node name="Entrance" type="MeshInstance3D" parent="." groups=["door"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50.0539, 5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -50)
 mesh = SubResource("BoxMesh_ajyl4")
 
 [node name="PlayerSensor" type="Area3D" parent="Entrance"]
@@ -67,7 +66,7 @@ collision_layer = 5
 shape = SubResource("BoxShape3D_ug7bm")
 
 [node name="EyeballBoss" parent="." instance=ExtResource("5_7xfrx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53.3233, 3.74289, 82.5101)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.743, 34.987)
 
 [connection signal="body_entered" from="Entrance/PlayerSensor" to="." method="_on_player_sensor_body_entered"]
 [connection signal="body_exited" from="Entrance/PlayerSensor" to="." method="_on_player_sensor_body_exited"]

@@ -44,6 +44,7 @@ albedo_color = Color(0.678431, 0.678431, 0.678431, 1)
 albedo_texture = ExtResource("1_avsel")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_e6k27"]
+radius = 0.7
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8lck2"]
 radius = 1.0
@@ -72,6 +73,7 @@ _data = {
 [node name="ghost" type="CharacterBody3D" groups=["monsters"]]
 collision_layer = 5
 collision_mask = 5
+axis_lock_linear_y = true
 script = ExtResource("1_qgu1w")
 
 [node name="Cube" type="MeshInstance3D" parent="."]

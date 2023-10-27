@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://cn8dijnpr8dbo"]
+
+[ext_resource type="Texture2D" uid="uid://2sm8pie633ge" path="res://objects/crate/crate.png" id="1_4g17g"]
+[ext_resource type="Script" path="res://objects/crate/crate.gd" id="1_f40hb"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8lqnt"]
+albedo_color = Color(0.74902, 0.713726, 0.694118, 1)
+albedo_texture = ExtResource("1_4g17g")
+uv1_scale = Vector3(0.993, 0.993, 0.993)
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_yslep"]
+material = SubResource("StandardMaterial3D_8lqnt")
+size = Vector3(2, 2, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0wpff"]
+size = Vector3(2.2, 2.2, 2.2)
+
+[node name="Crate" type="RigidBody3D"]
+gravity_scale = 0.0
+script = ExtResource("1_f40hb")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.00151, 0)
+mesh = SubResource("BoxMesh_yslep")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.00055, 0)
+shape = SubResource("BoxShape3D_0wpff")

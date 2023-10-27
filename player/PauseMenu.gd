@@ -82,13 +82,5 @@ func _on_health_upgrade_pressed():
 
 
 func _on_end_run_pressed():
-	global.player_health = 100
-	global.player_exp = 0
-	global.double_blaster = false
-	global.shield_reflect = false
-	global.spell_speed_modifier = 1
-	global.spell_power_modifier = 1
-	global.run_speed_modifier = 1
-	global.has_key = false
-	global.done = false
+	global.initialize()
 	unpause()

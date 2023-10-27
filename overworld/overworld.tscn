@@ -1,13 +1,13 @@
-[gd_scene load_steps=14 format=3 uid="uid://l5vl4ias6edp"]
+[gd_scene load_steps=17 format=3 uid="uid://l5vl4ias6edp"]
 
 [ext_resource type="Script" path="res://Overworld.gd" id="1_cdfcf"]
 [ext_resource type="Texture2D" uid="uid://crxcjkepo20a3" path="res://overworld/tree4.png" id="2_200q8"]
 [ext_resource type="PackedScene" uid="uid://d1w51ia4nwluc" path="res://player/player.tscn" id="3_kw6ax"]
 [ext_resource type="Texture2D" uid="uid://citavidpluk3j" path="res://overworld/IMG_9652.jpg" id="4_roomm"]
 [ext_resource type="Script" path="res://overworld/RoomSpawner.gd" id="5_v5s1o"]
-[ext_resource type="Script" path="res://overworld/FlameballTest.gd" id="6_gb3i0"]
+[ext_resource type="PackedScene" uid="uid://cn8dijnpr8dbo" path="res://objects/crate/crate.tscn" id="7_0svn2"]
 [ext_resource type="PackedScene" uid="uid://bkpuvfcd0mmyg" path="res://key_chest/key_chest.tscn" id="7_vby6k"]
-[ext_resource type="PackedScene" uid="uid://caikkgve1wa4k" path="res://boss_room/eyeball_boss.tscn" id="8_d14og"]
+[ext_resource type="Texture2D" uid="uid://b6s8gviyq3mkh" path="res://overworld/witchy-woods.png" id="8_a4mb0"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dxtds"]
 albedo_texture = ExtResource("2_200q8")
@@ -30,6 +30,17 @@ background_mode = 2
 sky = SubResource("Sky_ds02c")
 sky_custom_fov = 30.2
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dkbk0"]
+albedo_texture = ExtResource("8_a4mb0")
+uv1_scale = Vector3(7.528, 1, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_qy1lq"]
+material = SubResource("StandardMaterial3D_dkbk0")
+size = Vector2(100, 25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yanlm"]
+size = Vector3(1, 2, 100)
+
 [node name="Overworld" type="Node3D"]
 script = ExtResource("1_cdfcf")
 
@@ -51,17 +62,41 @@ transform = Transform3D(1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, 4.40183,
 light_bake_mode = 0
 sky_mode = 1
 
-[node name="FlameballTest" type="Node3D" parent="."]
-process_mode = 4
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.206, 0.5, 3.153)
-script = ExtResource("6_gb3i0")
-
-[node name="Timer" type="Timer" parent="FlameballTest"]
-autostart = true
-
 [node name="KeyChest" parent="." instance=ExtResource("7_vby6k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.15105, 0, 46.84)
 
-[node name="EyeballBoss" parent="." instance=ExtResource("8_d14og")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.57094, -37.8643)
+[node name="Crate" parent="." instance=ExtResource("7_0svn2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.04104, 0, -16.4284)
 
-[connection signal="timeout" from="FlameballTest/Timer" to="FlameballTest" method="_on_timer_timeout"]
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 1, 0)
+
+[node name="Woods" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(-4.37114e-08, -1, 4.37114e-08, 0, -4.37114e-08, -1, 1, -4.37114e-08, 1.91069e-15, 0, 10, 0)
+mesh = SubResource("PlaneMesh_qy1lq")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_yanlm")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -50, 1, 0)
+
+[node name="Woods" type="MeshInstance3D" parent="StaticBody3D2"]
+transform = Transform3D(-4.37114e-08, -1, 4.37114e-08, 0, -4.37114e-08, -1, 1, -4.37114e-08, 1.91069e-15, 0, 10, 0)
+mesh = SubResource("PlaneMesh_qy1lq")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
+shape = SubResource("BoxShape3D_yanlm")
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1, -50)
+
+[node name="Woods" type="MeshInstance3D" parent="StaticBody3D3"]
+transform = Transform3D(-4.37114e-08, -1, 4.37114e-08, 0, -4.37114e-08, -1, 1, -4.37114e-08, 1.91069e-15, 0, 10, 0)
+mesh = SubResource("PlaneMesh_qy1lq")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D3"]
+shape = SubResource("BoxShape3D_yanlm")

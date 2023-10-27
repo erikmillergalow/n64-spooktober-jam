@@ -3,8 +3,6 @@ extends CharacterBody3D
 
 var speed = 10.0
 
-#var health = 5000
-#var health = 2000
 var health = 2000
 
 var active = false
@@ -17,20 +15,25 @@ var knockback = Vector3.ZERO
 
 
 func _ready():
-	player = get_parent().get_node('Player')
+	pass
+#	player = get_parent().get_node('Player')
+
+
+func set_player(body):
+	player = body
+
 
 func _physics_process(delta):
 	if not dead:
 		$Arm.rotation.x = lerp($Arm.rotation.x, $Arm.rotation.x + 0.05, 0.8)
 		$Arm2.rotation.x = lerp($Arm2.rotation.x, $Arm2.rotation.x + 0.05, 0.8)
 	
-	print($SpinBlast.is_playing())
+	
 	if active and not dead and not $SpinBlast.is_playing():
-
 		rotation.y = PI
 		
 		# move toward player
-		var direction = (player.transform.origin - transform.origin).normalized();
+		var direction = (player.global_transform.origin - global_transform.origin).normalized();
 		direction.y = 0
 		look_at(player.global_transform.origin, Vector3.UP)
 		
@@ -99,6 +102,7 @@ func take_damage(amount):
 	$Arm2.get_active_material(0).albedo_color = new_arm2_color
 	
 	if health <= 0:
+		$SpinBlast.stop('spinblast')
 		dead = true
 		$Particles.visible = true
 		$ParticlesTimer.start()
@@ -108,7 +112,7 @@ func _on_blast_delay_timeout():
 	if not dead and $SpinBlast.is_playing():
 		for i in range(-7, 7):
 			var flameball = flameball_scene.instantiate()
-			flameball.global_transform.origin = global_transform.origin - Vector3(0, 1.8 , 0.5)
+			flameball.transform.origin = transform.origin - Vector3(0, 1.8 , 0.5)
 			flameball.rotation.y = rotation.y + PI + ((PI / 8) * i)
 			flameball.rotation.x = 0
 			get_parent().add_child(flameball)

@@ -24,16 +24,16 @@ script = ExtResource("1_mijuu")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 0, 50)
 mesh = SubResource("PlaneMesh_2py83")
 
-[node name="RoomWall" parent="." instance=ExtResource("2_swirm")]
+[node name="RoomWallNorth" parent="." instance=ExtResource("2_swirm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50.2695, 1, 99.917)
 
-[node name="RoomWall2" parent="." instance=ExtResource("2_swirm")]
+[node name="RoomWallSouth" parent="." instance=ExtResource("2_swirm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50.2695, 1, -0.0829697)
 
-[node name="RoomWall3" parent="." instance=ExtResource("2_swirm")]
+[node name="RoomWallWest" parent="." instance=ExtResource("2_swirm")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 100.27, 1, 49.917)
 
-[node name="RoomWall4" parent="." instance=ExtResource("2_swirm")]
+[node name="RoomWallEast" parent="." instance=ExtResource("2_swirm")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.269512, 1, 49.917)
 
 [node name="Area3D" type="Area3D" parent="."]

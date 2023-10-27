@@ -4,16 +4,17 @@ extends Node3D
 
 
 func _ready():
-	pass # Replace with function body.
+	$RoomWall.close_laser_gate()
+	$RoomWall2.close_laser_gate()
+	$RoomWall3.close_laser_gate()
+	$EyeballBoss.set_player(get_parent().get_node('Player'))
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if global.has_key:
 		$Entrance/StaticBody3D.set_collision_layer_value(1, false)
 		$Entrance/StaticBody3D.set_collision_mask_value(1, false)
 		$Entrance.visible = false
-
 
 
 func _on_player_sensor_body_entered(body):

@@ -75,6 +75,8 @@ func _physics_process(delta):
 	knockback = lerp(knockback, Vector3.ZERO, 0.5)	
 	velocity += knockback
 	
+#	velocity.y = 0
+	
 	var collision = move_and_collide(velocity * delta)
 	if collision:
 		if (collision.get_collider().is_in_group('player')):

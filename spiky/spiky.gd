@@ -11,10 +11,10 @@ var color = Color().from_hsv(0.0, 0.0, 0.68, 1.0)
 var knockback = Vector3(0, 0, 0)
 
 var new_look = 0
-
 var detected_player
-
 var damage_modifier = 1.0
+
+var has_bats = false
 
 @onready var orb_scene = load('res://orb.tscn')
 var orbs = 5

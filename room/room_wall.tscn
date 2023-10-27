@@ -1,6 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://bg3e318qf7atc"]
+[gd_scene load_steps=15 format=3 uid="uid://bg3e318qf7atc"]
 
 [ext_resource type="Material" uid="uid://d2g0830lpvqbu" path="res://fence_material.tres" id="1_a1ikd"]
+[ext_resource type="Script" path="res://room/room_wall.gd" id="1_o5kyl"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_y2vdn"]
 size = Vector3(45, 2, 1)
@@ -70,8 +71,12 @@ _data = {
 "color_morph": SubResource("Animation_6wyap")
 }
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_wppb1"]
+size = Vector3(100, 5, 100)
+
 [node name="RoomWall" type="StaticBody3D" groups=["walls_objects"]]
 collision_layer = 5
+script = ExtResource("1_o5kyl")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.4757, 0, 0)
@@ -93,20 +98,26 @@ shape = SubResource("BoxShape3D_y2vdn")
 visible = false
 mesh = SubResource("PlaneMesh_i6dsc")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.475597)
+[node name="LaserGate" type="StaticBody3D" parent="." groups=["laser_wall"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0271989)
 collision_layer = 4
 collision_mask = 4
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LaserGate"]
 shape = SubResource("BoxShape3D_tnq24")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -0.473686)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="LaserGate"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -0.0237823)
 mesh = SubResource("PlaneMesh_sv622")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="StaticBody3D"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="LaserGate"]
 autoplay = "color_morph"
 libraries = {
 "": SubResource("AnimationLibrary_jk6q8")
 }
+
+[node name="BlockSensor" type="Area3D" parent="LaserGate"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LaserGate/BlockSensor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -52.4388)
+shape = SubResource("BoxShape3D_wppb1")
