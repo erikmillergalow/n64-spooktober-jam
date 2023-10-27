@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://btm66kt8fge1g"]
+[gd_scene load_steps=25 format=3 uid="uid://btm66kt8fge1g"]
 
 [ext_resource type="Script" path="res://spiky/spiky.gd" id="1_fg7lh"]
 [ext_resource type="Texture2D" uid="uid://bpol32qroukrn" path="res://spiky/spiky.png" id="2_l35p5"]
@@ -53,7 +53,7 @@ height = 0.7
 radius = 2.0
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_7lubb"]
-radius = 10.0
+radius = 14.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l5v50"]
 atlas = ExtResource("3_c5syj")
@@ -147,6 +147,9 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_khw2v"]
+radius = 3.8
+
 [node name="spiky" type="CharacterBody3D" groups=["monsters"]]
 collision_layer = 5
 collision_mask = 5
@@ -181,8 +184,15 @@ pixel_size = 0.15
 sprite_frames = SubResource("SpriteFrames_wad13")
 
 [node name="TwirlCooldown" type="Timer" parent="."]
-wait_time = 7.132
+wait_time = 6.267
+one_shot = true
 
-[connection signal="timeout" from="FlameCooldown" to="." method="_on_cooldown_timeout"]
+[node name="TwirlHitBox" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TwirlHitBox"]
+shape = SubResource("CylinderShape3D_khw2v")
+
+[connection signal="timeout" from="FlameCooldown" to="." method="_on_flame_cooldown_timeout"]
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="animation_finished" from="TwirlAttack" to="." method="_on_twirl_attack_animation_finished"]
+[connection signal="body_entered" from="TwirlHitBox" to="." method="_on_twirl_hit_box_body_entered"]

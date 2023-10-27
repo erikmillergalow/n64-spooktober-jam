@@ -62,6 +62,7 @@ func _on_area_entered(area):
 			moving = false
 			$AnimatedSprite3D.animation = 'collide'
 			$AnimatedSprite3D.pixel_size += (damage_modifier * 0.009)
+			$CollisionShape3D.disabled = true
 #			queue_free()
 
 

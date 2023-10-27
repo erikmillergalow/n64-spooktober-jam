@@ -155,9 +155,9 @@ shape = SubResource("SphereShape3D_v20aq")
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
 billboard = 1
 sprite_frames = SubResource("SpriteFrames_1uoxb")
+animation = &"collide"
 autoplay = "default"
-frame_progress = 0.432862
-speed_scale = 2.5
+speed_scale = 3.0
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

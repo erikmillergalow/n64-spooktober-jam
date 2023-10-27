@@ -25,8 +25,8 @@ func _on_body_entered(body):
 	$AnimatedSprite3D.play()
 	
 	if body.is_in_group('monsters'):
+		body.add_knockback(global_transform.basis.z.normalized() * (global.spell_power_modifier))		
 		body.take_damage(10 + (5 * global.spell_power_modifier))
-		body.add_knockback(global_transform.basis.z.normalized() * (global.spell_power_modifier))
 
 
 func _on_animated_sprite_3d_animation_finished():
