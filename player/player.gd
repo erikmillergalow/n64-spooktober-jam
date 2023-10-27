@@ -127,7 +127,8 @@ func _physics_process(delta):
 		
 		shield_pivot.rotation.y = atan2(velocity.x, velocity.z)
 		
-		$player_spooky.rotation.y = lerp_angle($player_spooky.rotation.y, atan2(velocity.x, velocity.z), 1)
+		if not Input.is_action_pressed('strafe'):
+			$player_spooky.rotation.y = lerp_angle($player_spooky.rotation.y, atan2(velocity.x, velocity.z), 1)
 	else:
 		velocity.x = lerp(velocity.x, 0.0, GROUND_LERP)
 		velocity.z = lerp(velocity.z, 0.0, GROUND_LERP)

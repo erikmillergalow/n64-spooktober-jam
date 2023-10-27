@@ -7,7 +7,7 @@
 [ext_resource type="Script" path="res://overworld/RoomSpawner.gd" id="5_v5s1o"]
 [ext_resource type="Script" path="res://overworld/FlameballTest.gd" id="6_gb3i0"]
 [ext_resource type="PackedScene" uid="uid://bkpuvfcd0mmyg" path="res://key_chest/key_chest.tscn" id="7_vby6k"]
-[ext_resource type="PackedScene" uid="uid://btm66kt8fge1g" path="res://spiky/spiky.tscn" id="8_pq3nq"]
+[ext_resource type="PackedScene" uid="uid://caikkgve1wa4k" path="res://boss_room/eyeball_boss.tscn" id="8_d14og"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dxtds"]
 albedo_texture = ExtResource("2_200q8")
@@ -61,7 +61,7 @@ autostart = true
 
 [node name="KeyChest" parent="." instance=ExtResource("7_vby6k")]
 
-[node name="spiky" parent="." instance=ExtResource("8_pq3nq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.42544, 0, 0)
+[node name="EyeballBoss" parent="." instance=ExtResource("8_d14og")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.57094, -37.8643)
 
 [connection signal="timeout" from="FlameballTest/Timer" to="FlameballTest" method="_on_timer_timeout"]

@@ -18,11 +18,15 @@ var room_cols = 3
 var key_chest_spawned = false
 var boss_room_spawned = false
 
+var player
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	create_grid()
 
 
+#func set_player(body):
+#	player = body
 
 func spawn_room(is_last):
 	var room = room_scene.instantiate()
@@ -59,7 +63,14 @@ func spawn_ghosts(amount):
 		var placement = Vector3(randi()%80 + 10, 0, randi()%80 + 10)
 		ghost.global_transform.origin = global_transform.origin + placement
 		owner.add_child.call_deferred(ghost)
-	
+
+
+func spawn_spiky(amount):
+	for i in range(0, amount):
+		var spiky = spiky_scene.instantiate()
+		var placement = Vector3(randi()%80 + 10, 0, randi()%80 + 10)
+		spiky.global_transform.origin = global_transform.origin + placement
+		owner.add_child.call_deferred(spiky)
 
 
 func spawn_trees(amount):
@@ -87,13 +98,16 @@ func create_grid():
 			spawn_room(is_last)
 			
 			if row == 0:
+				spawn_spiky(randi() % 2)
 				spawn_ghosts(randi() % 5 + 2)
 				spawn_trees(randi() % 8)
 			if row == 1:
+				spawn_spiky(randi() % 10 + 1)
 				spawn_ghosts(randi() % 10 + 4)
 				spawn_trees(randi() % 8)
 			if row == 2:
-				spawn_ghosts(randi() % 15 + 10)
+				spawn_spiky(randi() % 2 + 15)
+				spawn_ghosts(randi() % 15 + 20)
 				spawn_trees(randi() % 4)
 			
 			global_transform.origin += Vector3(-100, 0, 0)

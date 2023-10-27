@@ -14,6 +14,7 @@ extends Node3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+#	$RoomSpawner.set_player($Player)
 	pass # Replace with function body.
 
 

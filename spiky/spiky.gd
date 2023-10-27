@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-const speed = 8.0
+var speed = 8.0
 var weight = 1.0
 
 var angry = false
@@ -24,17 +24,26 @@ var orbs = 5
 func _ready():
 	var unique_material = $Cube.get_surface_override_material(0).duplicate()
 	$Cube.set_surface_override_material(0, unique_material)
-	
-#	var x = randf()
-#	if (x < 0.25):
-#		velocity = Vector3(SPEED, 0, 0)
-#	elif (x < 0.50):
-#		velocity = Vector3(-SPEED, 0, 0)
-#	elif (x < 0.75):
-#		velocity = Vector3(0, 0, SPEED)
-#	else:
-#		velocity = Vector3(0, 0, -SPEED)
 
+
+func set_speed(value):
+	speed = value
+
+
+func set_damage_modifier(modifier):
+	damage_modifier = modifier
+
+
+func set_orbs(amount):
+	orbs = amount
+
+
+func set_health(amount):
+	health = amount
+
+
+func set_detected_player(body):
+	detected_player = body
 
 func _physics_process(delta):
 	if not angry and not dead:
@@ -86,8 +95,7 @@ func _physics_process(delta):
 
 func _on_twirl_hit_box_body_entered(body):
 	if body.is_in_group('player'):
-		print('player hit')
-		body.add_knockback(-global_transform.basis.z * (damage_modifier) * 5)		
+		body.add_knockback(-global_transform.basis.z * (damage_modifier) * 5)
 		body.take_damage(10 + (5 * damage_modifier))
 
 
@@ -123,8 +131,6 @@ func take_damage(amount):
 
 
 func _on_area_3d_body_entered(body):
-	print('entered spiky range')
-	print(body)
 	if body.is_in_group('player'):
 		print('body in')
 		if not angry:
@@ -141,5 +147,5 @@ func _on_flame_cooldown_timeout():
 			flameball.global_transform.origin = global_transform.origin - Vector3(0, -0.5, 0.5)
 			flameball.rotation.y = rotation.y + PI + ((PI / 8) * i)
 			flameball.rotation.x = 0
-			owner.add_child(flameball)
+			get_parent().add_child(flameball)
 			$FlameCooldown.start()
