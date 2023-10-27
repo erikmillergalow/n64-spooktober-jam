@@ -1,9 +1,12 @@
 extends Area3D
 
 var moving = true
+var damage = 10
 
-# Called when the node enters the scene tree for the first time.
+@onready var global = get_node('/root/global')
+
 func _ready():
+	$AnimatedSprite3D.pixel_size += (global.spell_power_modifier * 0.001)
 	$AnimatedSprite3D.animation = 'default'
 	$AnimatedSprite3D.frame = randi() % 7
 
@@ -14,19 +17,16 @@ func _physics_process(delta):
 		global_transform.origin += global_transform.basis.z * 40 * delta
 
 
-func get_damage():
-	return 10
-
-
 func _on_body_entered(body):
 	moving = false
+	$AnimatedSprite3D.pixel_size += (global.spell_power_modifier * 0.009)
 	$AnimatedSprite3D.animation = 'collide'
 	$AnimatedSprite3D.sprite_frames.set_animation_loop('collide', false)
 	$AnimatedSprite3D.play()
 	
-	print(body)
 	if body.is_in_group('monsters'):
-		body.take_damage(10)
+		body.take_damage(10 + (5 * global.spell_power_modifier))
+		body.add_knockback(global_transform.basis.z.normalized() * (global.spell_power_modifier))
 
 
 func _on_animated_sprite_3d_animation_finished():

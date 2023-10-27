@@ -1,13 +1,74 @@
-[gd_scene load_steps=4 format=3 uid="uid://bg3e318qf7atc"]
+[gd_scene load_steps=13 format=3 uid="uid://bg3e318qf7atc"]
+
+[ext_resource type="Material" uid="uid://d2g0830lpvqbu" path="res://fence_material.tres" id="1_a1ikd"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_y2vdn"]
 size = Vector3(45, 2, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_atqy2"]
+material = ExtResource("1_a1ikd")
 size = Vector3(45, 2, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_i6dsc"]
 size = Vector2(100, 100)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tnq24"]
+size = Vector3(15, 2, 1)
+
+[sub_resource type="Gradient" id="Gradient_e5ikb"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_802hk"]
+gradient = SubResource("Gradient_e5ikb")
+fill_from = Vector2(0.421296, 0)
+fill_to = Vector2(0.430556, 0.75463)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sdgnf"]
+transparency = 1
+cull_mode = 2
+albedo_color = Color(1, 0.501961, 0.611765, 0.666667)
+albedo_texture = SubResource("GradientTexture2D_802hk")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_sv622"]
+material = SubResource("StandardMaterial3D_sdgnf")
+size = Vector2(10, 2)
+
+[sub_resource type="Animation" id="Animation_nequx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:mesh:material:albedo_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0.501961, 0.611765, 0.666667)]
+}
+
+[sub_resource type="Animation" id="Animation_6wyap"]
+resource_name = "color_morph"
+length = 5.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:mesh:material:albedo_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1, 0.6, 1, 1.8, 2.9, 3.7, 4.6, 5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(0.537255, 0.752941, 0.439216, 0.666667), Color(0.423529, 0.74902, 0.741176, 0.666667), Color(0.478431, 0.721569, 0.839216, 0.666667), Color(0.529412, 0.701961, 0.862745, 0.666667), Color(0.901961, 0.560784, 0.709804, 0.666667), Color(0.870588, 0.631373, 0.317647, 0.666667), Color(0.772549, 0.678431, 0.376471, 0.666667), Color(0.513726, 0.764706, 0.392157, 0.666667)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jk6q8"]
+_data = {
+"RESET": SubResource("Animation_nequx"),
+"color_morph": SubResource("Animation_6wyap")
+}
 
 [node name="RoomWall" type="StaticBody3D" groups=["walls_objects"]]
 collision_layer = 5
@@ -31,3 +92,21 @@ shape = SubResource("BoxShape3D_y2vdn")
 [node name="FakeFloor" type="MeshInstance3D" parent="."]
 visible = false
 mesh = SubResource("PlaneMesh_i6dsc")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.475597)
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_tnq24")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -0.473686)
+mesh = SubResource("PlaneMesh_sv622")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="StaticBody3D"]
+autoplay = "color_morph"
+libraries = {
+"": SubResource("AnimationLibrary_jk6q8")
+}

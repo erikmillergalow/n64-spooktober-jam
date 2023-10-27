@@ -8,7 +8,12 @@ var dead = false
 
 var health = 100
 var color = Color().from_hsv(0.0, 0.0, 0.68, 1.0)
+var knockback = Vector3(0, 0, 0)
 
+@onready var orb_scene = load('res://orb.tscn')
+var orbs = 5
+
+@onready var flameball_scene = load('res://flame_ball/flameball.tscn')
 
 func _ready():
 	var unique_material = $Cube.get_surface_override_material(0).duplicate()
@@ -27,6 +32,8 @@ func _ready():
 
 func _physics_process(delta):
 	if not angry and not dead:
+		velocity = lerp(velocity, $Cube.transform.basis.z * SPEED, 0.2)
+		
 		$Cube.rotation.y = lerp_angle($Cube.rotation.y, atan2(velocity.x, velocity.z), 1)
 		
 		var turn_chance = randf()
@@ -34,32 +41,42 @@ func _physics_process(delta):
 			var turn_amount = randf() * ((PI/2))
 			velocity = velocity.rotated(Vector3(0, 1, 0), (PI/2) - turn_amount)
 	
+	knockback = lerp(knockback, Vector3.ZERO, 0.5)	
+	velocity += knockback
+	
 	var collision = move_and_collide(velocity * delta)
 	if collision:
 		var reflect = collision.get_remainder().bounce(collision.get_normal())
 		velocity = velocity.bounce(collision.get_normal())
 		move_and_collide(reflect)
+		
+	if dead:
+		rotation_degrees.x = lerp(rotation_degrees.x, 90.0, 0.2)
+		velocity = Vector3.ZERO
 
-func _on_area_3d_body_entered(body):
-	if body.is_in_group("player_projectile"):
-		print(body)
-		take_damage(body.get_damage())
+
+func add_knockback(direction):
+	if not dead:
+		direction.y = 0
+		knockback = direction * 15.0
 
 
 func take_damage(amount):
 	health -= amount 
 	
 	var current_sat = $Cube.get_surface_override_material(0).albedo_color.s
-	print(current_sat)
-	print($Cube.get_surface_override_material(0).albedo_color)
 	var new_color = Color().from_hsv(0.0, current_sat + 0.1, 0.68, 1.0)
-	print(new_color)
 	$Cube.get_surface_override_material(0).albedo_color = new_color
 	
 	if health <= 0:
-		print("dead")
 		dead = true
 		velocity = Vector3(0, 0, 0)
-
+		set_collision_layer_value(1, false)
+		set_collision_mask_value(1, false)
+		
+		for i in range(0, orbs):
+			var orb = orb_scene.instantiate()
+			orb.global_transform.origin = global_transform.origin + Vector3(randf() * 3, 1, randf() * 3)
+			get_parent().add_child(orb)
 
 

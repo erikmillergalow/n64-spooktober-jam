@@ -1,18 +1,16 @@
 extends Node
 
-var max_health = 100
+var player_health = 100.0
+var player_exp = 100000.0
+var double_blaster = false
+var shield_reflect = false
+var spell_speed_modifier = 1
+var spell_power_modifier = 1
+var run_speed_modifier = 1
+var has_key = false
 
-var health_upgrade = 0
-var speed_upgrade = 0
-var shield_upgrade = 0
-var power_upgrade = 0
+var paused = false
 
+var win = false
+var done = false
 
-## Called when the node enters the scene tree for the first time.
-#func _ready():
-#	pass # Replace with function body.
-#
-#
-## Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass

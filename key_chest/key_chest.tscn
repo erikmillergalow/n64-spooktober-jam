@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://bkpuvfcd0mmyg"]
+
+[ext_resource type="Texture2D" uid="uid://cedr3sh2almfk" path="res://key_chest/key_chest.png" id="1_81wt1"]
+[ext_resource type="Script" path="res://key_chest/key_chest.gd" id="1_w5rox"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8jbrr"]
+
+[node name="KeyChest" type="Area3D"]
+script = ExtResource("1_w5rox")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_8jbrr")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.62834, 0)
+pixel_size = 0.02
+billboard = 1
+texture = ExtResource("1_81wt1")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

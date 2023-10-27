@@ -1,8 +1,10 @@
-[gd_scene load_steps=20 format=3 uid="uid://dcy86n4si7d7v"]
+[gd_scene load_steps=27 format=3 uid="uid://dcy86n4si7d7v"]
 
 [ext_resource type="Script" path="res://world/orbit_camera.gd" id="1"]
 [ext_resource type="Script" path="res://world/menu_world.gd" id="1_qder5"]
+[ext_resource type="FontFile" uid="uid://clvfdpwuiqgui" path="res://fonts/RoSpritendoSemiboldBeta-vmVwZ.otf" id="2_m6y7h"]
 [ext_resource type="Script" path="res://world/box/spatial_sin_pan.gd" id="3"]
+[ext_resource type="StyleBox" uid="uid://cwapqfihydmnm" path="res://world/main-menu-button-style.tres" id="3_bcovx"]
 [ext_resource type="PackedScene" path="res://world/floor/floor.tscn" id="4"]
 [ext_resource type="PackedScene" uid="uid://dy02fdb77e812" path="res://world/shadow/shadow.tscn" id="6"]
 [ext_resource type="Material" uid="uid://1k4iirdl0qtf" path="res://world/box/sparkle_mat.tres" id="7"]
@@ -15,6 +17,82 @@
 [ext_resource type="Script" path="res://world/scene_controls.gd" id="16"]
 [ext_resource type="Material" path="res://world/stairs/stairs_side_mat.tres" id="19"]
 [ext_resource type="Material" path="res://world/stairs/stairs_top_mat.tres" id="20"]
+
+[sub_resource type="Animation" id="Animation_g7blm"]
+resource_name = "begin"
+length = 1.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BeginButton:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.884, 0.884), Vector2(1.161, 1.161), Vector2(0.884, 0.884)]
+}
+
+[sub_resource type="Animation" id="Animation_qdtma"]
+resource_name = "help"
+length = 1.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HelpButton:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.884, 0.884), Vector2(1.161, 1.161), Vector2(0.884, 0.884)]
+}
+
+[sub_resource type="Animation" id="Animation_hpnxm"]
+resource_name = "quit"
+length = 1.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("QuitButton:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.884, 0.884), Vector2(1.161, 1.161), Vector2(0.884, 0.884)]
+}
+
+[sub_resource type="Animation" id="Animation_xqvgb"]
+resource_name = "settings"
+length = 1.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SettingsButton:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.884, 0.884), Vector2(1.161, 1.161), Vector2(0.884, 0.884)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bhxeb"]
+_data = {
+"begin": SubResource("Animation_g7blm"),
+"help": SubResource("Animation_qdtma"),
+"quit": SubResource("Animation_hpnxm"),
+"settings": SubResource("Animation_xqvgb")
+}
 
 [sub_resource type="ParticleProcessMaterial" id="1"]
 direction = Vector3(1, 1, 1)
@@ -47,19 +125,68 @@ offset_bottom = 40.0
 
 [node name="BeginButton" type="Button" parent="Control"]
 layout_mode = 0
-offset_left = 134.0
-offset_top = 163.0
-offset_right = 195.0
-offset_bottom = 196.0
+offset_left = 24.0
+offset_top = 159.0
+offset_right = 94.0
+offset_bottom = 187.0
+scale = Vector2(0.884, 0.884)
+focus_neighbor_left = NodePath("../HelpButton")
+focus_neighbor_right = NodePath("../SettingsButton")
+theme_override_fonts/font = ExtResource("2_m6y7h")
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = ExtResource("3_bcovx")
 text = "Begin"
 
-[node name="Quit Button" type="Button" parent="Control"]
+[node name="HelpButton" type="Button" parent="Control"]
 layout_mode = 0
-offset_left = 145.0
-offset_top = 201.0
-offset_right = 187.0
-offset_bottom = 232.0
+offset_left = 233.0
+offset_top = 161.0
+offset_right = 303.0
+offset_bottom = 189.0
+scale = Vector2(0.884, 0.884)
+focus_neighbor_left = NodePath("../SettingsButton")
+focus_neighbor_right = NodePath("../BeginButton")
+theme_override_fonts/font = ExtResource("2_m6y7h")
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = ExtResource("3_bcovx")
+text = "Help"
+
+[node name="SettingsButton" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 125.0
+offset_top = 161.0
+offset_right = 202.0
+offset_bottom = 189.0
+scale = Vector2(0.884, 0.884)
+focus_neighbor_left = NodePath("../BeginButton")
+focus_neighbor_top = NodePath("../QuitButton")
+focus_neighbor_right = NodePath("../HelpButton")
+focus_neighbor_bottom = NodePath("../QuitButton")
+theme_override_fonts/font = ExtResource("2_m6y7h")
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = ExtResource("3_bcovx")
+text = "Settings"
+
+[node name="QuitButton" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 128.0
+offset_top = 202.0
+offset_right = 198.0
+offset_bottom = 230.0
+scale = Vector2(0.884, 0.884)
+focus_neighbor_left = NodePath("../BeginButton")
+focus_neighbor_top = NodePath("../SettingsButton")
+focus_neighbor_right = NodePath("../HelpButton")
+focus_neighbor_bottom = NodePath("../SettingsButton")
+theme_override_fonts/font = ExtResource("2_m6y7h")
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = ExtResource("3_bcovx")
 text = "Quit"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Control"]
+libraries = {
+"": SubResource("AnimationLibrary_bhxeb")
+}
 
 [node name="SceneControls" type="Node" parent="."]
 script = ExtResource("16")
@@ -127,4 +254,9 @@ visible = false
 transform = Transform3D(-0.632935, 0, 0.774205, 0, 1, 0, -0.774205, 0, -0.632935, 2.30476, 0, -1.16371)
 visible = false
 
+[connection signal="focus_entered" from="Control/BeginButton" to="." method="_on_begin_button_focus_entered"]
 [connection signal="pressed" from="Control/BeginButton" to="." method="_on_begin_button_pressed"]
+[connection signal="focus_entered" from="Control/HelpButton" to="." method="_on_help_button_focus_entered"]
+[connection signal="focus_entered" from="Control/SettingsButton" to="." method="_on_settings_button_focus_entered"]
+[connection signal="focus_entered" from="Control/QuitButton" to="." method="_on_quit_button_focus_entered"]
+[connection signal="pressed" from="Control/QuitButton" to="." method="_on_quit_button_pressed"]

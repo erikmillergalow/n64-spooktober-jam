@@ -1,10 +1,13 @@
-[gd_scene load_steps=11 format=3 uid="uid://l5vl4ias6edp"]
+[gd_scene load_steps=14 format=3 uid="uid://l5vl4ias6edp"]
 
 [ext_resource type="Script" path="res://Overworld.gd" id="1_cdfcf"]
 [ext_resource type="Texture2D" uid="uid://crxcjkepo20a3" path="res://overworld/tree4.png" id="2_200q8"]
 [ext_resource type="PackedScene" uid="uid://d1w51ia4nwluc" path="res://player/player.tscn" id="3_kw6ax"]
 [ext_resource type="Texture2D" uid="uid://citavidpluk3j" path="res://overworld/IMG_9652.jpg" id="4_roomm"]
 [ext_resource type="Script" path="res://overworld/RoomSpawner.gd" id="5_v5s1o"]
+[ext_resource type="Script" path="res://overworld/FlameballTest.gd" id="6_gb3i0"]
+[ext_resource type="PackedScene" uid="uid://bkpuvfcd0mmyg" path="res://key_chest/key_chest.tscn" id="7_vby6k"]
+[ext_resource type="PackedScene" uid="uid://btm66kt8fge1g" path="res://spiky/spiky.tscn" id="8_pq3nq"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dxtds"]
 albedo_texture = ExtResource("2_200q8")
@@ -19,12 +22,12 @@ size = Vector2(100, 100)
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_2t6h8"]
 panorama = ExtResource("4_roomm")
 
-[sub_resource type="Sky" id="Sky_sdeel"]
+[sub_resource type="Sky" id="Sky_ds02c"]
 sky_material = SubResource("PanoramaSkyMaterial_2t6h8")
 
 [sub_resource type="Environment" id="Environment_7fdbm"]
 background_mode = 2
-sky = SubResource("Sky_sdeel")
+sky = SubResource("Sky_ds02c")
 sky_custom_fov = 30.2
 
 [node name="Overworld" type="Node3D"]
@@ -47,3 +50,18 @@ script = ExtResource("5_v5s1o")
 transform = Transform3D(1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, 4.40183, 47.631, 2.57139)
 light_bake_mode = 0
 sky_mode = 1
+
+[node name="FlameballTest" type="Node3D" parent="."]
+process_mode = 4
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.206, 0.5, 3.153)
+script = ExtResource("6_gb3i0")
+
+[node name="Timer" type="Timer" parent="FlameballTest"]
+autostart = true
+
+[node name="KeyChest" parent="." instance=ExtResource("7_vby6k")]
+
+[node name="spiky" parent="." instance=ExtResource("8_pq3nq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.42544, 0, 0)
+
+[connection signal="timeout" from="FlameballTest/Timer" to="FlameballTest" method="_on_timer_timeout"]

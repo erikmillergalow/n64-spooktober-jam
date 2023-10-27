@@ -1,0 +1,34 @@
+[gd_scene load_steps=8 format=3 uid="uid://njb36gsi3tuu"]
+
+[ext_resource type="Texture2D" uid="uid://bgcnbej3gix2p" path="res://win_room/IMG_9681.jpg" id="1_qdfjs"]
+[ext_resource type="PackedScene" uid="uid://d1w51ia4nwluc" path="res://player/player.tscn" id="2_4d8fk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y6t62"]
+albedo_texture = ExtResource("1_qdfjs")
+uv1_scale = Vector3(0.209, 0.209, 0.209)
+uv1_offset = Vector3(-0.254, 0.509, 0.047)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_5fl4j"]
+material = SubResource("StandardMaterial3D_y6t62")
+size = Vector2(200, 200)
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_a21or"]
+panorama = ExtResource("1_qdfjs")
+
+[sub_resource type="Sky" id="Sky_q1ng0"]
+sky_material = SubResource("PanoramaSkyMaterial_a21or")
+
+[sub_resource type="Environment" id="Environment_iuojt"]
+background_mode = 2
+sky = SubResource("Sky_q1ng0")
+sky_rotation = Vector3(4.65479, -1.78547, 3.47146)
+
+[node name="WinRoom" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_5fl4j")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_iuojt")
+
+[node name="Player" parent="." instance=ExtResource("2_4d8fk")]
