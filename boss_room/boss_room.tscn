@@ -59,6 +59,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.76889)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.05967)
 shape = SubResource("BoxShape3D_pu35s")
 
+[node name="PlayerEnteredSensor" type="Area3D" parent="Entrance"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 7.26106)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Entrance/PlayerEnteredSensor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.05967)
+shape = SubResource("BoxShape3D_pu35s")
+
 [node name="StaticBody3D" type="StaticBody3D" parent="Entrance"]
 collision_layer = 5
 
@@ -70,3 +77,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.743, 34.987)
 
 [connection signal="body_entered" from="Entrance/PlayerSensor" to="." method="_on_player_sensor_body_entered"]
 [connection signal="body_exited" from="Entrance/PlayerSensor" to="." method="_on_player_sensor_body_exited"]
+[connection signal="body_entered" from="Entrance/PlayerEnteredSensor" to="." method="_on_player_entered_sensor_body_entered"]

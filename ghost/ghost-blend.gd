@@ -51,6 +51,10 @@ func set_health(amount):
 	health = amount
 
 
+func set_detected_player(body):
+	pass
+
+
 func _physics_process(delta):
 	if not angry and not dead:
 		velocity = lerp(velocity, $Cube.transform.basis.z * speed, 0.2)

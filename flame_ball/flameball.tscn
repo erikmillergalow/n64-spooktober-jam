@@ -1,8 +1,9 @@
-[gd_scene load_steps=24 format=3 uid="uid://ug7xg7v4pj71"]
+[gd_scene load_steps=25 format=3 uid="uid://ug7xg7v4pj71"]
 
 [ext_resource type="Script" path="res://flame_ball/flameball.gd" id="1_ixits"]
 [ext_resource type="Texture2D" uid="uid://ch8t2ucsvp5me" path="res://flame_ball/flame-ball.png" id="1_lovdq"]
 [ext_resource type="Texture2D" uid="uid://dpson7asm5810" path="res://flame_ball/flame-ball-dissipate.png" id="2_wyeog"]
+[ext_resource type="AudioStream" uid="uid://q7848v2qt3bm" path="res://sounds/fx/flame-out-002.ogg" id="4_7vy1q"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_v20aq"]
 radius = 0.2
@@ -160,6 +161,9 @@ sprite_frames = SubResource("SpriteFrames_1uoxb")
 animation = &"collide"
 autoplay = "default"
 speed_scale = 3.0
+
+[node name="Fizzle" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_7vy1q")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

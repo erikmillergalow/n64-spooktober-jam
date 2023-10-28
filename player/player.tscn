@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://d1w51ia4nwluc"]
+[gd_scene load_steps=29 format=3 uid="uid://d1w51ia4nwluc"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_lx0as"]
 [ext_resource type="FontFile" uid="uid://clvfdpwuiqgui" path="res://fonts/RoSpritendoSemiboldBeta-vmVwZ.otf" id="2_cibyo"]
@@ -6,6 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://bociqye04gv3g" path="res://shield/blurred-shield.png" id="4_8vdka"]
 [ext_resource type="Texture2D" uid="uid://bpq5u3loojfgl" path="res://shield/anim-shield.png" id="5_dv8vu"]
 [ext_resource type="PackedScene" uid="uid://dv26w14qirikq" path="res://player/player_spooky.tscn" id="5_j08mn"]
+[ext_resource type="AudioStream" uid="uid://sanedl10k2lj" path="res://sounds/music/playing-theme-002.ogg" id="7_hjyu4"]
+[ext_resource type="AudioStream" uid="uid://dn4c2solurshy" path="res://sounds/music/boss-theme-002.ogg" id="8_v6lxc"]
+[ext_resource type="AudioStream" uid="uid://d2pq6jvu5db4g" path="res://sounds/fx/oof-002.ogg" id="9_0kch7"]
+[ext_resource type="AudioStream" uid="uid://coup8w3myt0qn" path="res://sounds/fx/cast-002.ogg" id="10_sj83s"]
 
 [sub_resource type="Animation" id="Animation_sq4sq"]
 resource_name = "hit_flicker"
@@ -43,6 +47,7 @@ corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s3l46"]
+radius = 0.4
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mxffn"]
 transparency = 1
@@ -254,8 +259,7 @@ spring_length = 7.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88097, 0)
 
 [node name="Shield" parent="ShieldPivot" instance=ExtResource("3_imjhw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.11891)
-visible = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.28998)
 
 [node name="EnergyShield" type="MeshInstance3D" parent="ShieldPivot"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0.969798)
@@ -272,7 +276,24 @@ speed_scale = 4.0
 [node name="player_spooky" parent="." instance=ExtResource("5_j08mn")]
 
 [node name="MagicCooldown" type="Timer" parent="."]
-wait_time = 0.054
+wait_time = 0.435
 one_shot = true
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_hjyu4")
+autoplay = true
+bus = &"music"
+
+[node name="BossMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_v6lxc")
+bus = &"music"
+
+[node name="Oof" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_0kch7")
+bus = &"fx"
+
+[node name="Cast" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_sj83s")
+bus = &"fx"
 
 [connection signal="timeout" from="Control/KeyAlertTimer" to="." method="_on_key_alert_timer_timeout"]

@@ -64,13 +64,20 @@ func _on_key_alert_timer_timeout():
 	$Control/KeyAlertLabel.visible = false
 
 
+func play_boss_music():
+	if not $BossMusic.playing:
+		$Music.stop()
+		$BossMusic.play()
+
+
 func add_exp(amount):
-	global.player_exp += amount
+	global.player_exp += amount * 10
 	exp_label.text = "%s EXP" % global.player_exp
 
 
 func take_damage(amount):
 	if not hit_animation.is_playing():
+		$Oof.play()
 		global.player_health -= amount
 		health_bar.value -= amount
 		hit_animation.play("hit_flicker")
@@ -122,7 +129,9 @@ func _physics_process(delta):
 		knockback = lerp(knockback, Vector3.ZERO, 1.0)
 		
 		if Input.is_action_pressed("strafe"):
-			h.rotation.y = lerp(h.rotation.y, $player_spooky.rotation.y, 0.25)
+#			if h.rotation_degrees.y != $player_spooky.rotation.y:
+#			h.rotation.y = lerp(h.rotation.y, $player_spooky.rotation.y, 0.25)
+			$player_spooky.rotation.y = lerp($player_spooky.rotation.y, h.rotation.y, 0.25)
 		
 		# handle movement
 		if direction != Vector3(0, 1, 0):
@@ -155,6 +164,9 @@ func _physics_process(delta):
 		
 		# handle magic attack
 		if (Input.is_action_pressed('magic') and not Input.is_action_pressed('shield')) and magic_cooldown.is_stopped():
+			$Cast.pitch_scale = 1.0 + randf()
+			$Cast.play()
+			
 			magic_cooldown.start()
 			if (global.double_blaster):
 				var projectileA = projectile_scene.instantiate()

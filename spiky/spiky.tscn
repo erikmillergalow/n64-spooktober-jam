@@ -1,8 +1,9 @@
-[gd_scene load_steps=25 format=3 uid="uid://btm66kt8fge1g"]
+[gd_scene load_steps=26 format=3 uid="uid://btm66kt8fge1g"]
 
 [ext_resource type="Script" path="res://spiky/spiky.gd" id="1_fg7lh"]
 [ext_resource type="Texture2D" uid="uid://bpol32qroukrn" path="res://spiky/spiky.png" id="2_l35p5"]
 [ext_resource type="Texture2D" uid="uid://dqe6jwt3cmpvh" path="res://spiky/spiky-attack.png" id="3_c5syj"]
+[ext_resource type="AudioStream" uid="uid://d02ffqju5r1bg" path="res://sounds/fx/zap-002.ogg" id="4_l2n3y"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4fgbc"]
 resource_name = "Material"
@@ -192,6 +193,9 @@ one_shot = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TwirlHitBox"]
 shape = SubResource("CylinderShape3D_khw2v")
+
+[node name="Zap" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_l2n3y")
 
 [connection signal="timeout" from="FlameCooldown" to="." method="_on_flame_cooldown_timeout"]
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

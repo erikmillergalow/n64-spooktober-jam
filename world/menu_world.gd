@@ -4,6 +4,14 @@ var overworld_scene = preload('res://overworld/overworld.tscn')
 
 @onready var global = get_node("/root/global")
 
+var helpIndex = 0
+@onready var helpLabels = [
+	$Control/HelpRect/Controls,
+	$Control/HelpRect/Upgrades,
+	$Control/HelpRect/Monsters,
+	$Control/HelpRect/Premise,
+]
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$Control/BeginButton.grab_focus()
@@ -17,6 +25,8 @@ func _process(delta):
 
 
 func _on_begin_button_pressed():
+	$MenuMusic.stop()
+	
 	global.initialize()
 	
 	var overworld = overworld_scene.instantiate()
@@ -71,3 +81,32 @@ func _on_settings_button_focus_entered():
 
 func _on_quit_button_focus_entered():
 	$Control/AnimationPlayer.play("quit")
+
+# help screen
+func _on_help_button_pressed():
+	$Control/HelpRect.visible = true
+	$Control/HelpRect/Controls.visible = true
+	$Control/HelpRect/HelpNextButton.grab_focus()
+
+
+func _on_help_done_button_pressed():
+	$Control/HelpRect.visible = false
+	helpIndex = 0
+	helpLabels[0].visible = true
+	$Control/BeginButton.grab_focus()
+
+
+func _on_help_back_button_pressed():
+	helpLabels[helpIndex].visible = false
+	helpIndex -= 1
+	if helpIndex < 0:
+		helpIndex = helpLabels.size() - 1
+	helpLabels[helpIndex].visible = true
+
+
+func _on_help_next_button_pressed():
+	helpLabels[helpIndex].visible = false
+	helpIndex += 1
+	if helpIndex > helpLabels.size() - 1:
+		helpIndex = 0
+	helpLabels[helpIndex].visible = true

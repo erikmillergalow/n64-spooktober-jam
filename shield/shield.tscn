@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cycakfb4xvx8o" path="res://shield/dogg-shield.png" id="2_sdgos"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_kpidp"]
-size = Vector3(1.3, 1.499, 0.5)
+size = Vector3(1.5, 1.499, 0.5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_biqsq"]
 albedo_texture = ExtResource("2_sdgos")
@@ -12,7 +12,7 @@ uv1_scale = Vector3(3.012, 2.045, 3.012)
 
 [sub_resource type="BoxMesh" id="BoxMesh_6wlrk"]
 material = SubResource("StandardMaterial3D_biqsq")
-size = Vector3(1, 1.5, 0.2)
+size = Vector3(1.3, 1.5, 0.2)
 
 [node name="Shield" type="Area3D" groups=["player_shield"]]
 script = ExtResource("1_yb7dn")

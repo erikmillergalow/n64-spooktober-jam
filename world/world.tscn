@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://dcy86n4si7d7v"]
+[gd_scene load_steps=28 format=3 uid="uid://dcy86n4si7d7v"]
 
 [ext_resource type="Script" path="res://world/orbit_camera.gd" id="1"]
 [ext_resource type="Script" path="res://world/menu_world.gd" id="1_qder5"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://c7yqmbdcqkcw0" path="res://world/floor/floor.png" id="14_ep1q3"]
 [ext_resource type="Environment" uid="uid://cw6ddwwbnli2q" path="res://world/world_env.tres" id="15"]
 [ext_resource type="Script" path="res://world/scene_controls.gd" id="16"]
+[ext_resource type="AudioStream" uid="uid://d25kmlveabu0p" path="res://sounds/music/main-menu-theme-002.ogg" id="18_51kic"]
 [ext_resource type="Material" path="res://world/stairs/stairs_side_mat.tres" id="19"]
 [ext_resource type="Material" path="res://world/stairs/stairs_top_mat.tres" id="20"]
 
@@ -315,6 +316,157 @@ theme_override_font_sizes/font_size = 10
 theme_override_styles/normal = ExtResource("3_bcovx")
 text = "Done"
 
+[node name="HelpRect" type="ColorRect" parent="Control"]
+visible = false
+layout_mode = 0
+offset_left = 9.0
+offset_top = 11.0
+offset_right = 302.0
+offset_bottom = 236.0
+color = Color(0.501961, 0.501961, 0.501961, 1)
+
+[node name="Controls" type="Label" parent="Control/HelpRect"]
+visible = false
+layout_mode = 0
+offset_left = 9.0
+offset_top = 7.0
+offset_right = 284.0
+offset_bottom = 177.0
+theme_override_fonts/font = ExtResource("2_m6y7h")
+theme_override_font_sizes/font_size = 8
+text = "Controller needed for now.
+
+Left stick = Move
+
+Right stick = Camera/Aim Shield
+
+X = Cast spell
+
+Y = Change camera zoom
+
+L = Strafe/Re-center camera
+
+Start = Pause
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Upgrades" type="Label" parent="Control/HelpRect"]
+visible = false
+layout_mode = 0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = 281.0
+offset_bottom = 182.0
+theme_override_fonts/font = ExtResource("2_m6y7h")
+theme_override_font_sizes/font_size = 7
+text = "You can purchase upgrades using exp in the 
+pause screen.
+
+Shield upgrade = Enemy projectiles reflect
+off your shield.
+
+Double spells - Cast two spells at once.
+
+Spell speed - Reduce cooldown between spells.
+
+Spell strength - Spells cause more damage
+and knockback.
+
+Run speed - Move faster.
+
+More Health - Replenish health"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Monsters" type="Label" parent="Control/HelpRect"]
+visible = false
+layout_mode = 0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = 281.0
+offset_bottom = 182.0
+theme_override_fonts/font = ExtResource("2_m6y7h")
+theme_override_font_sizes/font_size = 7
+text = "Ghosts will wander until being provoked. When
+angry they will chase you and cast fireball
+spells in your direction.
+
+Spiky aliens don't move much because they
+can't see well. If you get too close they will
+chase and spray fireballs at you. Watch out for
+their electric spell if they come too close.
+
+Tentacle beasts have the most health of all. 
+They spray fireballs, chase you, and swing their
+tentacles (don't touch)."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Premise" type="Label" parent="Control/HelpRect"]
+visible = false
+layout_mode = 0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = 281.0
+offset_bottom = 182.0
+theme_override_fonts/font = ExtResource("2_m6y7h")
+theme_override_font_sizes/font_size = 7
+text = "You've emerged from the woods tasked with
+vanquishing the monsters that invaded town.
+
+Their tentacled leader has locked itself in a 
+grove while the minions wreak havoc.
+
+You must find the hidded chest to unlock the
+gate to Mr. Tentacle's grove. Defeat Mr. Tentacle
+so you can return to the spooky woods you 
+were summoned from."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HelpDoneButton" type="Button" parent="Control/HelpRect"]
+layout_mode = 0
+offset_left = 215.0
+offset_top = 188.0
+offset_right = 285.0
+offset_bottom = 216.0
+scale = Vector2(0.884, 0.884)
+focus_neighbor_left = NodePath("../HelpNextButton")
+focus_neighbor_right = NodePath("../HelpBackButton")
+theme_override_fonts/font = ExtResource("2_m6y7h")
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = ExtResource("3_bcovx")
+text = "Done"
+
+[node name="HelpBackButton" type="Button" parent="Control/HelpRect"]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 188.0
+offset_right = 83.0
+offset_bottom = 216.0
+scale = Vector2(0.884, 0.884)
+focus_neighbor_left = NodePath("../HelpDoneButton")
+focus_neighbor_right = NodePath("../HelpNextButton")
+theme_override_fonts/font = ExtResource("2_m6y7h")
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = ExtResource("3_bcovx")
+text = "Previous"
+
+[node name="HelpNextButton" type="Button" parent="Control/HelpRect"]
+layout_mode = 0
+offset_left = 94.0
+offset_top = 188.0
+offset_right = 164.0
+offset_bottom = 216.0
+scale = Vector2(0.884, 0.884)
+focus_neighbor_left = NodePath("../HelpBackButton")
+focus_neighbor_right = NodePath("../HelpDoneButton")
+theme_override_fonts/font = ExtResource("2_m6y7h")
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = ExtResource("3_bcovx")
+text = "Next"
+
 [node name="SceneControls" type="Node" parent="."]
 script = ExtResource("16")
 
@@ -381,9 +533,15 @@ visible = false
 transform = Transform3D(-0.632935, 0, 0.774205, 0, 1, 0, -0.774205, 0, -0.632935, 2.30476, 0, -1.16371)
 visible = false
 
+[node name="MenuMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("18_51kic")
+autoplay = true
+bus = &"music"
+
 [connection signal="focus_entered" from="Control/BeginButton" to="." method="_on_begin_button_focus_entered"]
 [connection signal="pressed" from="Control/BeginButton" to="." method="_on_begin_button_pressed"]
 [connection signal="focus_entered" from="Control/HelpButton" to="." method="_on_help_button_focus_entered"]
+[connection signal="pressed" from="Control/HelpButton" to="." method="_on_help_button_pressed"]
 [connection signal="focus_entered" from="Control/SettingsButton" to="." method="_on_settings_button_focus_entered"]
 [connection signal="pressed" from="Control/SettingsButton" to="." method="_on_settings_button_pressed"]
 [connection signal="focus_entered" from="Control/QuitButton" to="." method="_on_quit_button_focus_entered"]
@@ -394,3 +552,6 @@ visible = false
 [connection signal="toggled" from="Control/SettingsRect/QualityCheck" to="." method="_on_quality_check_toggled"]
 [connection signal="focus_entered" from="Control/SettingsRect/DoneButton" to="." method="_on_begin_button_focus_entered"]
 [connection signal="pressed" from="Control/SettingsRect/DoneButton" to="." method="_on_done_button_pressed"]
+[connection signal="pressed" from="Control/HelpRect/HelpDoneButton" to="." method="_on_help_done_button_pressed"]
+[connection signal="pressed" from="Control/HelpRect/HelpBackButton" to="." method="_on_help_back_button_pressed"]
+[connection signal="pressed" from="Control/HelpRect/HelpNextButton" to="." method="_on_help_next_button_pressed"]

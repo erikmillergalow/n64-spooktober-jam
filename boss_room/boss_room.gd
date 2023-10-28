@@ -25,3 +25,8 @@ func _on_player_sensor_body_entered(body):
 func _on_player_sensor_body_exited(body):
 	if body.is_in_group('player'):
 		body.hide_door_text()
+
+
+func _on_player_entered_sensor_body_entered(body):
+	if body.is_in_group('player'):
+		body.play_boss_music()

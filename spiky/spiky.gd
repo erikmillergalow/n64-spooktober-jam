@@ -22,6 +22,7 @@ var orbs = 5
 @onready var flameball_scene = load('res://flame_ball/flameball.tscn')
 
 func _ready():
+	detected_player = get_parent().get_node('Player')
 	var unique_material = $Cube.get_surface_override_material(0).duplicate()
 	$Cube.set_surface_override_material(0, unique_material)
 
@@ -72,6 +73,7 @@ func _physics_process(delta):
 
 		if global_transform.origin.distance_to(detected_player.global_transform.origin) < 6:
 			if $TwirlCooldown.is_stopped():
+				$Zap.play()
 				$TwirlAttack.visible = true
 				$TwirlAttack.play('default')
 				$TwirlCooldown.start()
@@ -112,6 +114,9 @@ func add_knockback(direction):
 
 
 func take_damage(amount):
+	if not angry:
+		angry = true
+	
 	health -= amount 
 	
 	var current_sat = $Cube.get_surface_override_material(0).albedo_color.s
