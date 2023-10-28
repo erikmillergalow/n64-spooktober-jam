@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://uregyl6y88pt"]
+
+[ext_resource type="PackedScene" uid="uid://l5vl4ias6edp" path="res://overworld/overworld.tscn" id="1_te6ou"]
+[ext_resource type="PackedScene" uid="uid://brws4cvg7k8y8" path="res://ghost/ghost-blend.tscn" id="2_2k66n"]
+[ext_resource type="PackedScene" uid="uid://d1w51ia4nwluc" path="res://player/player.tscn" id="3_4g404"]
+[ext_resource type="PackedScene" uid="uid://btm66kt8fge1g" path="res://spiky/spiky.tscn" id="4_v81o1"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Overworld" parent="." instance=ExtResource("1_te6ou")]
+
+[node name="ghost2" parent="Overworld" instance=ExtResource("2_2k66n")]
+process_mode = 4
+transform = Transform3D(0.645018, 0, -0.764168, 0, 1, 0, 0.764168, 0, 0.645018, 18.513, 0, -7.00529)
+
+[node name="Player2" parent="Overworld" instance=ExtResource("3_4g404")]
+process_mode = 4
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0054, 0, 0)
+
+[node name="ghost" parent="Overworld" instance=ExtResource("2_2k66n")]
+process_mode = 4
+transform = Transform3D(0.811023, 0, 0.585014, 0, 1, 0, -0.585014, 0, 0.811023, 6.54494, 0, -7.13834)
+
+[node name="spiky" parent="Overworld" instance=ExtResource("4_v81o1")]
+process_mode = 4
+transform = Transform3D(0.0867906, 0, -0.996227, 0, 1, 0, 0.996227, 0, 0.0867906, 22.7651, 0, 0)

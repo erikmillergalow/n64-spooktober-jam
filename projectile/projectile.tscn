@@ -163,8 +163,8 @@ shape = SubResource("SphereShape3D_t828x")
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="." groups=["player_projectile"]]
 billboard = 1
 sprite_frames = SubResource("SpriteFrames_wpu2u")
+animation = &"collide"
 autoplay = "collide"
-frame_progress = 0.730862
 speed_scale = 3.0
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

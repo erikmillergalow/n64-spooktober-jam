@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://l5vl4ias6edp"]
+[gd_scene load_steps=18 format=3 uid="uid://l5vl4ias6edp"]
 
 [ext_resource type="Script" path="res://Overworld.gd" id="1_cdfcf"]
 [ext_resource type="Texture2D" uid="uid://crxcjkepo20a3" path="res://overworld/tree4.png" id="2_200q8"]
@@ -40,6 +40,9 @@ size = Vector2(100, 25)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yanlm"]
 size = Vector3(1, 2, 100)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u23ma"]
+size = Vector3(10000, 200, 1)
 
 [node name="Overworld" type="Node3D"]
 script = ExtResource("1_cdfcf")
@@ -103,3 +106,19 @@ transform = Transform3D(4.631, 0, 0, 0, 4.631, 0, 0, 0, 4.631, -23.1732, 0, 0)
 
 [node name="tree2" parent="." instance=ExtResource("8_7ipc5")]
 transform = Transform3D(3.523, 0, 0, 0, 5.467, 0, 0, 0, 1.849, 27.3351, 0, -22.3577)
+
+[node name="FirstRowWall" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5050, 0, 49.431)
+collision_layer = 5
+collision_mask = 5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FirstRowWall"]
+shape = SubResource("BoxShape3D_u23ma")
+
+[node name="FirstRowWall2" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5050, 0, 49.431)
+collision_layer = 5
+collision_mask = 5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FirstRowWall2"]
+shape = SubResource("BoxShape3D_u23ma")

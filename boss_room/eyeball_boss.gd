@@ -3,7 +3,8 @@ extends CharacterBody3D
 
 var speed = 10.0
 
-var health = 2000
+var health = 2000.0
+var max_health = 2000.0
 
 var active = false
 var dead = false
@@ -16,7 +17,6 @@ var knockback = Vector3.ZERO
 
 func _ready():
 	pass
-#	player = get_parent().get_node('Player')
 
 
 func set_player(body):
@@ -59,10 +59,7 @@ func _physics_process(delta):
 			print('DETECTED')
 			
 			if not active:
-				$BlastDelay.start()
-				$SpinBlast.play("spinblast")
-#				$SpinTimer.start()
-				active = true
+				activate()
 			
 			var player = collision.get_collider()
 			player.add_knockback(-global_transform.basis.z * 15)
@@ -80,29 +77,35 @@ func add_knockback(direction):
 		knockback = direction * 15.0
 
 
+func activate():
+	player.play_boss_music()
+	$BlastDelay.start()
+	$SpinBlast.play("spinblast")
+	active = true
+
 func take_damage(amount):
 	if not active:
-		$BlastDelay.start()
-		$SpinBlast.play("spinblast")
-#		$SpinTimer.start()
-		active = true
+		activate()
 	
 	health -= amount 
 	
 	var head_sat = $Head.get_active_material(0).albedo_color.s
-	var new_head_color = Color().from_hsv(0.0, head_sat + 0.1, 0.68, 1.0)
+	var new_head_color = Color().from_hsv(0.0, 1.0 - health / max_health, 0.68, 1.0)
 	$Head.get_active_material(0).albedo_color = new_head_color
 	
 	var arm_sat = $Arm.get_active_material(0).albedo_color.s
-	var new_arm_color = Color().from_hsv(0.0, arm_sat + 0.1, 0.68, 1.0)
+	var new_arm_color = Color().from_hsv(0.0, 1.0 - health / max_health, 0.68, 1.0)
 	$Arm.get_active_material(0).albedo_color = new_arm_color
 	
 	var arm2_sat = $Arm2.get_active_material(0).albedo_color.s
-	var new_arm2_color = Color().from_hsv(0.0, arm2_sat + 0.1, 0.68, 1.0)
+	var new_arm2_color = Color().from_hsv(0.0, 1.0 - health / max_health, 0.68, 1.0)
 	$Arm2.get_active_material(0).albedo_color = new_arm2_color
 	
 	if health <= 0:
-		$SpinBlast.stop('spinblast')
+		$DestructionBlast.visible = true
+		$DestructionBlast.play()
+		$GrowDestruction.play('grow')
+		$SpinBlast.stop()
 		dead = true
 		$Particles.visible = true
 		$ParticlesTimer.start()
@@ -128,9 +131,8 @@ func _on_spin_blast_animation_finished(anim_name):
 func _on_arm_2_area_3d_body_entered(body):
 	if body.is_in_group('player'):
 		if not active:
-			$BlastDelay.start()
-			$SpinBlast.play("spinblast")
-			active = true
+			activate()
+
 		body.add_knockback(-global_transform.basis.z * 10)
 		body.take_damage(20)
 
@@ -138,9 +140,8 @@ func _on_arm_2_area_3d_body_entered(body):
 func _on_arm_area_3d_body_entered(body):
 	if body.is_in_group('player'):
 		if not active:
-			$BlastDelay.start()
-			$SpinBlast.play("spinblast")
-			active = true
+			activate()
+
 		body.add_knockback(-global_transform.basis.z * 10)
 		body.take_damage(20)
 

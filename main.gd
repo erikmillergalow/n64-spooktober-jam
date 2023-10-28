@@ -18,7 +18,7 @@ func _process(delta):
 	if global.win and not global.done:
 		global.done = true
 		var win_room = win_scene.instantiate()
-		print($N64Layer/HBlur/SubViewport/DitherBand/SubViewport.get_children())		
+		print($N64Layer/HBlur/SubViewport/DitherBand/SubViewport.get_children())
 		$N64Layer/HBlur/SubViewport/DitherBand/SubViewport.add_child(win_room)
 		$N64Layer/HBlur/SubViewport/DitherBand/SubViewport/Overworld.queue_free()
 
@@ -27,5 +27,9 @@ func _on_end_run_pressed():
 	var menu_world = menu_world_scene.instantiate()
 	print($N64Layer/HBlur/SubViewport/DitherBand/SubViewport.get_children())
 	$N64Layer/HBlur/SubViewport/DitherBand/SubViewport.add_child(menu_world)
-	$N64Layer/HBlur/SubViewport/DitherBand/SubViewport/Overworld.queue_free()
+
+	if global.win:
+		$N64Layer/HBlur/SubViewport/DitherBand/SubViewport/WinRoom.queue_free()
+	else:
+		$N64Layer/HBlur/SubViewport/DitherBand/SubViewport/Overworld.queue_free()
 

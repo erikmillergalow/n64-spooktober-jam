@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://dcy86n4si7d7v"]
+[gd_scene load_steps=31 format=3 uid="uid://dcy86n4si7d7v"]
 
 [ext_resource type="Script" path="res://world/orbit_camera.gd" id="1"]
 [ext_resource type="Script" path="res://world/menu_world.gd" id="1_qder5"]
@@ -18,6 +18,44 @@
 [ext_resource type="AudioStream" uid="uid://d25kmlveabu0p" path="res://sounds/music/main-menu-theme-002.ogg" id="18_51kic"]
 [ext_resource type="Material" path="res://world/stairs/stairs_side_mat.tres" id="19"]
 [ext_resource type="Material" path="res://world/stairs/stairs_top_mat.tres" id="20"]
+
+[sub_resource type="Animation" id="Animation_vytv4"]
+resource_name = "wiggle"
+length = 4.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0.0349066, 0), Vector3(0, 0, 0), Vector3(0, -0.0349066, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_6uic4"]
+resource_name = "zoom"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.574349, 1),
+"update": 0,
+"values": [Vector3(0, 3.487, -60), Vector3(0, 3.4872, 10.3183)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_88xum"]
+_data = {
+"wiggle": SubResource("Animation_vytv4"),
+"zoom": SubResource("Animation_6uic4")
+}
 
 [sub_resource type="Animation" id="Animation_g7blm"]
 resource_name = "begin"
@@ -118,11 +156,39 @@ size = Vector2(200, 200)
 [node name="MenuWorld" type="Node3D"]
 script = ExtResource("1_qder5")
 
+[node name="Title" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.4872, 10.3183)
+text = "SUPER MONSTER SMASH
+
+64"
+font = ExtResource("2_m6y7h")
+font_size = 76
+outline_size = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Title"]
+libraries = {
+"": SubResource("AnimationLibrary_88xum")
+}
+
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="Title" type="Label" parent="Control"]
+visible = false
+layout_mode = 0
+offset_left = -1.0
+offset_top = 16.0
+offset_right = 327.0
+offset_bottom = 56.0
+theme_override_fonts/font = ExtResource("2_m6y7h")
+theme_override_font_sizes/font_size = 13
+text = "SUPER MONSTER SMASH 
+64"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="BeginButton" type="Button" parent="Control"]
 layout_mode = 0
@@ -210,59 +276,87 @@ text = "Settings"
 
 [node name="MusicLabel" type="Label" parent="Control/SettingsRect"]
 layout_mode = 0
-offset_left = 71.0
-offset_top = 36.0
-offset_right = 119.0
-offset_bottom = 52.0
+offset_left = 13.0
+offset_top = 26.0
+offset_right = 61.0
+offset_bottom = 42.0
 theme_override_fonts/font = ExtResource("2_m6y7h")
 theme_override_font_sizes/font_size = 8
 text = "Music"
-horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="MusicSlider" type="HSlider" parent="Control/SettingsRect"]
 layout_mode = 0
-offset_left = 130.0
-offset_top = 34.0
-offset_right = 218.0
-offset_bottom = 50.0
+offset_left = 136.0
+offset_top = 26.0
+offset_right = 270.0
+offset_bottom = 42.0
 focus_neighbor_top = NodePath("../DoneButton")
 focus_neighbor_bottom = NodePath("../FXSlider")
+theme_override_styles/grabber_area = ExtResource("3_bcovx")
+theme_override_styles/grabber_area_highlight = ExtResource("3_bcovx")
 max_value = 1.0
 step = 0.1
 value = 1.0
 
 [node name="FXLabel" type="Label" parent="Control/SettingsRect"]
 layout_mode = 0
-offset_left = 69.0
+offset_left = 13.0
 offset_top = 56.0
-offset_right = 117.0
+offset_right = 61.0
 offset_bottom = 72.0
 theme_override_fonts/font = ExtResource("2_m6y7h")
 theme_override_font_sizes/font_size = 8
 text = "FX
 "
-horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="FXSlider" type="HSlider" parent="Control/SettingsRect"]
 layout_mode = 0
-offset_left = 130.0
+offset_left = 136.0
 offset_top = 56.0
-offset_right = 218.0
+offset_right = 268.0
 offset_bottom = 72.0
 focus_neighbor_top = NodePath("../MusicSlider")
-focus_neighbor_bottom = NodePath("../InvertCheck")
+focus_neighbor_bottom = NodePath("../HorizontalLookSlider")
+theme_override_styles/grabber_area = ExtResource("3_bcovx")
+theme_override_styles/grabber_area_highlight = ExtResource("3_bcovx")
 max_value = 1.0
 step = 0.1
 value = 1.0
 
+[node name="HorizontalLookLabel" type="Label" parent="Control/SettingsRect"]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 82.0
+offset_right = 124.0
+offset_bottom = 106.0
+theme_override_fonts/font = ExtResource("2_m6y7h")
+theme_override_font_sizes/font_size = 8
+text = "Horizontal Look 
+Speed
+"
+vertical_alignment = 1
+
+[node name="HorizontalLookSlider" type="HSlider" parent="Control/SettingsRect"]
+layout_mode = 0
+offset_left = 136.0
+offset_top = 82.0
+offset_right = 268.0
+offset_bottom = 98.0
+focus_neighbor_top = NodePath("../FXSlider")
+focus_neighbor_bottom = NodePath("../InvertCheck")
+theme_override_styles/grabber_area = ExtResource("3_bcovx")
+theme_override_styles/grabber_area_highlight = ExtResource("3_bcovx")
+max_value = 10.0
+value = 2.0
+
 [node name="InvertLabel" type="Label" parent="Control/SettingsRect"]
 layout_mode = 0
 offset_left = 87.0
-offset_top = 84.0
+offset_top = 110.0
 offset_right = 161.0
-offset_bottom = 100.0
+offset_bottom = 126.0
 theme_override_fonts/font = ExtResource("2_m6y7h")
 theme_override_font_sizes/font_size = 8
 text = "Invert Look
@@ -273,18 +367,18 @@ vertical_alignment = 1
 [node name="InvertCheck" type="CheckBox" parent="Control/SettingsRect"]
 layout_mode = 0
 offset_left = 178.0
-offset_top = 80.0
+offset_top = 106.0
 offset_right = 202.0
-offset_bottom = 104.0
-focus_neighbor_top = NodePath("../FXSlider")
+offset_bottom = 130.0
+focus_neighbor_top = NodePath("../HorizontalLookSlider")
 focus_neighbor_bottom = NodePath("../QualityCheck")
 
 [node name="N64QualityLabel" type="Label" parent="Control/SettingsRect"]
 layout_mode = 0
 offset_left = 83.0
-offset_top = 112.0
+offset_top = 138.0
 offset_right = 166.0
-offset_bottom = 128.0
+offset_bottom = 154.0
 theme_override_fonts/font = ExtResource("2_m6y7h")
 theme_override_font_sizes/font_size = 8
 text = "N64 Quality
@@ -295,9 +389,9 @@ vertical_alignment = 1
 [node name="QualityCheck" type="CheckBox" parent="Control/SettingsRect"]
 layout_mode = 0
 offset_left = 178.0
-offset_top = 108.0
+offset_top = 134.0
 offset_right = 202.0
-offset_bottom = 132.0
+offset_bottom = 158.0
 focus_neighbor_top = NodePath("../InvertCheck")
 focus_neighbor_bottom = NodePath("../DoneButton")
 button_pressed = true
@@ -334,7 +428,7 @@ offset_right = 284.0
 offset_bottom = 177.0
 theme_override_fonts/font = ExtResource("2_m6y7h")
 theme_override_font_sizes/font_size = 8
-text = "Controller needed for now.
+text = "(controller only)
 
 Left stick = Move
 
@@ -415,13 +509,41 @@ theme_override_font_sizes/font_size = 7
 text = "You've emerged from the woods tasked with
 vanquishing the monsters that invaded town.
 
-Their tentacled leader has locked itself in a 
+Their leader has locked itself in a 
 grove while the minions wreak havoc.
 
-You must find the hidded chest to unlock the
-gate to Mr. Tentacle's grove. Defeat Mr. Tentacle
+You must find the hidden chest to unlock the
+gate to the grove. Defeat the leader
 so you can return to the spooky woods you 
 were summoned from."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Mechanics" type="Label" parent="Control/HelpRect"]
+visible = false
+layout_mode = 0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = 281.0
+offset_bottom = 182.0
+theme_override_fonts/font = ExtResource("2_m6y7h")
+theme_override_font_sizes/font_size = 7
+text = "The playing field is generated randomly
+each time you start anew. Each row of the grid 
+has different probabilities for how many of 
+each type of objects and enemys spawn.
+
+Enemies have randomized attributes such as
+attack power, movement speed, and max
+health.
+
+You further you progress away from the woods,
+enemies are more likely to be powerful and 
+fast.
+
+The final boss and key chest are placed in 
+random sections of the grid, the key chest 
+in the furthest row."
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -466,6 +588,109 @@ theme_override_fonts/font = ExtResource("2_m6y7h")
 theme_override_font_sizes/font_size = 10
 theme_override_styles/normal = ExtResource("3_bcovx")
 text = "Next"
+
+[node name="GridSizeRect" type="ColorRect" parent="Control"]
+visible = false
+layout_mode = 0
+offset_left = 15.0
+offset_top = 16.0
+offset_right = 302.0
+offset_bottom = 184.0
+color = Color(0.486275, 0.486275, 0.486275, 1)
+
+[node name="Info" type="Label" parent="Control/GridSizeRect"]
+layout_mode = 0
+offset_right = 287.0
+offset_bottom = 47.0
+theme_override_fonts/font = ExtResource("2_m6y7h")
+theme_override_font_sizes/font_size = 6
+text = "Choose the number of areas generated in 
+the playing field (larger values untested,
+performance may suffer - moreso with rows than 
+columns):"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RowsLabel" type="Label" parent="Control/GridSizeRect"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 40.0
+offset_right = 116.0
+offset_bottom = 78.0
+focus_neighbor_bottom = NodePath("../ColsSlider")
+theme_override_fonts/font = ExtResource("2_m6y7h")
+theme_override_font_sizes/font_size = 6
+text = "Grid rows (default = 3):"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RowsSlider" type="HSlider" parent="Control/GridSizeRect"]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 49.0
+offset_right = 278.0
+offset_bottom = 65.0
+theme_override_styles/grabber_area = ExtResource("3_bcovx")
+theme_override_styles/grabber_area_highlight = ExtResource("3_bcovx")
+min_value = 3.0
+max_value = 15.0
+value = 3.0
+
+[node name="ColsLabel" type="Label" parent="Control/GridSizeRect"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 72.0
+offset_right = 137.0
+offset_bottom = 110.0
+focus_neighbor_top = NodePath("../RowsSlider")
+focus_neighbor_bottom = NodePath("../Start")
+theme_override_fonts/font = ExtResource("2_m6y7h")
+theme_override_font_sizes/font_size = 6
+text = "Grid columns (default = 3):"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ColsSlider" type="HSlider" parent="Control/GridSizeRect"]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 82.0
+offset_right = 278.0
+offset_bottom = 98.0
+theme_override_styles/grabber_area = ExtResource("3_bcovx")
+theme_override_styles/grabber_area_highlight = ExtResource("3_bcovx")
+min_value = 3.0
+max_value = 15.0
+value = 3.0
+
+[node name="Back" type="Button" parent="Control/GridSizeRect"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 122.0
+offset_right = 120.0
+offset_bottom = 150.0
+scale = Vector2(0.884, 0.884)
+focus_neighbor_left = NodePath("../Start")
+focus_neighbor_top = NodePath("../ColsLabel")
+focus_neighbor_right = NodePath("../Start")
+theme_override_fonts/font = ExtResource("2_m6y7h")
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = ExtResource("3_bcovx")
+text = "Back"
+
+[node name="Start" type="Button" parent="Control/GridSizeRect"]
+layout_mode = 0
+offset_left = 169.0
+offset_top = 122.0
+offset_right = 239.0
+offset_bottom = 150.0
+scale = Vector2(0.884, 0.884)
+focus_neighbor_left = NodePath("../Back")
+focus_neighbor_top = NodePath("../ColsSlider")
+focus_neighbor_right = NodePath("../Back")
+theme_override_fonts/font = ExtResource("2_m6y7h")
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = ExtResource("3_bcovx")
+text = "Start"
 
 [node name="SceneControls" type="Node" parent="."]
 script = ExtResource("16")
@@ -538,6 +763,7 @@ stream = ExtResource("18_51kic")
 autoplay = true
 bus = &"music"
 
+[connection signal="animation_finished" from="Title/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="focus_entered" from="Control/BeginButton" to="." method="_on_begin_button_focus_entered"]
 [connection signal="pressed" from="Control/BeginButton" to="." method="_on_begin_button_pressed"]
 [connection signal="focus_entered" from="Control/HelpButton" to="." method="_on_help_button_focus_entered"]
@@ -548,6 +774,7 @@ bus = &"music"
 [connection signal="pressed" from="Control/QuitButton" to="." method="_on_quit_button_pressed"]
 [connection signal="value_changed" from="Control/SettingsRect/MusicSlider" to="." method="_on_music_slider_value_changed"]
 [connection signal="value_changed" from="Control/SettingsRect/FXSlider" to="." method="_on_fx_slider_value_changed"]
+[connection signal="value_changed" from="Control/SettingsRect/HorizontalLookSlider" to="." method="_on_horizontal_look_slider_value_changed"]
 [connection signal="toggled" from="Control/SettingsRect/InvertCheck" to="." method="_on_invert_check_toggled"]
 [connection signal="toggled" from="Control/SettingsRect/QualityCheck" to="." method="_on_quality_check_toggled"]
 [connection signal="focus_entered" from="Control/SettingsRect/DoneButton" to="." method="_on_begin_button_focus_entered"]
@@ -555,3 +782,7 @@ bus = &"music"
 [connection signal="pressed" from="Control/HelpRect/HelpDoneButton" to="." method="_on_help_done_button_pressed"]
 [connection signal="pressed" from="Control/HelpRect/HelpBackButton" to="." method="_on_help_back_button_pressed"]
 [connection signal="pressed" from="Control/HelpRect/HelpNextButton" to="." method="_on_help_next_button_pressed"]
+[connection signal="value_changed" from="Control/GridSizeRect/RowsSlider" to="." method="_on_rows_slider_value_changed"]
+[connection signal="value_changed" from="Control/GridSizeRect/ColsSlider" to="." method="_on_cols_slider_value_changed"]
+[connection signal="pressed" from="Control/GridSizeRect/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Control/GridSizeRect/Start" to="." method="_on_start_pressed"]

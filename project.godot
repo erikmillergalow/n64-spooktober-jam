@@ -10,13 +10,16 @@ config_version=5
 
 [application]
 
-config/name="n64-spooktober-jam"
+config/name="super_monster_smash_64"
 config/description="Demo project featuring a collection of N64 style shaders and materials for Godot engine.
 (MIT License)
 https://github.com/MenacingMecha/godot-n64-shader-demo/"
 run/main_scene="res://main.tscn"
 config/features=PackedStringArray("4.0")
 run/max_fps=24
+boot_splash/image="res://content/splash.png"
+config/icon="res://content/n64-cover.png"
+config/windows_native_icon="res://content/icon.ico"
 
 [autoload]
 

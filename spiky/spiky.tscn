@@ -196,6 +196,7 @@ shape = SubResource("CylinderShape3D_khw2v")
 
 [node name="Zap" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_l2n3y")
+bus = &"fx"
 
 [connection signal="timeout" from="FlameCooldown" to="." method="_on_flame_cooldown_timeout"]
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

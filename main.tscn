@@ -196,7 +196,7 @@ offset_top = -88.0
 offset_right = 270.0
 offset_bottom = -36.0
 text = "Cast 2 spells at once.
-Cost: 4000 EXP"
+Cost: 8000 EXP"
 
 [node name="BlasterLabel2" type="Label" parent="N64Layer/Control/DoubleBlaster"]
 layout_mode = 0
@@ -295,7 +295,7 @@ offset_top = -85.0
 offset_right = 264.0
 offset_bottom = -33.0
 text = "Run faster.
-Cost: 2000 EXP"
+Cost: 1000 EXP"
 
 [node name="RunSpeedLabel2" type="Label" parent="N64Layer/Control/RunSpeed"]
 layout_mode = 0
@@ -328,7 +328,7 @@ offset_top = -89.0
 offset_right = 276.0
 offset_bottom = -37.0
 text = "Recharge health.
-Cost: 2000 EXP"
+Cost: 1000 EXP"
 
 [node name="HealthUpgradeLabel2" type="Label" parent="N64Layer/Control/HealthUpgrade"]
 layout_mode = 0

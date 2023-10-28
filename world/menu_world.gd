@@ -10,10 +10,12 @@ var helpIndex = 0
 	$Control/HelpRect/Upgrades,
 	$Control/HelpRect/Monsters,
 	$Control/HelpRect/Premise,
+	$Control/HelpRect/Mechanics
 ]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	$Title/AnimationPlayer.play('zoom')
 	$Control/BeginButton.grab_focus()
 	randomize()
 	pass # Replace with function body.
@@ -25,6 +27,21 @@ func _process(delta):
 
 
 func _on_begin_button_pressed():
+	$Control/GridSizeRect/RowsSlider.value = global.room_rows
+	$Control/GridSizeRect/ColsSlider.value = global.room_cols
+	$Control/GridSizeRect.visible = true
+	$Control/GridSizeRect/RowsSlider.grab_focus()
+
+# game config menu
+func _on_rows_slider_value_changed(value):
+	global.room_rows = value
+
+
+func _on_cols_slider_value_changed(value):
+	global.room_cols = value
+
+
+func _on_start_pressed():
 	$MenuMusic.stop()
 	
 	global.initialize()
@@ -32,6 +49,11 @@ func _on_begin_button_pressed():
 	var overworld = overworld_scene.instantiate()
 	get_parent().add_child(overworld)
 	self.queue_free()
+
+
+func _on_back_pressed():
+	$Control/BeginButton.grab_focus()
+	$Control/GridSizeRect.visible = false
 
 
 func _on_done_button_pressed():
@@ -110,3 +132,12 @@ func _on_help_next_button_pressed():
 	if helpIndex > helpLabels.size() - 1:
 		helpIndex = 0
 	helpLabels[helpIndex].visible = true
+
+
+func _on_animation_player_animation_finished(anim_name):
+	print('done zooming')
+	$Title/AnimationPlayer.play('wiggle')
+
+
+func _on_horizontal_look_slider_value_changed(value):
+	global.horizontal_cam_speed = value

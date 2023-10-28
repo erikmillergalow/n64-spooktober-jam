@@ -28,7 +28,7 @@ func _ready():
 	create_grid()
 
 
-func spawn_room(is_last, closed_gates):
+func spawn_room(is_last, closed_gates, row):
 	var room = room_scene.instantiate()
 	room.global_transform.origin = global_transform.origin
 	
@@ -38,29 +38,32 @@ func spawn_room(is_last, closed_gates):
 	
 	owner.add_child.call_deferred(room)
 	
-	if not key_chest_spawned:
-		if randf() < 0.1 or is_last:
-			spawn_chest()
+	if not key_chest_spawned and is_last:
+		spawn_chest(row)
+	elif not key_chest_spawned:
+		if randf() < 0.2:
+			spawn_chest(row)
 
 
-func spawn_chest():
-	var key_chest = key_chest_scene.instantiate()
-	var placement
-	var corner_prob = randf()
-	if corner_prob < 0.25:
-		placement = Vector3(randi()%8 + 2, 0, randi()%8 + 2)
-	elif corner_prob < 0.5:
-		placement = Vector3(randi()%8 + 2, 0, randi()%8 + 2)
-	elif corner_prob < 0.75:
-		placement = Vector3(randi()%8 + 2, 0, randi()%8 + 2)
-	else:
-		placement = Vector3(randi()%8 + 2, 0, randi()%8 + 2)
-		
-	key_chest.global_transform.origin = global_transform.origin + placement
-	owner.add_child.call_deferred(key_chest)
-	key_chest_spawned = true
-	print('key_chest spawned')
-	print(key_chest.global_transform.origin)
+func spawn_chest(row):
+	if (row == 2):
+		var key_chest = key_chest_scene.instantiate()
+		var placement
+		var corner_prob = randf()
+		if corner_prob < 0.25:
+			placement = Vector3(randi()%8 + 2, 0, randi()%8 + 2)
+		elif corner_prob < 0.5:
+			placement = Vector3(randi()%8 + 2, 0, randi()%8 + 2)
+		elif corner_prob < 0.75:
+			placement = Vector3(randi()%8 + 2, 0, randi()%8 + 2)
+		else:
+			placement = Vector3(randi()%8 + 2, 0, randi()%8 + 2)
+			
+		key_chest.global_transform.origin = global_transform.origin + placement
+		owner.add_child.call_deferred(key_chest)
+		key_chest_spawned = true
+		print('key_chest spawned')
+		print(key_chest.global_transform.origin)
 
 
 func spawn_monsters(scene, amount, intensity):
@@ -68,6 +71,8 @@ func spawn_monsters(scene, amount, intensity):
 		var monster = scene.instantiate()
 		var placement = Vector3(randi()%80 + 10, 0, randi()%80 + 10)
 		monster.global_transform.origin = global_transform.origin + placement
+		monster.set_intensity(intensity)
+		
 		owner.add_child.call_deferred(monster)
 
 
@@ -92,6 +97,8 @@ func spawn_boss_room(placement, rotation):
 func create_grid():
 	var is_last = false
 	var boss_room_chance = 0.0
+	room_rows = global.room_rows
+	room_cols = global.room_cols
 	for row in range(0, room_rows):
 		for col in range(0, room_cols):
 			if row == room_rows - 1 and col == room_cols - 1:
@@ -110,89 +117,98 @@ func create_grid():
 					# first corner on the left
 					if boss_room_chance > 0.9 and not boss_room_spawned:
 						if boss_room_chance < 0.5:
-							spawn_room(is_last, ['south'])
+							spawn_room(is_last, ['south'], row)
 							spawn_boss_room(Vector3(150.0, 0.0, 50.0), 90.0)
 						else:
-							spawn_room(is_last, ['west'])
+							spawn_room(is_last, ['west'], row)
 							spawn_boss_room(Vector3(50.0, 0.0, -50.0), 180.0)
 					else:
-						spawn_room(is_last, ['south', 'west'])
+						spawn_room(is_last, ['south', 'west'], row)
 				
 				elif col == room_cols - 1:
 					# first corner on the right
 					if boss_room_chance > 0.8 and not boss_room_spawned:
 						if boss_room_chance < 0.5:
-							spawn_room(is_last, ['east'])
+							spawn_room(is_last, ['east'], row)
 							spawn_boss_room(Vector3(50.0, 0.0, -50.0), 180.0)
 						else:
-							spawn_room(is_last, ['south'])
+							spawn_room(is_last, ['south'], row)
 							spawn_boss_room(Vector3(-50.0, 0.0, 50.0), 270.0)
 					else:
-						spawn_room(is_last, ['south', 'east'])
+						spawn_room(is_last, ['south', 'east'], row)
 				else:
-					spawn_room(is_last, [])
+					spawn_room(is_last, [], row)
 
 			elif row != room_rows - 1:
 				if col == 0:
 #					# west end
 					if boss_room_chance > 0.7 and not boss_room_spawned:
-						spawn_room(is_last, [])
+						spawn_room(is_last, [], row)
 						spawn_boss_room(Vector3(150.0, 0.0, 50.0), 90.0)
 					else:
-						spawn_room(is_last, ['west'])
+						spawn_room(is_last, ['west'], row)
 				elif col == room_cols - 1:
 #					# east end
 					if boss_room_chance > 0.7 and not boss_room_spawned:
-						spawn_room(is_last, [])
+						spawn_room(is_last, [], row)
 						spawn_boss_room(Vector3(-50.0, 0.0, 50.0), 270.0)
 					else:
-						spawn_room(is_last, ['east'])
+						spawn_room(is_last, ['east'], row)
 				else:
-					spawn_room(is_last, [])
+					spawn_room(is_last, [], row)
 			elif row == room_rows - 1:
 				if col == 0:
 					# far corner on the left
 					if boss_room_chance > 0.4 and not boss_room_spawned:
 						if boss_room_chance < 0.5:
-							spawn_room(is_last, ['north'])
+							spawn_room(is_last, ['north'], row)
 							spawn_boss_room(Vector3(150.0, 0.0, 50.0), 90.0)
 						else:
-							spawn_room(is_last, ['west'])
+							spawn_room(is_last, ['west'], row)
 							spawn_boss_room(Vector3(50.0, 0.0, 150.0), 0.0)
 					else:
-						spawn_room(is_last, ['north', 'west'])
+						spawn_room(is_last, ['north', 'west'], row)
 				elif col == room_cols - 1:
 					# far corner on the right
 					if not boss_room_spawned:
 						if boss_room_chance < 0.5:
-							spawn_room(is_last, ['north'])
+							spawn_room(is_last, ['north'], row)
 							spawn_boss_room(Vector3(-50.0, 0.0, 50.0), 270.0)
 						else:
-							spawn_room(is_last, ['east'])
+							spawn_room(is_last, ['east'], row)
 							spawn_boss_room(Vector3(50.0, 0.0, 150.0), 0.0)
 					else:
-						spawn_room(is_last, ['north', 'east'])
+						spawn_room(is_last, ['north', 'east'], row)
 				else:
 #					# middle end
 					if boss_room_chance > 0.80 and not boss_room_spawned:
-						spawn_room(is_last, [])
+						spawn_room(is_last, [], row)
 						spawn_boss_room(Vector3(50.0, 0.0, 150.0), 0.0)
-					spawn_room(is_last, ['north'])
+					spawn_room(is_last, ['north'], row)
 			
 			if row == 0:
-				spawn_monsters(ghost_scene, randi() % 5 + 2, 0)
-				spawn_monsters(spiky_scene, randi() % 2, 0)
+				if col == 1:
+					spawn_monsters(ghost_scene, randi() % 5 + 3, 0)
+				else:
+					spawn_monsters(ghost_scene, randi() % 5 + 5, 0)
+					spawn_monsters(spiky_scene, randi() % 2, 0)
 				spawn_objects(tree_scene, randi() % 8)
 				spawn_objects(house_scene, randi() % 5)
 				spawn_objects(crate_scene, randi() % 9)
 			if row == 1:
 				spawn_monsters(ghost_scene, randi() % 10 + 6, 1)
-				spawn_monsters(spiky_scene, randi() % 6 + 3, 1)
+				spawn_monsters(spiky_scene, randi() % 6 + 3, (randi() % 2) + 2)
 				spawn_objects(tree_scene, randi() % 8 + 4)
 				spawn_objects(house_scene, randi() % 4 + 3)
 			if row == 2:
-				spawn_monsters(ghost_scene, randi() % 15 + 15, 2)
-				spawn_monsters(spiky_scene, randi() % 3 + 15, 2)
+				spawn_monsters(ghost_scene, randi() % 15 + 15, (randi() % 2) + 2)
+				spawn_monsters(spiky_scene, randi() % 3 + 15, (randi() % 2) + 2)
+				spawn_objects(tree_scene, randi() % 4 + 4)
+				spawn_objects(tower_scene, randi() % 4 + 4)
+				spawn_objects(tower_scene, randi() % 2 + 1)
+			if row > 2:
+				spawn_monsters(ghost_scene, randi() % 15 + 15, (randi() % 2) + 2)
+				spawn_monsters(spiky_scene, randi() % 3 + 15, (randi() % 2) + 2)
 				spawn_objects(tree_scene, randi() % 4 + 4)
 				spawn_objects(tower_scene, randi() % 4 + 4)
 				spawn_objects(tower_scene, randi() % 2 + 1)

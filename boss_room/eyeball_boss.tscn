@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://caikkgve1wa4k"]
+[gd_scene load_steps=27 format=3 uid="uid://caikkgve1wa4k"]
 
 [ext_resource type="Texture2D" uid="uid://ddqdw6kk1hla0" path="res://boss_room/eyeball-boss.png" id="1_0nds7"]
 [ext_resource type="Script" path="res://boss_room/eyeball_boss.gd" id="1_hne23"]
 [ext_resource type="Texture2D" uid="uid://uawedj5es3wc" path="res://boss_room/boss-arm.png" id="3_g4dje"]
 [ext_resource type="Texture2D" uid="uid://c33ryrrujuws4" path="res://projectile/magic-ball-scatter.png" id="4_lb66a"]
+[ext_resource type="Texture2D" uid="uid://6f1n8pqxbriv" path="res://projectile/magic-ball-scatter-sheet.png" id="5_c5ghe"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_x0ppe"]
 size = Vector3(9.3, 9.3, 9.3)
@@ -60,6 +61,91 @@ billboard_mode = 1
 [sub_resource type="PlaneMesh" id="PlaneMesh_2q22b"]
 material = SubResource("StandardMaterial3D_8f5e6")
 orientation = 2
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oess2"]
+atlas = ExtResource("5_c5ghe")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_86gv6"]
+atlas = ExtResource("5_c5ghe")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lxjf5"]
+atlas = ExtResource("5_c5ghe")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0rixs"]
+atlas = ExtResource("5_c5ghe")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_488ov"]
+atlas = ExtResource("5_c5ghe")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2u75y"]
+atlas = ExtResource("5_c5ghe")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2mvpr"]
+atlas = ExtResource("5_c5ghe")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pbupb"]
+atlas = ExtResource("5_c5ghe")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rxidi"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oess2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_86gv6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lxjf5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0rixs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_488ov")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2u75y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2mvpr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pbupb")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_dc8rx"]
+resource_name = "grow"
+length = 10.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DestructionBlast:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1, 10),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(500, 500, 500)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1818o"]
+_data = {
+"grow": SubResource("Animation_dc8rx")
+}
 
 [node name="EyeballBoss" type="CharacterBody3D" groups=["monsters"]]
 collision_layer = 5
@@ -138,6 +224,17 @@ initial_velocity_max = 8.0
 angular_velocity_min = -38.57
 angular_velocity_max = 51.43
 angle_max = 102.9
+
+[node name="DestructionBlast" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(394.152, 0, 0, 0, 394.152, 0, 0, 0, 394.152, 0, 0, 0)
+visible = false
+billboard = 1
+sprite_frames = SubResource("SpriteFrames_rxidi")
+
+[node name="GrowDestruction" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_1818o")
+}
 
 [connection signal="body_entered" from="Arm/ArmArea3D" to="." method="_on_arm_area_3d_body_entered"]
 [connection signal="body_entered" from="Arm2/Arm2Area3D" to="." method="_on_arm_2_area_3d_body_entered"]

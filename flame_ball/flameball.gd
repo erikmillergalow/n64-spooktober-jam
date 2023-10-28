@@ -62,6 +62,7 @@ func _on_area_entered(area):
 	if area.is_in_group('player_shield'):
 		print('shield hit')
 		if global.shield_reflect:
+			
 			set_collision_layer_value(1, 0)
 			set_collision_mask_value(1, 0)
 			reflected = true

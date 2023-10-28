@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://ygtu3kij8g"]
+[gd_scene load_steps=13 format=3 uid="uid://ygtu3kij8g"]
 
 [ext_resource type="Texture2D" uid="uid://dc4xt72wr0q54" path="res://room/grass.png" id="1_aies4"]
 [ext_resource type="Script" path="res://boss_room/boss_room.gd" id="1_ltqil"]
 [ext_resource type="PackedScene" uid="uid://bg3e318qf7atc" path="res://room/room_wall.tscn" id="2_hpceo"]
 [ext_resource type="Texture2D" uid="uid://ckgnwyo283k26" path="res://boss_room/door.png" id="3_sxvfo"]
 [ext_resource type="PackedScene" uid="uid://caikkgve1wa4k" path="res://boss_room/eyeball_boss.tscn" id="5_7xfrx"]
+[ext_resource type="AudioStream" uid="uid://mh633kwe4hrv" path="res://sounds/fx/open-door-002.ogg" id="6_w2x3l"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m4r1g"]
 albedo_color = Color(0.439216, 0.439216, 0.439216, 1)
@@ -25,7 +26,7 @@ material = SubResource("StandardMaterial3D_s8jew")
 size = Vector3(10, 10, 2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pu35s"]
-size = Vector3(20, 10, 10)
+size = Vector3(13, 10, 3)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ug7bm"]
 size = Vector3(10, 10, 2)
@@ -56,7 +57,7 @@ mesh = SubResource("BoxMesh_ajyl4")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.76889)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Entrance/PlayerSensor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.05967)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.51767)
 shape = SubResource("BoxShape3D_pu35s")
 
 [node name="PlayerEnteredSensor" type="Area3D" parent="Entrance"]
@@ -74,6 +75,10 @@ shape = SubResource("BoxShape3D_ug7bm")
 
 [node name="EyeballBoss" parent="." instance=ExtResource("5_7xfrx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.743, 34.987)
+
+[node name="OpenDoor" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_w2x3l")
+bus = &"fx"
 
 [connection signal="body_entered" from="Entrance/PlayerSensor" to="." method="_on_player_sensor_body_entered"]
 [connection signal="body_exited" from="Entrance/PlayerSensor" to="." method="_on_player_sensor_body_exited"]

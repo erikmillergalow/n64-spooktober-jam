@@ -3,7 +3,6 @@ extends CharacterBody3D
 const SPEED = 17
 const GROUND_LERP = .1
 
-var horizontal_cam_speed = 2
 var dead = false
 
 @onready var global = get_node('/root/global')
@@ -42,8 +41,17 @@ func _process(delta):
 	if Input.is_action_just_pressed('zoom'):
 		if spring_arm.spring_length == 12:
 			spring_arm.spring_length = 7#lerp(spring_arm.spring_length, 7.0, 0.4)
+		elif spring_arm.spring_length == 7:
+			spring_arm.spring_length = 16
+		elif spring_arm.spring_length == 16:
+			spring_arm.spring_length = 12
 		else:
 			spring_arm.spring_length = 12#lerp(spring_arm.spring_length, 12.0, 0.4)
+
+func sync_spell_speed():
+	if global.increase_spell_speed:
+		$MagicCooldown.wait_time -= 0.05
+		global.increase_spell_speed = false
 
 
 func show_door_text():
@@ -69,19 +77,30 @@ func play_boss_music():
 		$Music.stop()
 		$BossMusic.play()
 
+func play_win_music():
+	if not $WinMusic.playing:
+		$Music.stop()
+		$WinMusic.play()
+
+func stop_music():
+	$Music.stop()
+
 
 func add_exp(amount):
-	global.player_exp += amount * 10
-	exp_label.text = "%s EXP" % global.player_exp
+	global.player_exp += amount * 3
 
 
 func take_damage(amount):
 	if not hit_animation.is_playing():
-		$Oof.play()
+		if not dead:
+			$Oof.play()
 		global.player_health -= amount
 		health_bar.value -= amount
 		hit_animation.play("hit_flicker")
 		if global.player_health <= 0.0:
+			$Music.stop()
+			if not $PerishedSong.is_playing():
+				$PerishedSong.play()
 			dead = true
 
 
@@ -108,6 +127,10 @@ func get_cam_input_direction():
 func _physics_process(delta):
 	
 	if not dead:
+		sync_spell_speed()
+		
+		exp_label.text = "%s EXP" % global.player_exp
+		
 		if Input.is_action_just_pressed("start"):
 			global.paused = true
 			get_tree().paused = true
@@ -140,7 +163,8 @@ func _physics_process(delta):
 			velocity.x = lerp(velocity.x, -direction.x * (SPEED + global.run_speed_modifier * 3), GROUND_LERP)
 			velocity.z = lerp(velocity.z, -direction.z * (SPEED + global.run_speed_modifier * 3), GROUND_LERP)
 			
-			shield_pivot.rotation.y = atan2(velocity.x, velocity.z)
+			if not Input.is_action_pressed('strafe'):
+				shield_pivot.rotation.y = atan2(velocity.x, velocity.z)
 			
 			if not Input.is_action_pressed('strafe'):
 				$player_spooky.rotation.y = lerp_angle($player_spooky.rotation.y, atan2(velocity.x, velocity.z), 1)
@@ -150,17 +174,25 @@ func _physics_process(delta):
 		
 		# handle camera movement
 		if cam_direction and (not Input.is_action_pressed('shield')):
-			h.rotation_degrees.y -= cam_direction.x * horizontal_cam_speed
+			h.rotation_degrees.y -= cam_direction.x * global.horizontal_cam_speed
 			if global.invert:
-				v.rotation_degrees.x -= cam_direction.z * horizontal_cam_speed
+				v.rotation_degrees.x -= cam_direction.z * global.horizontal_cam_speed
 			else:
-				v.rotation_degrees.x += cam_direction.z * horizontal_cam_speed
+				v.rotation_degrees.x += cam_direction.z * global.horizontal_cam_speed
 			v.rotation_degrees.x = clamp(v.rotation_degrees.x, -15.0, 180.0)
 		
 		# handle shield movement
 		if cam_direction != Vector3(0, 1, 0) and Input.is_action_pressed('shield'):
-			var converted = Vector3(cam_direction.x, 1, cam_direction.z).rotated(Vector3.UP, h.rotation.y)
-			shield_pivot.rotation.y = atan2(-converted.x, -converted.z) 
+			if Input.is_action_pressed('strafe'):
+				shield_pivot.rotation.y = $player_spooky.rotation.y
+				var converted = Vector3(cam_direction.x, 1, cam_direction.z).rotated(Vector3.UP, h.rotation.y)
+				shield_pivot.rotation.y += atan2(-converted.x, -converted.z)
+			else:
+				var converted = Vector3(cam_direction.x, 1, cam_direction.z).rotated(Vector3.UP, h.rotation.y)
+				shield_pivot.rotation.y = atan2(-converted.x, -converted.z) 
+		elif cam_direction == Vector3(0, 1, 0) and Input.is_action_pressed('shield'):
+			if Input.is_action_pressed('strafe'):			
+				shield_pivot.rotation.y = $player_spooky.rotation.y
 		
 		# handle magic attack
 		if (Input.is_action_pressed('magic') and not Input.is_action_pressed('shield')) and magic_cooldown.is_stopped():
@@ -211,3 +243,17 @@ func _physics_process(delta):
 		if Input.is_action_just_pressed("start"):
 			get_tree().change_scene_to_file('res://main.tscn')
 		
+
+
+func _on_boss_music_finished():
+	if not global.win and not dead:
+		$BossMusic.play()
+
+
+func _on_music_finished():
+	if not dead and not $BossMusic.is_playing():
+		$Music.play()
+
+
+func _on_win_music_finished():
+	$WinMusic.play()

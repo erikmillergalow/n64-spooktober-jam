@@ -5,11 +5,12 @@ var speed = 10.0
 var angry = false
 var dead = false
 
-var health = 100
+var health = 100.0
+var max_health = 100.0
 var color = Color().from_hsv(0.0, 0.0, 0.68, 1.0)
 var knockback = Vector3(0, 0, 0)
 
-var damage_modifier = 1
+var damage_modifier = 1.0
 
 var detected_player
 
@@ -49,7 +50,77 @@ func set_orbs(amount):
 
 func set_health(amount):
 	health = amount
+	max_health = amount
 
+
+func set_intensity(level):
+	if level == 0:
+		set_orbs(20)
+		set_health(100.0)
+		var chance = randf()
+		if chance < 0.33:
+			set_damage_modifier(1.0)
+		elif chance < 0.66:
+			set_damage_modifier(2.0)
+		else:
+			set_damage_modifier(3.0)
+			
+		var speed_chance = randf()
+		if speed_chance < 0.5:
+			set_speed(10.0)
+		else:
+			set_speed(15.0)
+			
+	if level == 1:
+		set_orbs(20)
+		set_health(150.0)
+		var chance = randf()
+		if chance < 0.33:
+			set_damage_modifier(1.0)
+		elif chance < 0.66:
+			set_damage_modifier(2.0)
+		else:
+			set_damage_modifier(3.0)
+			
+		var speed_chance = randf()
+		if speed_chance < 0.5:
+			set_speed(10.0)
+		else:
+			set_speed(15.0)
+			
+	if level == 2:
+		set_orbs(50)
+		set_health(2500.0)
+		var chance = randf()
+		if chance < 0.33:
+			set_damage_modifier(1.0)
+		elif chance < 0.95:
+			set_damage_modifier(2.0)
+		else:
+			set_damage_modifier(3.0)
+			
+		var speed_chance = randf()
+		if speed_chance < 0.5:
+			set_speed(9.0)
+		else:
+			set_speed(14.0)
+
+	if level == 3:
+		set_orbs(70)
+		set_health(500.0)
+		var chance = randf()
+		if chance < 0.22:
+			set_damage_modifier(1.0)
+		elif chance < 0.80:
+			set_damage_modifier(2.0)
+		else:
+			set_damage_modifier(3.0)
+			
+		var speed_chance = randf()
+		if speed_chance < 0.8:
+			set_speed(8.0)
+		else:
+			set_speed(16.0)
 
 func set_detected_player(body):
 	pass
@@ -91,7 +162,7 @@ func _physics_process(delta):
 				angry = true
 			
 			var player = collision.get_collider()
-			player.add_knockback(-global_transform.basis.z * (damage_modifier) * 5)
+			player.add_knockback(-global_transform.basis.z * (damage_modifier) * 2)
 			player.take_damage(10 + (5 * damage_modifier))
 			$Dance.play('dance')
 			
@@ -118,19 +189,22 @@ func take_damage(amount):
 	health -= amount 
 	
 	var current_sat = $Cube.get_surface_override_material(0).albedo_color.s
-	var new_color = Color().from_hsv(0.0, current_sat + 0.1, 0.68, 1.0)
+	var new_color = Color().from_hsv(0.0, 1.0 - health / max_health, 0.60, 1.0)
 	$Cube.get_surface_override_material(0).albedo_color = new_color
 	
 	if health <= 0:
+		if not dead:
+			for i in range(0, orbs):
+				var orb = orb_scene.instantiate()
+				orb.global_transform.origin = global_transform.origin + Vector3(randf() * 3, 1, randf() * 3)
+				get_parent().add_child(orb)
+		
 		dead = true
 		velocity = Vector3(0, 0, 0)
 		set_collision_layer_value(1, false)
 		set_collision_mask_value(1, false)
-		
-		for i in range(0, orbs):
-			var orb = orb_scene.instantiate()
-			orb.global_transform.origin = global_transform.origin + Vector3(randf() * 3, 1, randf() * 3)
-			get_parent().add_child(orb)
+		set_collision_layer_value(3, false)
+		set_collision_mask_value(3, false)
 
 
 func _on_flame_cooldown_timeout():

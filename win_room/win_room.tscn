@@ -1,5 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://njb36gsi3tuu"]
+[gd_scene load_steps=9 format=3 uid="uid://njb36gsi3tuu"]
 
+[ext_resource type="Script" path="res://win_room/win_room.gd" id="1_n7527"]
 [ext_resource type="Texture2D" uid="uid://bgcnbej3gix2p" path="res://win_room/IMG_9681.jpg" id="1_qdfjs"]
 [ext_resource type="PackedScene" uid="uid://d1w51ia4nwluc" path="res://player/player.tscn" id="2_4d8fk"]
 
@@ -24,6 +25,7 @@ sky = SubResource("Sky_q1ng0")
 sky_rotation = Vector3(4.65479, -1.78547, 3.47146)
 
 [node name="WinRoom" type="Node3D"]
+script = ExtResource("1_n7527")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("PlaneMesh_5fl4j")

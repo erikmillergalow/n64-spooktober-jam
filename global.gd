@@ -1,14 +1,19 @@
 extends Node
 
 # player values
-var player_health = 100
-var player_exp = 100000.0
+var player_health = 100.0
+var player_exp = 0.0
 var double_blaster = false
 var shield_reflect = false
-var spell_speed_modifier = 1
-var spell_power_modifier = 1
-var run_speed_modifier = 1
+var spell_speed_modifier = 1.0
+var spell_power_modifier = 1.0
+var run_speed_modifier = 1.0
 var has_key = false
+var increase_spell_speed = false
+var room_rows = 3
+var room_cols = 3
+
+var horizontal_cam_speed = 2.0
 
 # game states
 var paused = false
@@ -22,12 +27,14 @@ var music_volume = 100
 var fx_volume = 100
 
 func initialize():
-	global.player_health = 100
+	global.increase_spell_speed = false
+	global.player_health = 100.0
 	global.player_exp = 0
 	global.double_blaster = false
 	global.shield_reflect = false
-	global.spell_speed_modifier = 1
-	global.spell_power_modifier = 1
-	global.run_speed_modifier = 1
+	global.spell_speed_modifier = 1.0
+	global.spell_power_modifier = 1.0
+	global.run_speed_modifier = 1.0
 	global.has_key = false
 	global.done = false
+	global.win = false

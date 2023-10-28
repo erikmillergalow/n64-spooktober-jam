@@ -14,12 +14,16 @@ func _process(delta):
 	if global.has_key:
 		$Entrance/StaticBody3D.set_collision_layer_value(1, false)
 		$Entrance/StaticBody3D.set_collision_mask_value(1, false)
-		$Entrance.visible = false
 
 
 func _on_player_sensor_body_entered(body):
 	if body.is_in_group('player'):
 		body.show_door_text()
+		
+		if global.has_key and $Entrance.visible:
+			$OpenDoor.play()
+			$Entrance.visible = false
+			body.stop_music()
 
 
 func _on_player_sensor_body_exited(body):
@@ -27,6 +31,7 @@ func _on_player_sensor_body_exited(body):
 		body.hide_door_text()
 
 
-func _on_player_entered_sensor_body_entered(body):
-	if body.is_in_group('player'):
-		body.play_boss_music()
+#func _on_player_entered_sensor_body_entered(body):
+#	if body.is_in_group('player'):
+		
+#		body.play_boss_music()

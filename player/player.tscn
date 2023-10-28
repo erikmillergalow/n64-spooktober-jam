@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://d1w51ia4nwluc"]
+[gd_scene load_steps=31 format=3 uid="uid://d1w51ia4nwluc"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_lx0as"]
 [ext_resource type="FontFile" uid="uid://clvfdpwuiqgui" path="res://fonts/RoSpritendoSemiboldBeta-vmVwZ.otf" id="2_cibyo"]
@@ -10,6 +10,8 @@
 [ext_resource type="AudioStream" uid="uid://dn4c2solurshy" path="res://sounds/music/boss-theme-002.ogg" id="8_v6lxc"]
 [ext_resource type="AudioStream" uid="uid://d2pq6jvu5db4g" path="res://sounds/fx/oof-002.ogg" id="9_0kch7"]
 [ext_resource type="AudioStream" uid="uid://coup8w3myt0qn" path="res://sounds/fx/cast-002.ogg" id="10_sj83s"]
+[ext_resource type="AudioStream" uid="uid://th2wtqg4hbq1" path="res://sounds/music/perished-002.ogg" id="11_5wmgc"]
+[ext_resource type="AudioStream" uid="uid://beb5rdcxtboa0" path="res://sounds/music/win-002.ogg" id="12_478el"]
 
 [sub_resource type="Animation" id="Animation_sq4sq"]
 resource_name = "hit_flicker"
@@ -260,6 +262,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88097, 0)
 
 [node name="Shield" parent="ShieldPivot" instance=ExtResource("3_imjhw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.28998)
+visible = false
 
 [node name="EnergyShield" type="MeshInstance3D" parent="ShieldPivot"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0.969798)
@@ -296,4 +299,15 @@ bus = &"fx"
 stream = ExtResource("10_sj83s")
 bus = &"fx"
 
+[node name="PerishedSong" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_5wmgc")
+bus = &"music"
+
+[node name="WinMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_478el")
+bus = &"music"
+
 [connection signal="timeout" from="Control/KeyAlertTimer" to="." method="_on_key_alert_timer_timeout"]
+[connection signal="finished" from="Music" to="." method="_on_music_finished"]
+[connection signal="finished" from="BossMusic" to="." method="_on_boss_music_finished"]
+[connection signal="finished" from="WinMusic" to="." method="_on_win_music_finished"]
