@@ -531,7 +531,7 @@ theme_override_font_sizes/font_size = 7
 text = "The playing field is generated randomly
 each time you start anew. Each row of the grid 
 has different probabilities for how many of 
-each type of objects and enemys spawn.
+each type of objects and enemies spawn.
 
 Enemies have randomized attributes such as
 attack power, movement speed, and max
@@ -630,6 +630,7 @@ offset_left = 150.0
 offset_top = 49.0
 offset_right = 278.0
 offset_bottom = 65.0
+focus_neighbor_bottom = NodePath("../ColsSlider")
 theme_override_styles/grabber_area = ExtResource("3_bcovx")
 theme_override_styles/grabber_area_highlight = ExtResource("3_bcovx")
 min_value = 3.0
@@ -656,6 +657,8 @@ offset_left = 150.0
 offset_top = 82.0
 offset_right = 278.0
 offset_bottom = 98.0
+focus_neighbor_top = NodePath("../RowsSlider")
+focus_neighbor_bottom = NodePath("../Start")
 theme_override_styles/grabber_area = ExtResource("3_bcovx")
 theme_override_styles/grabber_area_highlight = ExtResource("3_bcovx")
 min_value = 3.0
@@ -672,6 +675,7 @@ scale = Vector2(0.884, 0.884)
 focus_neighbor_left = NodePath("../Start")
 focus_neighbor_top = NodePath("../ColsLabel")
 focus_neighbor_right = NodePath("../Start")
+focus_neighbor_bottom = NodePath("../RowsSlider")
 theme_override_fonts/font = ExtResource("2_m6y7h")
 theme_override_font_sizes/font_size = 10
 theme_override_styles/normal = ExtResource("3_bcovx")
@@ -687,6 +691,7 @@ scale = Vector2(0.884, 0.884)
 focus_neighbor_left = NodePath("../Back")
 focus_neighbor_top = NodePath("../ColsSlider")
 focus_neighbor_right = NodePath("../Back")
+focus_neighbor_bottom = NodePath("../RowsSlider")
 theme_override_fonts/font = ExtResource("2_m6y7h")
 theme_override_font_sizes/font_size = 10
 theme_override_styles/normal = ExtResource("3_bcovx")

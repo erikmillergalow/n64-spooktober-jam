@@ -154,7 +154,7 @@ func _physics_process(delta):
 		if Input.is_action_pressed("strafe"):
 #			if h.rotation_degrees.y != $player_spooky.rotation.y:
 #			h.rotation.y = lerp(h.rotation.y, $player_spooky.rotation.y, 0.25)
-			$player_spooky.rotation.y = lerp($player_spooky.rotation.y, h.rotation.y, 0.25)
+			$player_spooky.rotation.y = h.rotation.y #lerp($player_spooky.rotation.y, h.rotation.y, 0.25)
 		
 		# handle movement
 		if direction != Vector3(0, 1, 0):
@@ -184,14 +184,14 @@ func _physics_process(delta):
 		# handle shield movement
 		if cam_direction != Vector3(0, 1, 0) and Input.is_action_pressed('shield'):
 			if Input.is_action_pressed('strafe'):
-				shield_pivot.rotation.y = $player_spooky.rotation.y
+#				shield_pivot.rotation.y = $player_spooky.rotation.y
 				var converted = Vector3(cam_direction.x, 1, cam_direction.z).rotated(Vector3.UP, h.rotation.y)
-				shield_pivot.rotation.y += atan2(-converted.x, -converted.z)
+				shield_pivot.rotation.y = atan2(-converted.x, -converted.z)
 			else:
 				var converted = Vector3(cam_direction.x, 1, cam_direction.z).rotated(Vector3.UP, h.rotation.y)
 				shield_pivot.rotation.y = atan2(-converted.x, -converted.z) 
 		elif cam_direction == Vector3(0, 1, 0) and Input.is_action_pressed('shield'):
-			if Input.is_action_pressed('strafe'):			
+			if Input.is_action_pressed('strafe'):
 				shield_pivot.rotation.y = $player_spooky.rotation.y
 		
 		# handle magic attack
