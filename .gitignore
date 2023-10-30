@@ -14,5 +14,5 @@ export_presets.cfg
 data_*/
 mono_crash.*.json
 
-.windows_build/
-.linux_build
+windows_build/
+linux_build/
