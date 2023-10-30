@@ -170,6 +170,7 @@ func add_knockback(direction):
 
 func take_damage(amount):
 	if not angry:
+		$FlameCooldown.start()
 		angry = true
 	
 	health -= amount 

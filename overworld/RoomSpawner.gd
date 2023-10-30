@@ -184,7 +184,8 @@ func create_grid():
 					if boss_room_chance > 0.80 and not boss_room_spawned:
 						spawn_room(is_last, [], row)
 						spawn_boss_room(Vector3(50.0, 0.0, 150.0), 0.0)
-					spawn_room(is_last, ['north'], row)
+					else:
+						spawn_room(is_last, [], row)
 			
 			if row == 0:
 				if col == 1:

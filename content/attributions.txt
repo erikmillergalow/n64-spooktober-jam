@@ -1,0 +1,7 @@
+N64 Shaders and a few assets from https://github.com/MenacingMecha/godot-n64-shader-demo
+
+All other assets created by me.
+
+Music created by me.
+
+FX from freesound.org.
