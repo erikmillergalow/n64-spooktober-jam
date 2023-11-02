@@ -54,7 +54,6 @@ material = SubResource("ShaderMaterial_mhjag")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-mouse_filter = 2
 stretch = true
 stretch_shrink = 3
 
@@ -69,7 +68,6 @@ material = ExtResource("2")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-mouse_filter = 2
 stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="N64Layer/HBlur/SubViewport/DitherBand"]
@@ -127,10 +125,10 @@ color = Color(0.372549, 0.372549, 0.372549, 1)
 [node name="Resume" type="Button" parent="N64Layer/Control"]
 process_mode = 3
 layout_mode = 2
-offset_left = 80.0
-offset_top = 177.0
-offset_right = 194.0
-offset_bottom = 208.0
+offset_left = 50.0
+offset_top = 169.0
+offset_right = 164.0
+offset_bottom = 200.0
 focus_neighbor_left = NodePath("../DoubleBlaster")
 focus_neighbor_top = NodePath("../EndRun")
 focus_neighbor_right = NodePath("../ShieldUpgrade")
@@ -143,10 +141,10 @@ text = "Resume"
 [node name="ShieldUpgrade" type="Button" parent="N64Layer/Control"]
 process_mode = 3
 layout_mode = 2
-offset_left = 300.0
-offset_top = 175.0
-offset_right = 507.0
-offset_bottom = 206.0
+offset_left = 330.0
+offset_top = 170.0
+offset_right = 537.0
+offset_bottom = 201.0
 focus_neighbor_left = NodePath("../Resume")
 focus_neighbor_top = NodePath("../SpellStrength")
 focus_neighbor_right = NodePath("../DoubleBlaster")
@@ -158,28 +156,34 @@ text = "Shield Upgrade"
 
 [node name="ShieldLabel" type="Label" parent="N64Layer/Control/ShieldUpgrade"]
 layout_mode = 0
-offset_left = -6.0
-offset_top = -89.0
-offset_right = 265.0
-offset_bottom = -37.0
-text = "Reflect projectiles with your shield.
+offset_left = -8.0
+offset_top = -112.0
+offset_right = 263.0
+offset_bottom = -52.0
+theme_override_fonts/font = ExtResource("5_1ut6q")
+theme_override_font_sizes/font_size = 12
+text = "Reflect projectiles with 
+your shield.
+
 Cost: 2000 EXP"
 
 [node name="ShieldLabel2" type="Label" parent="N64Layer/Control/ShieldUpgrade"]
 layout_mode = 0
-offset_left = -6.0
-offset_top = -35.0
-offset_right = 265.0
-offset_bottom = 17.0
+offset_left = -8.0
+offset_top = -37.0
+offset_right = 263.0
+offset_bottom = 15.0
+theme_override_fonts/font = ExtResource("5_1ut6q")
+theme_override_font_sizes/font_size = 12
 text = "Reflective:"
 
 [node name="DoubleBlaster" type="Button" parent="N64Layer/Control"]
 process_mode = 3
 layout_mode = 2
-offset_left = 603.0
-offset_top = 173.0
-offset_right = 810.0
-offset_bottom = 204.0
+offset_left = 642.0
+offset_top = 169.0
+offset_right = 849.0
+offset_bottom = 200.0
 focus_neighbor_left = NodePath("../ShieldUpgrade")
 focus_neighbor_top = NodePath("../RunSpeed")
 focus_neighbor_right = NodePath("../Resume")
@@ -191,28 +195,33 @@ text = "Double Spells"
 
 [node name="BlasterLabel" type="Label" parent="N64Layer/Control/DoubleBlaster"]
 layout_mode = 0
-offset_left = -1.0
-offset_top = -88.0
-offset_right = 270.0
-offset_bottom = -36.0
+offset_left = -8.0
+offset_top = -110.0
+offset_right = 263.0
+offset_bottom = -58.0
+theme_override_fonts/font = ExtResource("5_1ut6q")
+theme_override_font_sizes/font_size = 12
 text = "Cast 2 spells at once.
+
 Cost: 8000 EXP"
 
 [node name="BlasterLabel2" type="Label" parent="N64Layer/Control/DoubleBlaster"]
 layout_mode = 0
-offset_left = 3.0
-offset_top = -34.0
-offset_right = 274.0
-offset_bottom = 18.0
+offset_left = -8.0
+offset_top = -36.0
+offset_right = 263.0
+offset_bottom = 16.0
+theme_override_fonts/font = ExtResource("5_1ut6q")
+theme_override_font_sizes/font_size = 12
 text = "Double spells:"
 
 [node name="SpellSpeed" type="Button" parent="N64Layer/Control"]
 process_mode = 3
 layout_mode = 2
-offset_left = 38.0
-offset_top = 336.0
-offset_right = 245.0
-offset_bottom = 367.0
+offset_left = 48.0
+offset_top = 338.0
+offset_right = 255.0
+offset_bottom = 369.0
 focus_neighbor_left = NodePath("../RunSpeed")
 focus_neighbor_top = NodePath("../Resume")
 focus_neighbor_right = NodePath("../SpellStrength")
@@ -224,27 +233,32 @@ text = "Spell Speed"
 
 [node name="SpellSpeedLabel" type="Label" parent="N64Layer/Control/SpellSpeed"]
 layout_mode = 0
-offset_left = -1.0
-offset_top = -89.0
-offset_right = 270.0
-offset_bottom = -37.0
+offset_left = -13.0
+offset_top = -104.0
+offset_right = 258.0
+offset_bottom = -52.0
+theme_override_fonts/font = ExtResource("5_1ut6q")
+theme_override_font_sizes/font_size = 12
 text = "Cast spells faster.
+
 Cost: 1000 EXP"
 
 [node name="SpellSpeedLabel2" type="Label" parent="N64Layer/Control/SpellSpeed"]
 layout_mode = 0
-offset_left = -1.0
-offset_top = -33.0
-offset_right = 270.0
-offset_bottom = 19.0
+offset_left = -13.0
+offset_top = -40.0
+offset_right = 199.0
+offset_bottom = -14.0
+theme_override_fonts/font = ExtResource("5_1ut6q")
+theme_override_font_sizes/font_size = 12
 text = "Level:"
 
 [node name="SpellStrength" type="Button" parent="N64Layer/Control"]
 process_mode = 3
 layout_mode = 2
-offset_left = 323.0
+offset_left = 325.0
 offset_top = 335.0
-offset_right = 530.0
+offset_right = 532.0
 offset_bottom = 366.0
 focus_neighbor_left = NodePath("../SpellSpeed")
 focus_neighbor_top = NodePath("../ShieldUpgrade")
@@ -257,28 +271,33 @@ text = "Spell Strength"
 
 [node name="SpellDamageLabel" type="Label" parent="N64Layer/Control/SpellStrength"]
 layout_mode = 0
-offset_left = -6.0
-offset_top = -87.0
-offset_right = 265.0
-offset_bottom = -35.0
+offset_left = -5.0
+offset_top = -101.0
+offset_right = 266.0
+offset_bottom = -49.0
+theme_override_fonts/font = ExtResource("5_1ut6q")
+theme_override_font_sizes/font_size = 12
 text = "Increase spell damage.
+
 Cost: 1000 EXP"
 
 [node name="SpellDamageLabel2" type="Label" parent="N64Layer/Control/SpellStrength"]
 layout_mode = 0
 offset_left = -5.0
-offset_top = -36.0
-offset_right = 266.0
-offset_bottom = 16.0
+offset_top = -37.0
+offset_right = 221.0
+offset_bottom = -13.0
+theme_override_fonts/font = ExtResource("5_1ut6q")
+theme_override_font_sizes/font_size = 12
 text = "Level:"
 
 [node name="RunSpeed" type="Button" parent="N64Layer/Control"]
 process_mode = 3
 layout_mode = 2
-offset_left = 617.0
-offset_top = 334.0
-offset_right = 824.0
-offset_bottom = 365.0
+offset_left = 642.0
+offset_top = 335.0
+offset_right = 849.0
+offset_bottom = 366.0
 focus_neighbor_left = NodePath("../SpellStrength")
 focus_neighbor_top = NodePath("../DoubleBlaster")
 focus_neighbor_right = NodePath("../SpellSpeed")
@@ -290,28 +309,33 @@ text = "Run Speed"
 
 [node name="RunSpeedLabel" type="Label" parent="N64Layer/Control/RunSpeed"]
 layout_mode = 0
-offset_left = -7.0
-offset_top = -85.0
-offset_right = 264.0
-offset_bottom = -33.0
+offset_left = -8.0
+offset_top = -101.0
+offset_right = 263.0
+offset_bottom = -49.0
+theme_override_fonts/font = ExtResource("5_1ut6q")
+theme_override_font_sizes/font_size = 12
 text = "Run faster.
+
 Cost: 1000 EXP"
 
 [node name="RunSpeedLabel2" type="Label" parent="N64Layer/Control/RunSpeed"]
 layout_mode = 0
 offset_left = -8.0
-offset_top = -34.0
+offset_top = -37.0
 offset_right = 263.0
-offset_bottom = 18.0
+offset_bottom = -16.0
+theme_override_fonts/font = ExtResource("5_1ut6q")
+theme_override_font_sizes/font_size = 12
 text = "Level:"
 
 [node name="HealthUpgrade" type="Button" parent="N64Layer/Control"]
 process_mode = 3
 layout_mode = 2
-offset_left = 33.0
-offset_top = 482.0
-offset_right = 240.0
-offset_bottom = 513.0
+offset_left = 35.0
+offset_top = 490.0
+offset_right = 242.0
+offset_bottom = 521.0
 focus_neighbor_left = NodePath("../EndRun")
 focus_neighbor_top = NodePath("../SpellSpeed")
 focus_neighbor_right = NodePath("../EndRun")
@@ -323,28 +347,33 @@ text = "More Health"
 
 [node name="HealthUpgradeLabel" type="Label" parent="N64Layer/Control/HealthUpgrade"]
 layout_mode = 0
-offset_left = 5.0
-offset_top = -89.0
-offset_right = 276.0
-offset_bottom = -37.0
-text = "Recharge health.
+offset_left = -5.0
+offset_top = -96.0
+offset_right = 266.0
+offset_bottom = -44.0
+theme_override_fonts/font = ExtResource("5_1ut6q")
+theme_override_font_sizes/font_size = 12
+text = "Regain full health.
+
 Cost: 1000 EXP"
 
 [node name="HealthUpgradeLabel2" type="Label" parent="N64Layer/Control/HealthUpgrade"]
 layout_mode = 0
-offset_left = 4.0
-offset_top = -34.0
-offset_right = 275.0
-offset_bottom = 18.0
+offset_left = -5.0
+offset_top = -33.0
+offset_right = 248.0
+offset_bottom = -7.0
+theme_override_fonts/font = ExtResource("5_1ut6q")
+theme_override_font_sizes/font_size = 12
 text = "Level:"
 
 [node name="EndRun" type="Button" parent="N64Layer/Control"]
 process_mode = 3
 layout_mode = 2
-offset_left = 320.0
-offset_top = 481.0
-offset_right = 527.0
-offset_bottom = 512.0
+offset_left = 318.0
+offset_top = 490.0
+offset_right = 525.0
+offset_bottom = 521.0
 focus_neighbor_left = NodePath("../HealthUpgrade")
 focus_neighbor_top = NodePath("../SpellStrength")
 focus_neighbor_right = NodePath("../HealthUpgrade")
@@ -356,26 +385,32 @@ text = "End Run"
 
 [node name="HealthLabel" type="Label" parent="N64Layer/Control"]
 layout_mode = 0
-offset_left = 611.0
-offset_top = 425.0
-offset_right = 699.0
-offset_bottom = 451.0
+offset_left = 558.0
+offset_top = 426.0
+offset_right = 667.0
+offset_bottom = 452.0
+theme_override_fonts/font = ExtResource("5_1ut6q")
+theme_override_font_sizes/font_size = 12
 text = "Health: 100"
 
 [node name="ExpLabel" type="Label" parent="N64Layer/Control"]
 layout_mode = 0
-offset_left = 612.0
-offset_top = 457.0
-offset_right = 658.0
-offset_bottom = 483.0
+offset_left = 558.0
+offset_top = 452.0
+offset_right = 615.0
+offset_bottom = 478.0
+theme_override_fonts/font = ExtResource("5_1ut6q")
+theme_override_font_sizes/font_size = 12
 text = "Exp: 0"
 
 [node name="KeyLabel" type="Label" parent="N64Layer/Control"]
 layout_mode = 0
-offset_left = 611.0
-offset_top = 488.0
-offset_right = 657.0
-offset_bottom = 514.0
+offset_left = 558.0
+offset_top = 478.0
+offset_right = 868.0
+offset_bottom = 530.0
+theme_override_fonts/font = ExtResource("5_1ut6q")
+theme_override_font_sizes/font_size = 12
 text = "Have you found the key chest?
 Not yet..."
 

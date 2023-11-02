@@ -74,7 +74,7 @@ func _physics_process(delta):
 func add_knockback(direction):
 	if not dead:
 		direction.y = 0
-		knockback = direction * 15.0
+		knockback = direction * 3.0
 
 
 func activate():

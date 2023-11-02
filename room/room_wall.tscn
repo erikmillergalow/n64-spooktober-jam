@@ -1,10 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://bg3e318qf7atc"]
+[gd_scene load_steps=17 format=3 uid="uid://bg3e318qf7atc"]
 
 [ext_resource type="Material" uid="uid://d2g0830lpvqbu" path="res://fence_material.tres" id="1_a1ikd"]
 [ext_resource type="Script" path="res://room/room_wall.gd" id="1_o5kyl"]
+[ext_resource type="Texture2D" uid="uid://crab1nrkaas4p" path="res://room/gate.png" id="3_mcrux"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_y2vdn"]
-size = Vector3(45, 2, 1)
+size = Vector3(45, 2, 0.8)
 
 [sub_resource type="BoxMesh" id="BoxMesh_atqy2"]
 material = ExtResource("1_a1ikd")
@@ -74,12 +75,16 @@ _data = {
 [sub_resource type="BoxShape3D" id="BoxShape3D_wppb1"]
 size = Vector3(100, 5, 100)
 
+[sub_resource type="BoxMesh" id="BoxMesh_wc50f"]
+size = Vector3(10, 10, 1)
+
 [node name="RoomWall" type="StaticBody3D" groups=["walls_objects"]]
-collision_layer = 5
+collision_layer = 16
+collision_mask = 0
 script = ExtResource("1_o5kyl")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.4757, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.476, 0, 0)
 shape = SubResource("BoxShape3D_y2vdn")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
@@ -91,7 +96,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5055, 0, 0)
 mesh = SubResource("BoxMesh_atqy2")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.476, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.476, 0, -0.2)
 shape = SubResource("BoxShape3D_y2vdn")
 
 [node name="FakeFloor" type="MeshInstance3D" parent="."]
@@ -100,8 +105,8 @@ mesh = SubResource("PlaneMesh_i6dsc")
 
 [node name="LaserGate" type="StaticBody3D" parent="." groups=["laser_wall"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0271989)
-collision_layer = 4
-collision_mask = 4
+collision_layer = 32
+collision_mask = 14
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LaserGate"]
 shape = SubResource("BoxShape3D_tnq24")
@@ -121,3 +126,14 @@ libraries = {
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LaserGate/BlockSensor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -52.4388)
 shape = SubResource("BoxShape3D_wppb1")
+
+[node name="Gate" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.94106, 0)
+visible = false
+mesh = SubResource("BoxMesh_wc50f")
+
+[node name="Gate2D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.94106, 0)
+visible = false
+pixel_size = 0.19
+texture = ExtResource("3_mcrux")

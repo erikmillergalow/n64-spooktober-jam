@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://vuuc5qm2dc5u"]
+
+[ext_resource type="Script" path="res://map/map.gd" id="1_22fhh"]
+[ext_resource type="Texture2D" uid="uid://d15k5ae7dao0y" path="res://map/map-tiles.png" id="1_cohsg"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_m2ex4"]
+texture = ExtResource("1_cohsg")
+texture_region_size = Vector2i(64, 64)
+use_texture_padding = false
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_shhwk"]
+tile_size = Vector2i(64, 64)
+sources/0 = SubResource("TileSetAtlasSource_m2ex4")
+
+[node name="Map" type="ColorRect"]
+custom_minimum_size = Vector2(128, 128)
+color = Color(1, 1, 1, 0.384314)
+script = ExtResource("1_22fhh")
+
+[node name="TileMap" type="TileMap" parent="."]
+modulate = Color(1, 1, 1, 0.666667)
+z_index = 1
+position = Vector2(81, 19)
+scale = Vector2(0.5, 0.5)
+tile_set = SubResource("TileSet_shhwk")
+format = 2

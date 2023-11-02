@@ -7,6 +7,7 @@ var dead = false
 
 @onready var global = get_node('/root/global')
 
+# HUD
 @onready var health_bar = $Control/HealthBar
 @onready var inner_health_bar = $Control/HealthBar/InnerHealthBar
 @onready var hit_animation = $HitAnimation
@@ -16,9 +17,12 @@ var dead = false
 
 var knockback = Vector3(0, 0, 0)
 
+# camera
 @onready var spring_arm = $CamRoot/h/v/SpringArm3D
 @onready var h = $CamRoot/h
 @onready var v = $CamRoot/h/v
+
+# shield
 @onready var shield = $ShieldPivot/Shield
 @onready var energy_shield = $ShieldPivot/EnergyShield
 @onready var shield_pivot = $ShieldPivot
@@ -27,9 +31,6 @@ var knockback = Vector3(0, 0, 0)
 
 @onready var animation_player = $player_spooky/AnimationPlayer
 
-@onready var pause_menu = $Control/PauseMenu
-@onready var resume_button = $Control/PauseMenu/HBoxContainer/VBoxContainer/Resume
-
 @onready var projectile_scene = load("res://projectile/projectile.tscn")
 
 
@@ -37,7 +38,8 @@ func _ready():
 #	energy_shield.play()
 	pass
 
-func _process(delta):
+func _process(_delta):
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	if Input.is_action_just_pressed('zoom'):
 		if spring_arm.spring_length == 12:
 			spring_arm.spring_length = 7#lerp(spring_arm.spring_length, 7.0, 0.4)
@@ -47,6 +49,7 @@ func _process(delta):
 			spring_arm.spring_length = 12
 		else:
 			spring_arm.spring_length = 12#lerp(spring_arm.spring_length, 12.0, 0.4)
+
 
 func sync_spell_speed():
 	if global.increase_spell_speed:
@@ -123,9 +126,23 @@ func get_cam_input_direction():
 	# account for camera's current rotation
 	return Vector3(dx, 1, dz)#.rotated(Vector3.UP, h.rotation.y)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+
+func _input(event):
+	if event is InputEventMouseMotion:
+		var camera_rotation = event.relative * global.mouse_camera_sensitiviy
+		$CamRoot/h.rotate(Vector3.DOWN, camera_rotation.x)
+		if global.invert:
+			$CamRoot/h/v.rotate(Vector3.RIGHT, -camera_rotation.y)
+		else:
+			$CamRoot/h/v.rotate(Vector3.RIGHT, camera_rotation.y)
+			
+		if Input.is_action_pressed('shield'):
+			print(camera_rotation.x)
+			shield_pivot.rotate(Vector3.DOWN, camera_rotation.x)
+
+
 func _physics_process(delta):
-	
+
 	if not dead:
 		sync_spell_speed()
 		
@@ -133,6 +150,7 @@ func _physics_process(delta):
 		
 		if Input.is_action_just_pressed("start"):
 			global.paused = true
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 			get_tree().paused = true
 		
 		if global.win == true:
@@ -184,7 +202,6 @@ func _physics_process(delta):
 		# handle shield movement
 		if cam_direction != Vector3(0, 1, 0) and Input.is_action_pressed('shield'):
 			if Input.is_action_pressed('strafe'):
-#				shield_pivot.rotation.y = $player_spooky.rotation.y
 				var converted = Vector3(cam_direction.x, 1, cam_direction.z).rotated(Vector3.UP, h.rotation.y)
 				shield_pivot.rotation.y = atan2(-converted.x, -converted.z)
 			else:

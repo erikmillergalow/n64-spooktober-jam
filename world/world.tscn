@@ -16,8 +16,8 @@
 [ext_resource type="Environment" uid="uid://cw6ddwwbnli2q" path="res://world/world_env.tres" id="15"]
 [ext_resource type="Script" path="res://world/scene_controls.gd" id="16"]
 [ext_resource type="AudioStream" uid="uid://d25kmlveabu0p" path="res://sounds/music/main-menu-theme-002.ogg" id="18_51kic"]
-[ext_resource type="Material" path="res://world/stairs/stairs_side_mat.tres" id="19"]
-[ext_resource type="Material" path="res://world/stairs/stairs_top_mat.tres" id="20"]
+[ext_resource type="Material" uid="uid://dunie376iltt6" path="res://world/stairs/stairs_side_mat.tres" id="19"]
+[ext_resource type="Material" uid="uid://bnlvnprnho5gc" path="res://world/stairs/stairs_top_mat.tres" id="20"]
 
 [sub_resource type="Animation" id="Animation_vytv4"]
 resource_name = "wiggle"
@@ -266,10 +266,10 @@ color = Color(0.462745, 0.462745, 0.462745, 1)
 
 [node name="Title" type="Label" parent="Control/SettingsRect"]
 layout_mode = 0
-offset_left = 101.0
-offset_top = 9.0
-offset_right = 172.0
-offset_bottom = 25.0
+offset_left = 113.0
+offset_top = 2.0
+offset_right = 184.0
+offset_bottom = 18.0
 theme_override_fonts/font = ExtResource("2_m6y7h")
 theme_override_font_sizes/font_size = 8
 text = "Settings"
@@ -277,9 +277,9 @@ text = "Settings"
 [node name="MusicLabel" type="Label" parent="Control/SettingsRect"]
 layout_mode = 0
 offset_left = 13.0
-offset_top = 26.0
+offset_top = 18.0
 offset_right = 61.0
-offset_bottom = 42.0
+offset_bottom = 34.0
 theme_override_fonts/font = ExtResource("2_m6y7h")
 theme_override_font_sizes/font_size = 8
 text = "Music"
@@ -288,9 +288,9 @@ vertical_alignment = 1
 [node name="MusicSlider" type="HSlider" parent="Control/SettingsRect"]
 layout_mode = 0
 offset_left = 136.0
-offset_top = 26.0
+offset_top = 18.0
 offset_right = 270.0
-offset_bottom = 42.0
+offset_bottom = 34.0
 focus_neighbor_top = NodePath("../DoneButton")
 focus_neighbor_bottom = NodePath("../FXSlider")
 theme_override_styles/grabber_area = ExtResource("3_bcovx")
@@ -302,9 +302,9 @@ value = 1.0
 [node name="FXLabel" type="Label" parent="Control/SettingsRect"]
 layout_mode = 0
 offset_left = 13.0
-offset_top = 56.0
+offset_top = 40.0
 offset_right = 61.0
-offset_bottom = 72.0
+offset_bottom = 56.0
 theme_override_fonts/font = ExtResource("2_m6y7h")
 theme_override_font_sizes/font_size = 8
 text = "FX
@@ -314,9 +314,9 @@ vertical_alignment = 1
 [node name="FXSlider" type="HSlider" parent="Control/SettingsRect"]
 layout_mode = 0
 offset_left = 136.0
-offset_top = 56.0
+offset_top = 40.0
 offset_right = 268.0
-offset_bottom = 72.0
+offset_bottom = 56.0
 focus_neighbor_top = NodePath("../MusicSlider")
 focus_neighbor_bottom = NodePath("../HorizontalLookSlider")
 theme_override_styles/grabber_area = ExtResource("3_bcovx")
@@ -328,9 +328,9 @@ value = 1.0
 [node name="HorizontalLookLabel" type="Label" parent="Control/SettingsRect"]
 layout_mode = 0
 offset_left = 13.0
-offset_top = 82.0
+offset_top = 66.0
 offset_right = 124.0
-offset_bottom = 106.0
+offset_bottom = 90.0
 theme_override_fonts/font = ExtResource("2_m6y7h")
 theme_override_font_sizes/font_size = 8
 text = "Horizontal Look 
@@ -341,22 +341,48 @@ vertical_alignment = 1
 [node name="HorizontalLookSlider" type="HSlider" parent="Control/SettingsRect"]
 layout_mode = 0
 offset_left = 136.0
-offset_top = 82.0
+offset_top = 66.0
 offset_right = 268.0
-offset_bottom = 98.0
+offset_bottom = 82.0
 focus_neighbor_top = NodePath("../FXSlider")
-focus_neighbor_bottom = NodePath("../InvertCheck")
+focus_neighbor_bottom = NodePath("../MouseLookSlider")
 theme_override_styles/grabber_area = ExtResource("3_bcovx")
 theme_override_styles/grabber_area_highlight = ExtResource("3_bcovx")
 max_value = 10.0
 value = 2.0
 
+[node name="MouseLookLabel" type="Label" parent="Control/SettingsRect"]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 97.0
+offset_right = 124.0
+offset_bottom = 121.0
+theme_override_fonts/font = ExtResource("2_m6y7h")
+theme_override_font_sizes/font_size = 8
+text = "Mouse Look 
+Speed
+"
+vertical_alignment = 1
+
+[node name="MouseLookSlider" type="HSlider" parent="Control/SettingsRect"]
+layout_mode = 0
+offset_left = 136.0
+offset_top = 97.0
+offset_right = 268.0
+offset_bottom = 113.0
+focus_neighbor_top = NodePath("../HorizontalLookSlider")
+focus_neighbor_bottom = NodePath("../InvertCheck")
+theme_override_styles/grabber_area = ExtResource("3_bcovx")
+theme_override_styles/grabber_area_highlight = ExtResource("3_bcovx")
+min_value = -10.0
+max_value = 10.0
+
 [node name="InvertLabel" type="Label" parent="Control/SettingsRect"]
 layout_mode = 0
-offset_left = 87.0
-offset_top = 110.0
-offset_right = 161.0
-offset_bottom = 126.0
+offset_left = 85.0
+offset_top = 122.0
+offset_right = 159.0
+offset_bottom = 138.0
 theme_override_fonts/font = ExtResource("2_m6y7h")
 theme_override_font_sizes/font_size = 8
 text = "Invert Look
@@ -366,19 +392,21 @@ vertical_alignment = 1
 
 [node name="InvertCheck" type="CheckBox" parent="Control/SettingsRect"]
 layout_mode = 0
-offset_left = 178.0
-offset_top = 106.0
-offset_right = 202.0
-offset_bottom = 130.0
-focus_neighbor_top = NodePath("../HorizontalLookSlider")
+offset_left = 180.0
+offset_top = 118.0
+offset_right = 204.0
+offset_bottom = 142.0
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../MouseLookSlider")
+focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../QualityCheck")
 
 [node name="N64QualityLabel" type="Label" parent="Control/SettingsRect"]
 layout_mode = 0
-offset_left = 83.0
-offset_top = 138.0
-offset_right = 166.0
-offset_bottom = 154.0
+offset_left = 85.0
+offset_top = 147.0
+offset_right = 168.0
+offset_bottom = 163.0
 theme_override_fonts/font = ExtResource("2_m6y7h")
 theme_override_font_sizes/font_size = 8
 text = "N64 Quality
@@ -388,23 +416,27 @@ vertical_alignment = 1
 
 [node name="QualityCheck" type="CheckBox" parent="Control/SettingsRect"]
 layout_mode = 0
-offset_left = 178.0
-offset_top = 134.0
-offset_right = 202.0
-offset_bottom = 158.0
+offset_left = 180.0
+offset_top = 143.0
+offset_right = 204.0
+offset_bottom = 167.0
+focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../InvertCheck")
+focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../DoneButton")
 button_pressed = true
 
 [node name="DoneButton" type="Button" parent="Control/SettingsRect"]
 layout_mode = 0
 offset_left = 113.0
-offset_top = 161.0
+offset_top = 168.0
 offset_right = 183.0
-offset_bottom = 189.0
+offset_bottom = 196.0
 scale = Vector2(0.884, 0.884)
-focus_neighbor_left = NodePath("../../HelpButton")
-focus_neighbor_right = NodePath("../../SettingsButton")
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../QualityCheck")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../MusicSlider")
 theme_override_fonts/font = ExtResource("2_m6y7h")
 theme_override_font_sizes/font_size = 10
 theme_override_styles/normal = ExtResource("3_bcovx")
@@ -423,12 +455,13 @@ color = Color(0.501961, 0.501961, 0.501961, 1)
 visible = false
 layout_mode = 0
 offset_left = 9.0
-offset_top = 7.0
+offset_top = 5.0
 offset_right = 284.0
-offset_bottom = 177.0
+offset_bottom = 185.0
 theme_override_fonts/font = ExtResource("2_m6y7h")
 theme_override_font_sizes/font_size = 8
-text = "(controller only)
+text = "CONTROLLER
+(see next page for keyboard)
 
 Left stick = Move
 
@@ -441,6 +474,32 @@ Y = Change camera zoom
 L = Strafe/Re-center camera
 
 Start = Pause
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="KeyboardControls" type="Label" parent="Control/HelpRect"]
+visible = false
+layout_mode = 0
+offset_left = 9.0
+offset_top = 5.0
+offset_right = 284.0
+offset_bottom = 185.0
+theme_override_fonts/font = ExtResource("2_m6y7h")
+theme_override_font_sizes/font_size = 8
+text = "MOUSE + KEYBOARD
+
+WASD = Move
+
+Left Mouse = Cast spell
+
+Right Mouse = Strafe
+
+Z = Change camera zoom
+
+Shift  = Shield
+
+Escape = Pause
 "
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -541,9 +600,30 @@ You further you progress away from the woods,
 enemies are more likely to be powerful and 
 fast.
 
-The final boss and key chest are placed in 
-random sections of the grid, the key chest 
-in the furthest row."
+(Continued. on next page)"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Modes" type="Label" parent="Control/HelpRect"]
+visible = false
+layout_mode = 0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = 281.0
+offset_bottom = 182.0
+theme_override_fonts/font = ExtResource("2_m6y7h")
+theme_override_font_sizes/font_size = 7
+text = "The final boss and key chest are placed in 
+random sections of the grid, the boss along the
+outside and the key chest in one of the main
+areas.
+
+In normal mode the playing field is an open
+grid. In maze mode gates are generated 
+throughout. Set a seed if you want to try 
+the exact same setup multiple times 
+(seeds can be text to make it easy to 
+remember)."
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -555,7 +635,9 @@ offset_right = 285.0
 offset_bottom = 216.0
 scale = Vector2(0.884, 0.884)
 focus_neighbor_left = NodePath("../HelpNextButton")
+focus_neighbor_top = NodePath(".")
 focus_neighbor_right = NodePath("../HelpBackButton")
+focus_neighbor_bottom = NodePath(".")
 theme_override_fonts/font = ExtResource("2_m6y7h")
 theme_override_font_sizes/font_size = 10
 theme_override_styles/normal = ExtResource("3_bcovx")
@@ -569,7 +651,9 @@ offset_right = 83.0
 offset_bottom = 216.0
 scale = Vector2(0.884, 0.884)
 focus_neighbor_left = NodePath("../HelpDoneButton")
+focus_neighbor_top = NodePath(".")
 focus_neighbor_right = NodePath("../HelpNextButton")
+focus_neighbor_bottom = NodePath(".")
 theme_override_fonts/font = ExtResource("2_m6y7h")
 theme_override_font_sizes/font_size = 10
 theme_override_styles/normal = ExtResource("3_bcovx")
@@ -583,7 +667,9 @@ offset_right = 164.0
 offset_bottom = 216.0
 scale = Vector2(0.884, 0.884)
 focus_neighbor_left = NodePath("../HelpBackButton")
+focus_neighbor_top = NodePath(".")
 focus_neighbor_right = NodePath("../HelpDoneButton")
+focus_neighbor_bottom = NodePath(".")
 theme_override_fonts/font = ExtResource("2_m6y7h")
 theme_override_font_sizes/font_size = 10
 theme_override_styles/normal = ExtResource("3_bcovx")
@@ -600,23 +686,23 @@ color = Color(0.486275, 0.486275, 0.486275, 1)
 
 [node name="Info" type="Label" parent="Control/GridSizeRect"]
 layout_mode = 0
-offset_right = 287.0
-offset_bottom = 47.0
+offset_left = 50.0
+offset_top = 2.0
+offset_right = 259.0
+offset_bottom = 22.0
 theme_override_fonts/font = ExtResource("2_m6y7h")
 theme_override_font_sizes/font_size = 6
 text = "Choose the number of areas generated in 
-the playing field (larger values untested,
-performance may suffer - moreso with rows than 
-columns):"
+the playing field."
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="RowsLabel" type="Label" parent="Control/GridSizeRect"]
 layout_mode = 0
 offset_left = 9.0
-offset_top = 40.0
+offset_top = 22.0
 offset_right = 116.0
-offset_bottom = 78.0
+offset_bottom = 60.0
 focus_neighbor_bottom = NodePath("../ColsSlider")
 theme_override_fonts/font = ExtResource("2_m6y7h")
 theme_override_font_sizes/font_size = 6
@@ -627,9 +713,10 @@ vertical_alignment = 1
 [node name="RowsSlider" type="HSlider" parent="Control/GridSizeRect"]
 layout_mode = 0
 offset_left = 150.0
-offset_top = 49.0
+offset_top = 31.0
 offset_right = 278.0
-offset_bottom = 65.0
+offset_bottom = 47.0
+focus_neighbor_top = NodePath(".")
 focus_neighbor_bottom = NodePath("../ColsSlider")
 theme_override_styles/grabber_area = ExtResource("3_bcovx")
 theme_override_styles/grabber_area_highlight = ExtResource("3_bcovx")
@@ -640,9 +727,9 @@ value = 3.0
 [node name="ColsLabel" type="Label" parent="Control/GridSizeRect"]
 layout_mode = 0
 offset_left = 9.0
-offset_top = 72.0
+offset_top = 47.0
 offset_right = 137.0
-offset_bottom = 110.0
+offset_bottom = 85.0
 focus_neighbor_top = NodePath("../RowsSlider")
 focus_neighbor_bottom = NodePath("../Start")
 theme_override_fonts/font = ExtResource("2_m6y7h")
@@ -654,28 +741,81 @@ vertical_alignment = 1
 [node name="ColsSlider" type="HSlider" parent="Control/GridSizeRect"]
 layout_mode = 0
 offset_left = 150.0
-offset_top = 82.0
+offset_top = 57.0
 offset_right = 278.0
-offset_bottom = 98.0
+offset_bottom = 73.0
 focus_neighbor_top = NodePath("../RowsSlider")
-focus_neighbor_bottom = NodePath("../Start")
+focus_neighbor_bottom = NodePath("../MazeModeCheckbox")
 theme_override_styles/grabber_area = ExtResource("3_bcovx")
 theme_override_styles/grabber_area_highlight = ExtResource("3_bcovx")
 min_value = 3.0
 max_value = 15.0
 value = 3.0
 
+[node name="MazeModeLabel" type="Label" parent="Control/GridSizeRect"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 88.0
+offset_right = 71.0
+offset_bottom = 102.0
+focus_neighbor_top = NodePath("../RowsSlider")
+focus_neighbor_bottom = NodePath("../Start")
+theme_override_fonts/font = ExtResource("2_m6y7h")
+theme_override_font_sizes/font_size = 6
+text = "Maze mode:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MazeModeCheckbox" type="CheckBox" parent="Control/GridSizeRect"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 82.0
+offset_right = 169.0
+offset_bottom = 106.0
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../ColsSlider")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../SeedTextEdit")
+
+[node name="SeedLabel" type="Label" parent="Control/GridSizeRect"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 110.0
+offset_right = 69.0
+offset_bottom = 124.0
+focus_neighbor_top = NodePath("../RowsSlider")
+focus_neighbor_bottom = NodePath("../Start")
+theme_override_fonts/font = ExtResource("2_m6y7h")
+theme_override_font_sizes/font_size = 6
+text = "RNG Seed:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SeedTextEdit" type="LineEdit" parent="Control/GridSizeRect"]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 106.0
+offset_right = 275.0
+offset_bottom = 126.0
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../MazeModeCheckbox")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Start")
+theme_override_fonts/font = ExtResource("2_m6y7h")
+theme_override_font_sizes/font_size = 7
+placeholder_text = "Enter seed"
+
 [node name="Back" type="Button" parent="Control/GridSizeRect"]
 layout_mode = 0
-offset_left = 50.0
-offset_top = 122.0
-offset_right = 120.0
-offset_bottom = 150.0
+offset_left = 64.0
+offset_top = 134.0
+offset_right = 134.0
+offset_bottom = 162.0
 scale = Vector2(0.884, 0.884)
 focus_neighbor_left = NodePath("../Start")
-focus_neighbor_top = NodePath("../ColsLabel")
+focus_neighbor_top = NodePath("../SeedTextEdit")
 focus_neighbor_right = NodePath("../Start")
-focus_neighbor_bottom = NodePath("../RowsSlider")
+focus_neighbor_bottom = NodePath(".")
 theme_override_fonts/font = ExtResource("2_m6y7h")
 theme_override_font_sizes/font_size = 10
 theme_override_styles/normal = ExtResource("3_bcovx")
@@ -683,15 +823,15 @@ text = "Back"
 
 [node name="Start" type="Button" parent="Control/GridSizeRect"]
 layout_mode = 0
-offset_left = 169.0
-offset_top = 122.0
-offset_right = 239.0
-offset_bottom = 150.0
+offset_left = 162.0
+offset_top = 134.0
+offset_right = 232.0
+offset_bottom = 162.0
 scale = Vector2(0.884, 0.884)
 focus_neighbor_left = NodePath("../Back")
-focus_neighbor_top = NodePath("../ColsSlider")
+focus_neighbor_top = NodePath("../SeedTextEdit")
 focus_neighbor_right = NodePath("../Back")
-focus_neighbor_bottom = NodePath("../RowsSlider")
+focus_neighbor_bottom = NodePath(".")
 theme_override_fonts/font = ExtResource("2_m6y7h")
 theme_override_font_sizes/font_size = 10
 theme_override_styles/normal = ExtResource("3_bcovx")
@@ -780,6 +920,7 @@ bus = &"music"
 [connection signal="value_changed" from="Control/SettingsRect/MusicSlider" to="." method="_on_music_slider_value_changed"]
 [connection signal="value_changed" from="Control/SettingsRect/FXSlider" to="." method="_on_fx_slider_value_changed"]
 [connection signal="value_changed" from="Control/SettingsRect/HorizontalLookSlider" to="." method="_on_horizontal_look_slider_value_changed"]
+[connection signal="value_changed" from="Control/SettingsRect/MouseLookSlider" to="." method="_on_mouse_look_slider_value_changed"]
 [connection signal="toggled" from="Control/SettingsRect/InvertCheck" to="." method="_on_invert_check_toggled"]
 [connection signal="toggled" from="Control/SettingsRect/QualityCheck" to="." method="_on_quality_check_toggled"]
 [connection signal="focus_entered" from="Control/SettingsRect/DoneButton" to="." method="_on_begin_button_focus_entered"]
@@ -789,5 +930,7 @@ bus = &"music"
 [connection signal="pressed" from="Control/HelpRect/HelpNextButton" to="." method="_on_help_next_button_pressed"]
 [connection signal="value_changed" from="Control/GridSizeRect/RowsSlider" to="." method="_on_rows_slider_value_changed"]
 [connection signal="value_changed" from="Control/GridSizeRect/ColsSlider" to="." method="_on_cols_slider_value_changed"]
+[connection signal="toggled" from="Control/GridSizeRect/MazeModeCheckbox" to="." method="_on_maze_mode_checkbox_toggled"]
+[connection signal="text_changed" from="Control/GridSizeRect/SeedTextEdit" to="." method="_on_seed_text_edit_text_changed"]
 [connection signal="pressed" from="Control/GridSizeRect/Back" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="Control/GridSizeRect/Start" to="." method="_on_start_pressed"]

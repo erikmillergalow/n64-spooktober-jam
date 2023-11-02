@@ -12,8 +12,10 @@ var has_key = false
 var increase_spell_speed = false
 var room_rows = 3
 var room_cols = 3
+var seed
 
 var horizontal_cam_speed = 2.0
+var mouse_camera_sensitiviy = 0.01
 
 # game states
 var paused = false
@@ -25,6 +27,7 @@ var invert = false
 var quality = false
 var music_volume = 100
 var fx_volume = 100
+var maze_mode = false
 
 func initialize():
 	global.increase_spell_speed = false

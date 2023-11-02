@@ -17,6 +17,9 @@ var damage_modifier = 1.0
 
 var has_bats = false
 
+var player_in_proximity = false
+var player_hittable = false
+
 @onready var orb_scene = load('res://orb.tscn')
 var orbs = 5
 
@@ -101,53 +104,87 @@ func set_health(amount):
 func set_detected_player(body):
 	detected_player = body
 
-func _physics_process(delta):
-	if not angry and not dead:
-		# if not angry just hang out and look around
-		velocity = lerp(velocity, Vector3.ZERO, 0.2)
-		
-		$Cube.rotation.y = lerp_angle($Cube.rotation.y, new_look, 0.15)
 
-		var turn_chance = randf()
-		if turn_chance > 0.985:
-			var turn_amount = randf() * ((PI))
-			new_look = $Cube.rotation.y + turn_amount
+func is_player_near():
+	player_in_proximity = global_transform.origin.distance_to(detected_player.global_transform.origin) < 100.0
 
-	if angry and not dead:
-		$Cube.rotation.y = PI
-		# move toward player
-		var direction = (detected_player.transform.origin - transform.origin).normalized();
-		
-		look_at(detected_player.global_transform.origin, Vector3.UP)
-		
-		if $TwirlCooldown.is_stopped() or $TwirlAttack.visible:
-			velocity = lerp(velocity, direction * speed, 0.3)
+
+func is_player_hittable():
+	if player_in_proximity:
+		if floor(int(transform.origin.x + 150) / 100) == floor(int(detected_player.global_transform.origin.x + 150) / 100):
+			if floor(int(transform.origin.z + 50) / 100) == floor(int(detected_player.global_transform.origin.z + 50) / 100):
+				player_hittable = true
+			else:
+				player_hittable = false
 		else:
-			velocity = lerp(velocity, -direction * speed, 0.3)
-		
+			player_hittable = false
 
-		if global_transform.origin.distance_to(detected_player.global_transform.origin) < 6:
-			if $TwirlCooldown.is_stopped():
-				$Zap.play()
-				$TwirlAttack.visible = true
-				$TwirlAttack.play('default')
-				$TwirlCooldown.start()
-				$TwirlHitBox.monitorable = true
-				$TwirlHitBox.monitoring = true
-		
 
-	knockback = lerp(knockback, Vector3.ZERO, 0.5)
-	velocity += knockback
+func _process(delta):
 	
-	var collision = move_and_collide(velocity * delta)
-	if collision:
-		var reflect = collision.get_remainder().bounce(collision.get_normal())
-		velocity = velocity.bounce(collision.get_normal())
-		move_and_collide(reflect)
+	# preserve resources for better performance by disabling actions when player is far away
+	is_player_near()
+	is_player_hittable()
+	
+	if player_in_proximity:
+		if not angry and not dead:
+			# if not angry just hang out and look around
+			velocity = lerp(velocity, Vector3.ZERO, 0.2)
+			
+			$Cube.rotation.y = lerp_angle($Cube.rotation.y, new_look, 0.15)
+
+			var turn_chance = randf()
+			if turn_chance > 0.985:
+				var turn_amount = randf() * ((PI))
+				new_look = $Cube.rotation.y + turn_amount
+
+
+func _physics_process(delta):
+	
+	if player_in_proximity:
+		if angry and not dead:
+			$Cube.rotation.y = PI
+			# move toward player
+			var direction = (detected_player.transform.origin - transform.origin).normalized();
+			
+			look_at(detected_player.global_transform.origin, Vector3.UP)
+			
+			if $TwirlCooldown.is_stopped() or $TwirlAttack.visible:
+				velocity = lerp(velocity, direction * speed, 0.3)
+			else:
+				velocity = lerp(velocity, -direction * speed, 0.3)
+				
+			if player_hittable and $FlameCooldown.is_stopped():
+				var flameball = flameball_scene.instantiate()
+				flameball.transform.origin = global_transform.origin - Vector3(0.0, -0.5, 0.0)
+				flameball.rotation.y = rotation.y + PI
+				flameball.rotation.x = 0
+				get_parent().add_child(flameball)
+				$FlameCooldown.start()
+			
+
+			if global_transform.origin.distance_to(detected_player.global_transform.origin) < 6:
+				if $TwirlCooldown.is_stopped():
+					$Zap.play()
+					$TwirlAttack.visible = true
+					$TwirlAttack.play('default')
+					$TwirlCooldown.start()
+					$TwirlHitBox.monitorable = true
+					$TwirlHitBox.monitoring = true
+			
+
+		knockback = lerp(knockback, Vector3.ZERO, 0.5)
+		velocity += knockback
 		
-	if dead:
-		rotation_degrees.x = lerp(rotation_degrees.x, 90.0, 0.2)
-		velocity = Vector3.ZERO
+		var collision = move_and_collide(velocity * delta)
+		if collision:
+			var reflect = collision.get_remainder().bounce(collision.get_normal())
+			velocity = velocity.bounce(collision.get_normal())
+			move_and_collide(reflect)
+			
+		if dead:
+			rotation_degrees.x = lerp(rotation_degrees.x, 90.0, 0.2)
+			velocity = Vector3.ZERO
 
 
 func _on_twirl_hit_box_body_entered(body):
@@ -163,9 +200,13 @@ func _on_twirl_attack_animation_finished():
 
 
 func add_knockback(direction):
-	if not dead:
+	if not dead and player_in_proximity:
 		direction.y = 0
 		knockback = direction * 15.0
+
+
+func spawn_at_location(location):
+	global_transform.origin = location
 
 
 func take_damage(amount):
@@ -183,7 +224,7 @@ func take_damage(amount):
 		if not dead:
 			for i in range(0, orbs):
 				var orb = orb_scene.instantiate()
-				orb.global_transform.origin = global_transform.origin + Vector3(randf() * 3, 1, randf() * 3)
+				orb.transform.origin = global_transform.origin + Vector3(randf() * 3, 1, randf() * 3)
 				get_parent().add_child(orb)
 
 		dead = true
@@ -192,26 +233,23 @@ func take_damage(amount):
 		set_collision_mask_value(1, false)
 		set_collision_layer_value(3, false)
 		set_collision_mask_value(3, false)
-		
-
 
 
 func _on_area_3d_body_entered(body):
 	if body.is_in_group('player'):
-		print('body in')
 		if not angry:
 			angry = true
 			detected_player = body
 			$FlameCooldown.start()
-#			$TwirlCooldown.start()
 
 
 func _on_flame_cooldown_timeout():
-	if not dead:
+	if not dead and player_in_proximity and player_hittable:# and $FlameCooldown.is_stopped():
+		$FlameCooldown.start()
+		
 		for i in range(-3, 3):
 			var flameball = flameball_scene.instantiate()
-			flameball.global_transform.origin = global_transform.origin - Vector3(0, -0.5, 0.5)
+			flameball.transform.origin = global_transform.origin - Vector3(0, -0.5, 0.5)
 			flameball.rotation.y = rotation.y + PI + ((PI / 8) * i)
 			flameball.rotation.x = 0
 			get_parent().add_child(flameball)
-			$FlameCooldown.start()

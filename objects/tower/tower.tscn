@@ -1,12 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://cygj14l5qytkh"]
+[gd_scene load_steps=8 format=3 uid="uid://cygj14l5qytkh"]
 
-[ext_resource type="Texture2D" uid="uid://iprjkvqm1160" path="res://objects/tower/tower.png" id="2_5thmr"]
+[ext_resource type="Texture2D" uid="uid://iprjkvqm1160" path="res://objects/tower/tower.png" id="1_4i6vp"]
+[ext_resource type="Script" path="res://objects/tower/tower.gd" id="1_lh6fn"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g7n6y"]
 resource_name = "Material"
 cull_mode = 2
 vertex_color_use_as_albedo = true
-albedo_texture = ExtResource("2_5thmr")
+albedo_texture = ExtResource("1_4i6vp")
 roughness = 0.4
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_ch1e8"]
@@ -40,13 +41,15 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_ch1e8")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t8o3i"]
-albedo_texture = ExtResource("2_5thmr")
+albedo_texture = ExtResource("1_4i6vp")
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_t4ujj"]
 radius = 1.1
 
-[node name="tower" type="StaticBody3D"]
-collision_layer = 5
+[node name="tower" type="StaticBody3D" groups=["walls_objects"]]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("1_lh6fn")
 
 [node name="Cube" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.02385, 0)

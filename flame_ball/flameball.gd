@@ -24,7 +24,6 @@ func set_damage_modifier(damage_modifier):
 
 
 func reflect(body):
-	print('reflect')
 	global_transform.basis.z = body.global_transform.basis.z
 
 
@@ -53,7 +52,7 @@ func _on_body_entered(body):
 
 
 func _on_area_entered(area):
-	if area.is_in_group('laser_wall'):
+	if area.is_in_group('laser_wall') or area.is_in_group('walls_objects'):
 		$Fizzle.play()
 		moving = false
 		$AnimatedSprite3D.animation = 'collide'

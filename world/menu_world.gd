@@ -7,21 +7,30 @@ var overworld_scene = preload('res://overworld/overworld.tscn')
 var helpIndex = 0
 @onready var helpLabels = [
 	$Control/HelpRect/Controls,
+	$Control/HelpRect/KeyboardControls,
 	$Control/HelpRect/Upgrades,
 	$Control/HelpRect/Monsters,
 	$Control/HelpRect/Premise,
-	$Control/HelpRect/Mechanics
+	$Control/HelpRect/Mechanics,
+	$Control/HelpRect/Modes
 ]
 
-# Called when the node enters the scene tree for the first time.
+
 func _ready():
 	$Title/AnimationPlayer.play('zoom')
 	$Control/BeginButton.grab_focus()
 	randomize()
-	pass # Replace with function body.
+	global.seed = str(randi())
+	$Control/GridSizeRect/SeedTextEdit.text = global.seed
+	$Control/SettingsRect/MouseLookSlider.value = global.mouse_camera_sensitiviy
+	$Control/SettingsRect/FXSlider.value = global.fx_volume
+	$Control/SettingsRect/MusicSlider.value = global.music_volume
+	$Control/SettingsRect/InvertCheck.button_pressed = global.invert
+	$Control/SettingsRect/QualityCheck.button_pressed = !global.quality
+	pass 
 
 
-func _process(delta):
+func _process(_delta):
 	$Floor.mesh.material.uv1_offset.z -= 0.03
 	$WorldEnvironment.environment.sky_rotation.y -= 0.002
 
@@ -29,6 +38,7 @@ func _process(delta):
 func _on_begin_button_pressed():
 	$Control/GridSizeRect/RowsSlider.value = global.room_rows
 	$Control/GridSizeRect/ColsSlider.value = global.room_cols
+	$Control/GridSizeRect/MazeModeCheckbox.button_pressed = global.maze_mode
 	$Control/GridSizeRect.visible = true
 	$Control/GridSizeRect/RowsSlider.grab_focus()
 
@@ -75,7 +85,7 @@ func _on_quit_button_pressed():
 
 
 func _on_quality_check_toggled(button_pressed):
-	global.quality = button_pressed
+	global.quality = !button_pressed
 
 
 func _on_music_slider_value_changed(value):
@@ -141,3 +151,15 @@ func _on_animation_player_animation_finished(anim_name):
 
 func _on_horizontal_look_slider_value_changed(value):
 	global.horizontal_cam_speed = value
+
+
+func _on_maze_mode_checkbox_toggled(button_pressed):
+	global.maze_mode = button_pressed
+
+
+func _on_seed_text_edit_text_changed(new_text):
+	global.seed = new_text
+
+
+func _on_mouse_look_slider_value_changed(value):
+	global.mouse_camera_sensitiviy = 0.01 + (0.001 * value)

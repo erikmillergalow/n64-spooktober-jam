@@ -16,6 +16,11 @@ func get_spawn_location():
 	
 	return Vector3(x, 0, z)
 
+
+func spawn_at_location(location):
+	global_transform.origin = location
+
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass

@@ -138,6 +138,7 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody3D" groups=["player"]]
+collision_mask = 17
 axis_lock_linear_y = true
 script = ExtResource("1_lx0as")
 
@@ -183,6 +184,8 @@ offset_left = 174.0
 offset_top = 15.0
 offset_right = 278.0
 offset_bottom = 41.0
+theme_override_fonts/font = ExtResource("2_cibyo")
+theme_override_font_sizes/font_size = 11
 text = "0 EXP"
 horizontal_alignment = 2
 
@@ -253,7 +256,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.55411, 0)
 
 [node name="SpringArm3D" type="SpringArm3D" parent="CamRoot/h/v"]
 transform = Transform3D(-1, -1.33744e-08, 8.63937e-08, 0, 0.988228, 0.152986, -8.74228e-08, 0.152986, -0.988228, 0, 0, 0)
-spring_length = 7.0
+spring_length = 12.0
 
 [node name="Camera" type="Camera3D" parent="CamRoot/h/v/SpringArm3D"]
 
@@ -263,6 +266,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88097, 0)
 [node name="Shield" parent="ShieldPivot" instance=ExtResource("3_imjhw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.28998)
 visible = false
+collision_mask = 0
 
 [node name="EnergyShield" type="MeshInstance3D" parent="ShieldPivot"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0.969798)

@@ -13,3 +13,6 @@ func _process(delta):
 
 func close_laser_gate():
 	$LaserGate.set_collision_layer_value(1, true)
+	
+	# debug
+	$Gate2D.visible = true

@@ -29,17 +29,13 @@ func set_labels():
 	else:
 		$KeyLabel.text = "Have you found the key chest? \n Not yet..."
 
-func _process(delta):
+func _process(_delta):
 	set_labels()
 	set_buttons()
 	
 	if global.paused and visible != true:
 		visible = true
 		$Resume.grab_focus()
-		
-#	if global.win:
-		
-
 
 func unpause():
 	visible = false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://brws4cvg7k8y8"]
+[gd_scene load_steps=10 format=3 uid="uid://brws4cvg7k8y8"]
 
 [ext_resource type="Texture2D" uid="uid://1ob1pthj3dp7" path="res://ghost/normal-ghost.png" id="1_avsel"]
 [ext_resource type="Script" path="res://ghost/ghost-blend.gd" id="1_qgu1w"]
@@ -46,9 +46,6 @@ albedo_texture = ExtResource("1_avsel")
 [sub_resource type="SphereShape3D" id="SphereShape3D_e6k27"]
 radius = 0.7
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8lck2"]
-radius = 1.0
-
 [sub_resource type="Animation" id="Animation_b4lqj"]
 resource_name = "dance"
 length = 1.2
@@ -71,8 +68,8 @@ _data = {
 }
 
 [node name="ghost" type="CharacterBody3D" groups=["monsters"]]
-collision_layer = 5
-collision_mask = 5
+collision_layer = 4
+collision_mask = 53
 axis_lock_linear_y = true
 script = ExtResource("1_qgu1w")
 
@@ -86,13 +83,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_16yj7")
 transform = Transform3D(1.767, 0, 0, 0, 1.767, 0, 0, 0, 1.767, 0.000359535, 1.2736, 0)
 shape = SubResource("SphereShape3D_e6k27")
 
-[node name="Area3D" type="Area3D" parent="."]
-collision_layer = 5
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" groups=["monsters"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.32613, 0)
-shape = SubResource("CapsuleShape3D_8lck2")
-
 [node name="Dance" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_lg3rl")
@@ -101,5 +91,4 @@ libraries = {
 [node name="FlameCooldown" type="Timer" parent="."]
 one_shot = true
 
-[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="timeout" from="FlameCooldown" to="." method="_on_flame_cooldown_timeout"]

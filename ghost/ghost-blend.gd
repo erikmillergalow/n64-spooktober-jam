@@ -14,6 +14,9 @@ var damage_modifier = 1.0
 
 var detected_player
 
+var player_in_proximity = false
+var player_hittable = false
+
 @onready var orb_scene = load('res://orb.tscn')
 var orbs = 5
 
@@ -122,64 +125,104 @@ func set_intensity(level):
 		else:
 			set_speed(16.0)
 
+
 func set_detected_player(body):
 	pass
 
 
-func _physics_process(delta):
-	if not angry and not dead:
-		velocity = lerp(velocity, $Cube.transform.basis.z * speed, 0.2)
-		
-		$Cube.rotation.y = lerp_angle($Cube.rotation.y, atan2(velocity.x, velocity.z), 1)
-		
-		var turn_chance = randf()
-		if turn_chance > 0.98:
-			var turn_amount = randf() * ((PI/2))
-			velocity = velocity.rotated(Vector3(0, 1, 0), (PI/2) - turn_amount)
+func is_player_near():
+	player_in_proximity = global_transform.origin.distance_to(detected_player.global_transform.origin) < 100.0
 
-	if angry and not dead:
-		$Cube.rotation.y = PI
-		# move toward player
-		var direction = (detected_player.transform.origin - transform.origin).normalized();
-		
-		look_at(detected_player.global_transform.origin, Vector3.UP)
-		
-		if not $Dance.is_playing():
-			velocity = lerp(velocity, direction * speed, 0.3)
 
-	knockback = lerp(knockback, Vector3.ZERO, 0.5)	
-	velocity += knockback
+func is_player_hittable():
+	if player_in_proximity:
+		if floor(int(transform.origin.x + 150) / 100) == floor(int(detected_player.global_transform.origin.x + 150) / 100):
+			if floor(int(transform.origin.z + 50) / 100) == floor(int(detected_player.global_transform.origin.z + 50) / 100):
+				player_hittable = true
+			else:
+				player_hittable = false
+		else:
+			player_hittable = false
+
+
+func _process(delta):
 	
-#	velocity.y = 0
+	# preserve resources for better performance by disabling actions when player is far away
+	is_player_near()
+	is_player_hittable()
 	
-	var collision = move_and_collide(velocity * delta)
-	if collision:
-		if (collision.get_collider().is_in_group('player')):
-			print('DETECTED')
+	if player_in_proximity:
+		if not angry and not dead:
+			velocity = lerp(velocity, $Cube.transform.basis.z * speed, 0.2)
+
+			# THIS ONE
+			$Cube.rotation.y = lerp_angle($Cube.rotation.y, atan2(velocity.x, velocity.z), 1)
+	#		$Cube.rotation.y = atan2(velocity.x, velocity.z)
+
+			var turn_chance = randf()
+			if turn_chance > 0.98:
+				var turn_amount = randf() * ((PI/2))
+				velocity = velocity.rotated(Vector3(0, 1, 0), (PI/2) - turn_amount)
+				
+		if angry and not dead:
+			$Cube.rotation.y = PI
+			# move toward player
+			var direction = (detected_player.transform.origin - transform.origin).normalized();
 			
-			if not angry:
+			look_at(detected_player.global_transform.origin, Vector3.UP)
+			
+			if not $Dance.is_playing():
+				velocity = lerp(velocity, direction * speed, 0.3)
+			
+			if player_in_proximity and player_hittable and $FlameCooldown.is_stopped():
+				var flameball = flameball_scene.instantiate()
+				flameball.transform.origin = global_transform.origin - Vector3(0.0, -0.5, 0.0)
+				flameball.rotation.y = rotation.y + PI
+				flameball.rotation.x = 0
+				get_parent().add_child(flameball)
 				$FlameCooldown.start()
-				angry = true
-			
-			var player = collision.get_collider()
-			player.add_knockback(-global_transform.basis.z * (damage_modifier) * 2)
-			player.take_damage(10 + (5 * damage_modifier))
-			$Dance.play('dance')
-			
-		var reflect = collision.get_remainder().bounce(collision.get_normal())
-		velocity = velocity.bounce(collision.get_normal())
-		move_and_collide(reflect)
-		
-	if dead:
-		rotation_degrees.x = lerp(rotation_degrees.x, 90.0, 0.2)
-		velocity = Vector3.ZERO
+
+
+func _physics_process(delta):
+	if player_in_proximity:
+
+		knockback = lerp(knockback, Vector3.ZERO, 0.5)
+		velocity += knockback
+
+		velocity.y = 0
+
+		var collision = move_and_collide(velocity * delta)
+		if collision:
+
+			if (collision.get_collider().is_in_group('player')):
+
+				if not angry:
+					$FlameCooldown.start()
+					angry = true
+
+				var player = collision.get_collider()
+				player.add_knockback(-global_transform.basis.z * (damage_modifier) * 2)
+				player.take_damage(10 + (5 * damage_modifier))
+				$Dance.play('dance')
+
+	#		if (collision.get_collider().is_in_group('walls_objects')):
+			var reflect = collision.get_remainder().bounce(collision.get_normal())
+			velocity = velocity.bounce(collision.get_normal())
+			move_and_collide(reflect)
+
+		if dead:
+			rotation_degrees.x = lerp(rotation_degrees.x, 90.0, 0.2)
+			velocity = Vector3.ZERO
 
 
 func add_knockback(direction):
-	if not dead:
+	if not dead and player_in_proximity:
 		direction.y = 0
 		knockback = direction * 15.0
 
+
+func spawn_at_location(location):
+	global_transform.origin = location
 
 func take_damage(amount):
 	if not angry:
@@ -196,7 +239,7 @@ func take_damage(amount):
 		if not dead:
 			for i in range(0, orbs):
 				var orb = orb_scene.instantiate()
-				orb.global_transform.origin = global_transform.origin + Vector3(randf() * 3, 1, randf() * 3)
+				orb.transform.origin = global_transform.origin + Vector3(randf() * 3, 1, randf() * 3)
 				get_parent().add_child(orb)
 		
 		dead = true
@@ -208,9 +251,9 @@ func take_damage(amount):
 
 
 func _on_flame_cooldown_timeout():
-	if not dead:
+	if not dead and player_in_proximity and player_hittable:
 		var flameball = flameball_scene.instantiate()
-		flameball.global_transform.origin = global_transform.origin - Vector3(0.5, -0.5, 0.0)
+		flameball.transform.origin = global_transform.origin - Vector3(0.0, -0.5, 0.0)
 		flameball.rotation.y = rotation.y + PI
 		flameball.rotation.x = 0
 		get_parent().add_child(flameball)

@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://o1yvukomvev8"]
+[gd_scene load_steps=8 format=3 uid="uid://o1yvukomvev8"]
 
+[ext_resource type="Script" path="res://objects/house/house.gd" id="1_mfy3v"]
 [ext_resource type="Texture2D" uid="uid://sq7vnhvu1dqh" path="res://objects/house/house.png" id="2_wo8l0"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l8ot3"]
@@ -38,21 +39,22 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_aaecl")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t2gb2"]
-albedo_color = Color(0.737255, 0.737255, 0.737255, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_stqyx"]
 albedo_texture = ExtResource("2_wo8l0")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wj0je"]
 size = Vector3(1.09726, 1, 1)
 
-[node name="house" type="StaticBody3D"]
-collision_layer = 5
+[node name="house" type="StaticBody3D" groups=["walls_objects"]]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("1_mfy3v")
 
 [node name="Cube" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.937048, 0)
 mesh = SubResource("ArrayMesh_dndbf")
 skeleton = NodePath("")
-surface_material_override/0 = SubResource("StandardMaterial3D_t2gb2")
+surface_material_override/0 = SubResource("StandardMaterial3D_stqyx")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(2.204, 0, 0, 0, 2.204, 0, 0, 0, 2.204, 0.141678, 1.11221, -0.109399)

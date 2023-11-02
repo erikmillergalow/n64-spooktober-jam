@@ -16,8 +16,9 @@ size = Vector3(2, 2, 2)
 [sub_resource type="BoxShape3D" id="BoxShape3D_0wpff"]
 size = Vector3(2.2, 2.2, 2.2)
 
-[node name="Crate" type="RigidBody3D"]
-gravity_scale = 0.0
+[node name="Crate" type="StaticBody3D" groups=["walls_objects"]]
+collision_layer = 0
+collision_mask = 16
 script = ExtResource("1_f40hb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]

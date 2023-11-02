@@ -37,6 +37,8 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 100.27
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.269512, 1, 49.917)
 
 [node name="Area3D" type="Area3D" parent="."]
+monitoring = false
+monitorable = false
 
 [node name="SpawnZone" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 0, 50)
