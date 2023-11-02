@@ -681,7 +681,7 @@ layout_mode = 0
 offset_left = 15.0
 offset_top = 16.0
 offset_right = 302.0
-offset_bottom = 184.0
+offset_bottom = 209.0
 color = Color(0.486275, 0.486275, 0.486275, 1)
 
 [node name="Info" type="Label" parent="Control/GridSizeRect"]
@@ -693,16 +693,16 @@ offset_bottom = 22.0
 theme_override_fonts/font = ExtResource("2_m6y7h")
 theme_override_font_sizes/font_size = 6
 text = "Choose the number of areas generated in 
-the playing field."
+the playing field and game type."
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="RowsLabel" type="Label" parent="Control/GridSizeRect"]
 layout_mode = 0
 offset_left = 9.0
-offset_top = 22.0
+offset_top = 24.0
 offset_right = 116.0
-offset_bottom = 60.0
+offset_bottom = 62.0
 focus_neighbor_bottom = NodePath("../ColsSlider")
 theme_override_fonts/font = ExtResource("2_m6y7h")
 theme_override_font_sizes/font_size = 6
@@ -713,9 +713,9 @@ vertical_alignment = 1
 [node name="RowsSlider" type="HSlider" parent="Control/GridSizeRect"]
 layout_mode = 0
 offset_left = 150.0
-offset_top = 31.0
+offset_top = 33.0
 offset_right = 278.0
-offset_bottom = 47.0
+offset_bottom = 49.0
 focus_neighbor_top = NodePath(".")
 focus_neighbor_bottom = NodePath("../ColsSlider")
 theme_override_styles/grabber_area = ExtResource("3_bcovx")
@@ -727,9 +727,9 @@ value = 3.0
 [node name="ColsLabel" type="Label" parent="Control/GridSizeRect"]
 layout_mode = 0
 offset_left = 9.0
-offset_top = 47.0
+offset_top = 56.0
 offset_right = 137.0
-offset_bottom = 85.0
+offset_bottom = 94.0
 focus_neighbor_top = NodePath("../RowsSlider")
 focus_neighbor_bottom = NodePath("../Start")
 theme_override_fonts/font = ExtResource("2_m6y7h")
@@ -741,9 +741,9 @@ vertical_alignment = 1
 [node name="ColsSlider" type="HSlider" parent="Control/GridSizeRect"]
 layout_mode = 0
 offset_left = 150.0
-offset_top = 57.0
+offset_top = 66.0
 offset_right = 278.0
-offset_bottom = 73.0
+offset_bottom = 82.0
 focus_neighbor_top = NodePath("../RowsSlider")
 focus_neighbor_bottom = NodePath("../MazeModeCheckbox")
 theme_override_styles/grabber_area = ExtResource("3_bcovx")
@@ -755,9 +755,9 @@ value = 3.0
 [node name="MazeModeLabel" type="Label" parent="Control/GridSizeRect"]
 layout_mode = 0
 offset_left = 9.0
-offset_top = 88.0
+offset_top = 96.0
 offset_right = 71.0
-offset_bottom = 102.0
+offset_bottom = 110.0
 focus_neighbor_top = NodePath("../RowsSlider")
 focus_neighbor_bottom = NodePath("../Start")
 theme_override_fonts/font = ExtResource("2_m6y7h")
@@ -769,9 +769,9 @@ vertical_alignment = 1
 [node name="MazeModeCheckbox" type="CheckBox" parent="Control/GridSizeRect"]
 layout_mode = 0
 offset_left = 145.0
-offset_top = 82.0
+offset_top = 90.0
 offset_right = 169.0
-offset_bottom = 106.0
+offset_bottom = 114.0
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../ColsSlider")
 focus_neighbor_right = NodePath(".")
@@ -780,9 +780,9 @@ focus_neighbor_bottom = NodePath("../SeedTextEdit")
 [node name="SeedLabel" type="Label" parent="Control/GridSizeRect"]
 layout_mode = 0
 offset_left = 7.0
-offset_top = 110.0
+offset_top = 126.0
 offset_right = 69.0
-offset_bottom = 124.0
+offset_bottom = 140.0
 focus_neighbor_top = NodePath("../RowsSlider")
 focus_neighbor_bottom = NodePath("../Start")
 theme_override_fonts/font = ExtResource("2_m6y7h")
@@ -794,9 +794,9 @@ vertical_alignment = 1
 [node name="SeedTextEdit" type="LineEdit" parent="Control/GridSizeRect"]
 layout_mode = 0
 offset_left = 150.0
-offset_top = 106.0
+offset_top = 122.0
 offset_right = 275.0
-offset_bottom = 126.0
+offset_bottom = 142.0
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../MazeModeCheckbox")
 focus_neighbor_right = NodePath(".")
@@ -808,9 +808,9 @@ placeholder_text = "Enter seed"
 [node name="Back" type="Button" parent="Control/GridSizeRect"]
 layout_mode = 0
 offset_left = 64.0
-offset_top = 134.0
+offset_top = 156.0
 offset_right = 134.0
-offset_bottom = 162.0
+offset_bottom = 184.0
 scale = Vector2(0.884, 0.884)
 focus_neighbor_left = NodePath("../Start")
 focus_neighbor_top = NodePath("../SeedTextEdit")
@@ -824,9 +824,9 @@ text = "Back"
 [node name="Start" type="Button" parent="Control/GridSizeRect"]
 layout_mode = 0
 offset_left = 162.0
-offset_top = 134.0
+offset_top = 156.0
 offset_right = 232.0
-offset_bottom = 162.0
+offset_bottom = 184.0
 scale = Vector2(0.884, 0.884)
 focus_neighbor_left = NodePath("../Back")
 focus_neighbor_top = NodePath("../SeedTextEdit")

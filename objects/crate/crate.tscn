@@ -17,8 +17,8 @@ size = Vector3(2, 2, 2)
 size = Vector3(2.2, 2.2, 2.2)
 
 [node name="Crate" type="StaticBody3D" groups=["walls_objects"]]
-collision_layer = 0
-collision_mask = 16
+collision_layer = 16
+collision_mask = 0
 script = ExtResource("1_f40hb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
