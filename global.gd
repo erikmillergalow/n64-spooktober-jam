@@ -12,6 +12,7 @@ var has_key = false
 var increase_spell_speed = false
 var room_rows = 3
 var room_cols = 3
+var max_stats_level = 1.0
 var seed
 
 var horizontal_cam_speed = 2.0
@@ -30,6 +31,7 @@ var fx_volume = 100
 var maze_mode = false
 
 func initialize():
+	global.max_stats_level = 1.0
 	global.increase_spell_speed = false
 	global.player_health = 100.0
 	global.player_exp = 0

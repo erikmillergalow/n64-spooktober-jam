@@ -13,7 +13,6 @@ func set_buttons():
 	$SpellSpeed.disabled = global.player_exp < 1000
 	$SpellStrength.disabled = global.player_exp < 1000
 	$RunSpeed.disabled = global.player_exp < 1000
-	$HealthUpgrade.disabled = (global.player_exp < 1000 or global.player_health == 100)
 
 
 func set_labels():
@@ -21,13 +20,15 @@ func set_labels():
 	$ExpLabel.text = "Exp: %s" % global.player_exp
 	$ShieldUpgrade/ShieldLabel2.text = "Reflective: %s" % global.shield_reflect
 	$DoubleBlaster/BlasterLabel2.text = "Double spells: %s" % global.double_blaster
-	$SpellSpeed/SpellSpeedLabel2.text = "Level: %s" % global.spell_speed_modifier
+	$SpellSpeed/SpellSpeedLabel2.text = "Level: %s" % ((global.spell_speed_modifier * 2) - 1)
 	$SpellStrength/SpellDamageLabel2.text = "Level: %s" % global.spell_power_modifier
 	$RunSpeed/RunSpeedLabel2.text = "Level: %s" % global.run_speed_modifier
 	if global.has_key:
 		$KeyLabel.text = "You have the key!"
 	else:
 		$KeyLabel.text = "Have you found the key chest? \n Not yet..."
+		
+	$HealthLabel/ProgressBar.value = global.player_health
 
 func _process(_delta):
 	set_labels()
@@ -61,21 +62,26 @@ func _on_spell_speed_pressed():
 	global.spell_speed_modifier += 0.5
 	global.player_exp -= 1000
 	global.increase_spell_speed = true
+	
+	if ((global.spell_speed_modifier * 2) - 1) > global.max_stats_level:
+		global.max_stats_level += 1
 
 
 func _on_spell_strength_pressed():
 	global.spell_power_modifier += 1
 	global.player_exp -= 1000
+	
+	if global.spell_power_modifier > global.max_stats_level:
+		global.max_stats_level += 1
 
 
 func _on_run_speed_pressed():
 	global.run_speed_modifier += 1
 	global.player_exp -= 1000
+	
+	if global.run_speed_modifier > global.max_stats_level:
+		global.max_stats_level += 1
 
-
-func _on_health_upgrade_pressed():
-	global.player_health = 100
-	global.player_exp -= 1000
 
 
 func _on_end_run_pressed():

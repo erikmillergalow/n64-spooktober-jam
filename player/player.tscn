@@ -1,7 +1,8 @@
-[gd_scene load_steps=31 format=3 uid="uid://d1w51ia4nwluc"]
+[gd_scene load_steps=33 format=3 uid="uid://d1w51ia4nwluc"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_lx0as"]
 [ext_resource type="FontFile" uid="uid://clvfdpwuiqgui" path="res://fonts/RoSpritendoSemiboldBeta-vmVwZ.otf" id="2_cibyo"]
+[ext_resource type="Shader" path="res://shaders/GodotRetro/Screen Shaders/Grain.gdshader" id="3_28j33"]
 [ext_resource type="PackedScene" uid="uid://tj837phb2kfp" path="res://shield/shield.tscn" id="3_imjhw"]
 [ext_resource type="Texture2D" uid="uid://bociqye04gv3g" path="res://shield/blurred-shield.png" id="4_8vdka"]
 [ext_resource type="Texture2D" uid="uid://bpq5u3loojfgl" path="res://shield/anim-shield.png" id="5_dv8vu"]
@@ -50,6 +51,14 @@ corner_radius_bottom_left = 5
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s3l46"]
 radius = 0.4
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mry7x"]
+shader = ExtResource("3_28j33")
+shader_parameter/colored = true
+shader_parameter/color_amount = 0.95
+shader_parameter/grain_amount = 0.026
+shader_parameter/grain_size = 2.685
+shader_parameter/lum_amount = 1.324
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mxffn"]
 transparency = 1
@@ -150,20 +159,24 @@ libraries = {
 [node name="Control" type="Control" parent="."]
 process_mode = 3
 layout_mode = 3
-anchors_preset = 0
-offset_left = 32.0
-offset_top = 14.0
-offset_right = 190.0
-offset_bottom = 54.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 1
 
 [node name="HealthBar" type="ProgressBar" parent="Control"]
 z_index = 2
-layout_mode = 0
-offset_left = 173.0
-offset_top = -6.0
-offset_right = 349.0
-offset_bottom = 21.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.67
+anchor_top = 0.032
+anchor_right = 1.0
+anchor_bottom = 0.1
+offset_left = 0.399963
+offset_top = -0.440001
+offset_right = 228.0
 scale = Vector2(0.588, 0.588)
 theme_override_styles/fill = SubResource("StyleBoxFlat_3yy6v")
 value = 100.0
@@ -172,70 +185,93 @@ show_percentage = false
 [node name="InnerHealthBar" type="ProgressBar" parent="Control/HealthBar"]
 z_index = 1
 z_as_relative = false
-layout_mode = 0
-offset_right = 177.0
-offset_bottom = 27.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_styles/fill = SubResource("StyleBoxFlat_q0gqm")
 show_percentage = false
 
 [node name="ExpLabel" type="Label" parent="Control"]
-layout_mode = 0
-offset_left = 174.0
-offset_top = 15.0
-offset_right = 278.0
-offset_bottom = 41.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.772
+anchor_top = 0.102
+anchor_right = 0.962
+anchor_bottom = 0.159
 theme_override_fonts/font = ExtResource("2_cibyo")
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 32
 text = "0 EXP"
-horizontal_alignment = 2
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="WinLabel" type="Label" parent="Control"]
 visible = false
-layout_mode = 0
-offset_left = -10.0
-offset_top = 68.0
-offset_right = 309.0
-offset_bottom = 94.0
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.398
+anchor_right = 1.0
+anchor_bottom = 0.398
 theme_override_fonts/font = ExtResource("2_cibyo")
-theme_override_font_sizes/font_size = 8
+theme_override_font_sizes/font_size = 32
 text = "YOU'VE SAVED THIS REALM OF EXISTENCE"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="DoorLabel" type="Label" parent="Control"]
 visible = false
-layout_mode = 0
-offset_left = -27.0
-offset_top = -2.0
-offset_right = 423.0
-offset_bottom = 21.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.068
+anchor_top = 0.016
+anchor_right = 0.194
+anchor_bottom = 0.08
+offset_left = -0.0400085
+offset_top = -0.0799999
+offset_right = 506.6
+offset_bottom = 4.4
 theme_override_fonts/font = ExtResource("2_cibyo")
-theme_override_font_sizes/font_size = 7
+theme_override_font_sizes/font_size = 24
 text = "YOU NEED TO FIND THE KEY CHEST"
+vertical_alignment = 1
 
 [node name="KeyAlertLabel" type="Label" parent="Control"]
 visible = false
-layout_mode = 0
-offset_left = -23.0
-offset_top = -7.0
-offset_right = 427.0
-offset_bottom = 16.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.068
+anchor_top = 0.015
+anchor_right = 0.614
+anchor_bottom = 0.08
+offset_left = -0.0400085
+offset_top = 0.200001
+offset_right = 0.0799561
+offset_bottom = 18.4
 theme_override_fonts/font = ExtResource("2_cibyo")
-theme_override_font_sizes/font_size = 7
+theme_override_font_sizes/font_size = 28
 text = "YOU FOUND THE KEY,
 NOW FIND THE DOOR"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="DeadLabel" type="Label" parent="Control"]
 visible = false
-layout_mode = 0
-offset_left = -98.0
-offset_top = 72.0
-offset_right = 352.0
-offset_bottom = 144.0
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.3
+anchor_right = 1.0
+anchor_bottom = 0.7
 theme_override_fonts/font = ExtResource("2_cibyo")
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 52
 text = "YOU'VE PERISHED
 
+
+
 PRESS START TO RETURN
-TO MAIN MENU"
+
+TO THE MAIN MENU"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -259,6 +295,14 @@ transform = Transform3D(-1, -1.33744e-08, 8.63937e-08, 0, 0.988228, 0.152986, -8
 spring_length = 12.0
 
 [node name="Camera" type="Camera3D" parent="CamRoot/h/v/SpringArm3D"]
+
+[node name="ColorRect" type="ColorRect" parent="CamRoot/h/v/SpringArm3D/Camera"]
+material = SubResource("ShaderMaterial_mry7x")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="ShieldPivot" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88097, 0)

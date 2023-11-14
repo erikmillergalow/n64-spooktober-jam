@@ -150,7 +150,7 @@ animations = [{
 
 [node name="Flameball" type="Area3D" groups=["enemy_projectiles"]]
 collision_layer = 0
-collision_mask = 49
+collision_mask = 53
 script = ExtResource("1_ixits")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." groups=["enemy_projectile"]]

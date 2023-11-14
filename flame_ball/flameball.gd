@@ -40,7 +40,7 @@ func _on_body_entered(body):
 		$AnimatedSprite3D.animation = 'collide'
 		$AnimatedSprite3D.pixel_size += (damage_modifier * 0.009)
 		body.add_knockback(global_transform.basis.z.normalized())
-		body.take_damage(5)
+		body.take_damage(10.0 * damage_modifier)
 	
 	if body.is_in_group('monsters') and reflected:
 		$Fizzle.play()
@@ -48,7 +48,7 @@ func _on_body_entered(body):
 		$AnimatedSprite3D.animation = 'collide'
 		$AnimatedSprite3D.pixel_size += (damage_modifier * 0.009)
 		body.add_knockback(global_transform.basis.z.normalized())
-		body.take_damage(5)
+		body.take_damage(100 * damage_modifier)
 
 
 func _on_area_entered(area):

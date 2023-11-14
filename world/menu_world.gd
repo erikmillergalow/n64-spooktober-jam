@@ -26,7 +26,7 @@ func _ready():
 	$Control/SettingsRect/FXSlider.value = global.fx_volume
 	$Control/SettingsRect/MusicSlider.value = global.music_volume
 	$Control/SettingsRect/InvertCheck.button_pressed = global.invert
-	$Control/SettingsRect/QualityCheck.button_pressed = !global.quality
+#	$Control/SettingsRect/QualityCheck.button_pressed = !global.quality
 	pass 
 
 

@@ -1,19 +1,33 @@
-[gd_scene load_steps=13 format=3 uid="uid://dp26i51kj0tvp"]
+[gd_scene load_steps=26 format=3 uid="uid://dp26i51kj0tvp"]
 
 [ext_resource type="FontFile" uid="uid://dc4mm784qpajc" path="res://gui/font/Oswald-Bold.ttf" id="1"]
 [ext_resource type="Shader" path="res://shaders/gaussian-blur.gdshader" id="1_0jd2d"]
 [ext_resource type="Script" path="res://main.gd" id="1_bcocx"]
 [ext_resource type="Material" uid="uid://c8e7ck31g8wbs" path="res://post-process/pp_dither-band.tres" id="2"]
+[ext_resource type="Shader" path="res://shaders/GodotRetro/Screen Shaders/NTSCBasic.gdshader" id="2_hxj8e"]
 [ext_resource type="PackedScene" uid="uid://dcy86n4si7d7v" path="res://world/world.tscn" id="4"]
 [ext_resource type="FontFile" uid="uid://clvfdpwuiqgui" path="res://fonts/RoSpritendoSemiboldBeta-vmVwZ.otf" id="5_1ut6q"]
 [ext_resource type="Script" path="res://player/PauseMenu.gd" id="5_uujxg"]
 [ext_resource type="StyleBox" uid="uid://dw26a84r1w6ut" path="res://world/pause-button-focus.tres" id="7_c52r2"]
+[ext_resource type="Shader" path="res://shaders/GodotRetro/Screen Shaders/SimpleGlitch.gdshader" id="9_ae2lb"]
+[ext_resource type="Shader" path="res://shaders/GodotRetro/Screen Shaders/Grain.gdshader" id="10_fc4oy"]
+[ext_resource type="StyleBox" uid="uid://dcntkobu66m1p" path="res://upgrade-slider.tres" id="12_5npch"]
+[ext_resource type="Script" path="res://SpellSpeedProgressBar.gd" id="12_tiqar"]
+[ext_resource type="Script" path="res://SpellStrengthProgressBar.gd" id="13_eljik"]
+[ext_resource type="Script" path="res://RunSpeedProgressBar.gd" id="14_v2mlw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kktvl"]
+shader = ExtResource("2_hxj8e")
+shader_parameter/_bleeding = 0.747
+shader_parameter/_fringing = 0.669
+shader_parameter/_scanline = 0.5
+shader_parameter/linearColorSpace = true
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mhjag"]
 shader = ExtResource("1_0jd2d")
-shader_parameter/h = 0.2
-shader_parameter/v = 0.0
-shader_parameter/enabled = true
+shader_parameter/h = 0.6
+shader_parameter/v = 0.8
+shader_parameter/enabled = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f8ke5"]
 bg_color = Color(0.494118, 0.270588, 0.529412, 1)
@@ -26,13 +40,50 @@ corner_radius_bottom_left = 5
 base_font = ExtResource("1")
 spacing_glyph = 2
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f8h3r"]
+shader = ExtResource("10_fc4oy")
+shader_parameter/colored = false
+shader_parameter/color_amount = 0.878
+shader_parameter/grain_amount = 0.042
+shader_parameter/grain_size = 1.6
+shader_parameter/lum_amount = 1.3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rd87v"]
+bg_color = Color(0.403922, 0.403922, 0.403922, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.709804, 0.443137, 0.133333, 1)
+border_blend = true
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_orm6s"]
+shader = ExtResource("9_ae2lb")
+shader_parameter/range = 0.03
+shader_parameter/noiseQuality = 250.0
+shader_parameter/noiseIntensity = 0.0
+shader_parameter/offsetIntensity = 0.01
+shader_parameter/colorOffsetIntensity = 0.941
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ql4b"]
+bg_color = Color(0.294118, 0.294118, 0.294118, 1)
+border_color = Color(0.12549, 0.12549, 0.12549, 1)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c212v"]
 bg_color = Color(0.180392, 0.188235, 0.388235, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
-border_color = Color(0.711381, 0.443147, 0.134274, 1)
+border_color = Color(0.709804, 0.443137, 0.133333, 1)
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 4
@@ -42,8 +93,23 @@ expand_margin_top = 8.0
 expand_margin_right = 8.0
 expand_margin_bottom = 8.0
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fiv08"]
+bg_color = Color(0, 0.658824, 0.243137, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
 [node name="Main" type="Node"]
 script = ExtResource("1_bcocx")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_kktvl")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="N64Layer" type="CanvasLayer" parent="."]
 layer = 0
@@ -55,12 +121,12 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 stretch = true
-stretch_shrink = 3
+stretch_shrink = 2
 
 [node name="SubViewport" type="SubViewport" parent="N64Layer/HBlur"]
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
-size = Vector2i(320, 240)
+size = Vector2i(640, 460)
 render_target_update_mode = 4
 
 [node name="DitherBand" type="SubViewportContainer" parent="N64Layer/HBlur/SubViewport"]
@@ -68,7 +134,6 @@ material = ExtResource("2")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="N64Layer/HBlur/SubViewport/DitherBand"]
 handle_input_locally = false
@@ -76,7 +141,7 @@ msaa_3d = 1
 canvas_item_default_texture_filter = 0
 audio_listener_enable_2d = true
 audio_listener_enable_3d = true
-size = Vector2i(320, 240)
+size = Vector2i(1280, 920)
 render_target_update_mode = 4
 
 [node name="World" parent="N64Layer/HBlur/SubViewport/DitherBand/SubViewport" instance=ExtResource("4")]
@@ -106,33 +171,68 @@ vertical_alignment = 1
 [node name="Control" type="Control" parent="N64Layer"]
 process_mode = 3
 visible = false
+material = SubResource("ShaderMaterial_f8h3r")
 layout_mode = 3
-anchors_preset = 0
-offset_left = 30.0
-offset_top = 30.0
-offset_right = 932.0
-offset_bottom = 657.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("5_uujxg")
 
-[node name="ColorRect" type="ColorRect" parent="N64Layer/Control"]
+[node name="ColorRect" type="Panel" parent="N64Layer/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.011
+anchor_top = 0.011
+anchor_right = 0.988
+anchor_bottom = 0.988
+theme_override_styles/panel = SubResource("StyleBoxFlat_rd87v")
+
+[node name="ColorRect3" type="ColorRect" parent="N64Layer/Control/ColorRect"]
+material = SubResource("ShaderMaterial_orm6s")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -14.08
+offset_top = -10.12
+offset_right = -14.08
+offset_bottom = -10.12
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="UpgradesRect" type="Panel" parent="N64Layer/Control"]
 layout_mode = 0
-offset_left = 3.0
-offset_top = 43.0
-offset_right = 899.0
-offset_bottom = 553.0
-color = Color(0.372549, 0.372549, 0.372549, 1)
+offset_left = 49.0
+offset_top = 36.0
+offset_right = 866.0
+offset_bottom = 783.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_4ql4b")
+
+[node name="Label" type="Label" parent="N64Layer/Control/UpgradesRect"]
+layout_mode = 0
+offset_left = 46.0
+offset_top = 80.0
+offset_right = 222.0
+offset_bottom = 103.0
+theme_override_fonts/font = ExtResource("5_1ut6q")
+theme_override_font_sizes/font_size = 20
+text = "UPGRADES"
 
 [node name="Resume" type="Button" parent="N64Layer/Control"]
 process_mode = 3
 layout_mode = 2
-offset_left = 50.0
-offset_top = 169.0
-offset_right = 164.0
-offset_bottom = 200.0
-focus_neighbor_left = NodePath("../DoubleBlaster")
-focus_neighbor_top = NodePath("../EndRun")
-focus_neighbor_right = NodePath("../ShieldUpgrade")
-focus_neighbor_bottom = NodePath("../SpellSpeed")
+offset_left = 86.0
+offset_top = 828.0
+offset_right = 296.0
+offset_bottom = 859.0
+focus_neighbor_left = NodePath("../EndRun")
+focus_neighbor_top = NodePath("../RunSpeed")
+focus_neighbor_right = NodePath("../EndRun")
+focus_neighbor_bottom = NodePath("../ShieldUpgrade")
+focus_next = NodePath("../EndRun")
+focus_previous = NodePath("../RunSpeed")
 theme_override_fonts/font = ExtResource("5_1ut6q")
 theme_override_styles/normal = SubResource("StyleBoxFlat_c212v")
 theme_override_styles/focus = ExtResource("7_c52r2")
@@ -140,21 +240,23 @@ text = "Resume"
 
 [node name="ShieldUpgrade" type="Button" parent="N64Layer/Control"]
 process_mode = 3
+z_index = 2
 layout_mode = 2
-offset_left = 330.0
-offset_top = 170.0
-offset_right = 537.0
-offset_bottom = 201.0
-focus_neighbor_left = NodePath("../Resume")
-focus_neighbor_top = NodePath("../SpellStrength")
+offset_left = 349.0
+offset_top = 176.0
+offset_right = 556.0
+offset_bottom = 207.0
+focus_neighbor_left = NodePath("../SpellSpeed")
+focus_neighbor_top = NodePath(".")
 focus_neighbor_right = NodePath("../DoubleBlaster")
-focus_neighbor_bottom = NodePath("../SpellStrength")
+focus_neighbor_bottom = NodePath("../SpellSpeed")
 theme_override_fonts/font = ExtResource("5_1ut6q")
 theme_override_styles/normal = SubResource("StyleBoxFlat_c212v")
 theme_override_styles/focus = ExtResource("7_c52r2")
 text = "Shield Upgrade"
 
 [node name="ShieldLabel" type="Label" parent="N64Layer/Control/ShieldUpgrade"]
+z_index = 2
 layout_mode = 0
 offset_left = -8.0
 offset_top = -112.0
@@ -168,6 +270,7 @@ your shield.
 Cost: 2000 EXP"
 
 [node name="ShieldLabel2" type="Label" parent="N64Layer/Control/ShieldUpgrade"]
+z_index = 2
 layout_mode = 0
 offset_left = -8.0
 offset_top = -37.0
@@ -179,21 +282,23 @@ text = "Reflective:"
 
 [node name="DoubleBlaster" type="Button" parent="N64Layer/Control"]
 process_mode = 3
+z_index = 2
 layout_mode = 2
-offset_left = 642.0
-offset_top = 169.0
-offset_right = 849.0
-offset_bottom = 200.0
+offset_left = 625.0
+offset_top = 173.0
+offset_right = 832.0
+offset_bottom = 204.0
 focus_neighbor_left = NodePath("../ShieldUpgrade")
-focus_neighbor_top = NodePath("../RunSpeed")
-focus_neighbor_right = NodePath("../Resume")
-focus_neighbor_bottom = NodePath("../RunSpeed")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../SpellSpeed")
 theme_override_fonts/font = ExtResource("5_1ut6q")
 theme_override_styles/normal = SubResource("StyleBoxFlat_c212v")
 theme_override_styles/focus = ExtResource("7_c52r2")
 text = "Double Spells"
 
 [node name="BlasterLabel" type="Label" parent="N64Layer/Control/DoubleBlaster"]
+z_index = 2
 layout_mode = 0
 offset_left = -8.0
 offset_top = -110.0
@@ -206,6 +311,7 @@ text = "Cast 2 spells at once.
 Cost: 8000 EXP"
 
 [node name="BlasterLabel2" type="Label" parent="N64Layer/Control/DoubleBlaster"]
+z_index = 2
 layout_mode = 0
 offset_left = -8.0
 offset_top = -36.0
@@ -217,26 +323,29 @@ text = "Double spells:"
 
 [node name="SpellSpeed" type="Button" parent="N64Layer/Control"]
 process_mode = 3
+z_index = 2
 layout_mode = 2
-offset_left = 48.0
-offset_top = 338.0
-offset_right = 255.0
-offset_bottom = 369.0
-focus_neighbor_left = NodePath("../RunSpeed")
-focus_neighbor_top = NodePath("../Resume")
-focus_neighbor_right = NodePath("../SpellStrength")
-focus_neighbor_bottom = NodePath("../HealthUpgrade")
+offset_left = 76.0
+offset_top = 346.0
+offset_right = 283.0
+offset_bottom = 377.0
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../ShieldUpgrade")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../SpellStrength")
+focus_next = NodePath("../SpellStrength")
+focus_previous = NodePath("../ShieldUpgrade")
 theme_override_fonts/font = ExtResource("5_1ut6q")
 theme_override_styles/normal = SubResource("StyleBoxFlat_c212v")
 theme_override_styles/focus = ExtResource("7_c52r2")
 text = "Spell Speed"
 
 [node name="SpellSpeedLabel" type="Label" parent="N64Layer/Control/SpellSpeed"]
+z_index = 2
 layout_mode = 0
-offset_left = -13.0
-offset_top = -104.0
-offset_right = 258.0
-offset_bottom = -52.0
+offset_top = -102.0
+offset_right = 271.0
+offset_bottom = -50.0
 theme_override_fonts/font = ExtResource("5_1ut6q")
 theme_override_font_sizes/font_size = 12
 text = "Cast spells faster.
@@ -244,32 +353,47 @@ text = "Cast spells faster.
 Cost: 1000 EXP"
 
 [node name="SpellSpeedLabel2" type="Label" parent="N64Layer/Control/SpellSpeed"]
+z_index = 2
 layout_mode = 0
-offset_left = -13.0
-offset_top = -40.0
-offset_right = 199.0
-offset_bottom = -14.0
+offset_top = -43.0
+offset_right = 212.0
+offset_bottom = -17.0
 theme_override_fonts/font = ExtResource("5_1ut6q")
 theme_override_font_sizes/font_size = 12
 text = "Level:"
 
+[node name="SpellSpeedProgressBar" type="ProgressBar" parent="N64Layer/Control/SpellSpeed"]
+layout_mode = 0
+offset_left = 267.0
+offset_right = 756.0
+offset_bottom = 27.0
+theme_override_styles/fill = ExtResource("12_5npch")
+max_value = 1.0
+step = 0.001
+show_percentage = false
+script = ExtResource("12_tiqar")
+
 [node name="SpellStrength" type="Button" parent="N64Layer/Control"]
 process_mode = 3
+z_index = 2
 layout_mode = 2
-offset_left = 325.0
-offset_top = 335.0
-offset_right = 532.0
-offset_bottom = 366.0
-focus_neighbor_left = NodePath("../SpellSpeed")
-focus_neighbor_top = NodePath("../ShieldUpgrade")
-focus_neighbor_right = NodePath("../RunSpeed")
-focus_neighbor_bottom = NodePath("../EndRun")
+offset_left = 76.0
+offset_top = 533.0
+offset_right = 283.0
+offset_bottom = 564.0
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../SpellSpeed")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../RunSpeed")
+focus_next = NodePath("../RunSpeed")
+focus_previous = NodePath("../SpellSpeed")
 theme_override_fonts/font = ExtResource("5_1ut6q")
 theme_override_styles/normal = SubResource("StyleBoxFlat_c212v")
 theme_override_styles/focus = ExtResource("7_c52r2")
 text = "Spell Strength"
 
 [node name="SpellDamageLabel" type="Label" parent="N64Layer/Control/SpellStrength"]
+z_index = 2
 layout_mode = 0
 offset_left = -5.0
 offset_top = -101.0
@@ -282,6 +406,7 @@ text = "Increase spell damage.
 Cost: 1000 EXP"
 
 [node name="SpellDamageLabel2" type="Label" parent="N64Layer/Control/SpellStrength"]
+z_index = 2
 layout_mode = 0
 offset_left = -5.0
 offset_top = -37.0
@@ -291,17 +416,31 @@ theme_override_fonts/font = ExtResource("5_1ut6q")
 theme_override_font_sizes/font_size = 12
 text = "Level:"
 
+[node name="SpellStrengthProgressBar" type="ProgressBar" parent="N64Layer/Control/SpellStrength"]
+layout_mode = 0
+offset_left = 267.0
+offset_right = 756.0
+offset_bottom = 27.0
+theme_override_styles/fill = ExtResource("12_5npch")
+max_value = 1.0
+step = 0.001
+show_percentage = false
+script = ExtResource("13_eljik")
+
 [node name="RunSpeed" type="Button" parent="N64Layer/Control"]
 process_mode = 3
+z_index = 2
 layout_mode = 2
-offset_left = 642.0
-offset_top = 335.0
-offset_right = 849.0
-offset_bottom = 366.0
-focus_neighbor_left = NodePath("../SpellStrength")
-focus_neighbor_top = NodePath("../DoubleBlaster")
-focus_neighbor_right = NodePath("../SpellSpeed")
-focus_neighbor_bottom = NodePath("../DoubleBlaster")
+offset_left = 75.0
+offset_top = 713.0
+offset_right = 282.0
+offset_bottom = 744.0
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../SpellStrength")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Resume")
+focus_next = NodePath("../Resume")
+focus_previous = NodePath(".")
 theme_override_fonts/font = ExtResource("5_1ut6q")
 theme_override_styles/normal = SubResource("StyleBoxFlat_c212v")
 theme_override_styles/focus = ExtResource("7_c52r2")
@@ -329,55 +468,31 @@ theme_override_fonts/font = ExtResource("5_1ut6q")
 theme_override_font_sizes/font_size = 12
 text = "Level:"
 
-[node name="HealthUpgrade" type="Button" parent="N64Layer/Control"]
-process_mode = 3
-layout_mode = 2
-offset_left = 35.0
-offset_top = 490.0
-offset_right = 242.0
-offset_bottom = 521.0
-focus_neighbor_left = NodePath("../EndRun")
-focus_neighbor_top = NodePath("../SpellSpeed")
-focus_neighbor_right = NodePath("../EndRun")
-focus_neighbor_bottom = NodePath("../Resume")
-theme_override_fonts/font = ExtResource("5_1ut6q")
-theme_override_styles/normal = SubResource("StyleBoxFlat_c212v")
-theme_override_styles/focus = ExtResource("7_c52r2")
-text = "More Health"
-
-[node name="HealthUpgradeLabel" type="Label" parent="N64Layer/Control/HealthUpgrade"]
+[node name="RunSpeedProgressBar" type="ProgressBar" parent="N64Layer/Control/RunSpeed"]
 layout_mode = 0
-offset_left = -5.0
-offset_top = -96.0
-offset_right = 266.0
-offset_bottom = -44.0
-theme_override_fonts/font = ExtResource("5_1ut6q")
-theme_override_font_sizes/font_size = 12
-text = "Regain full health.
-
-Cost: 1000 EXP"
-
-[node name="HealthUpgradeLabel2" type="Label" parent="N64Layer/Control/HealthUpgrade"]
-layout_mode = 0
-offset_left = -5.0
-offset_top = -33.0
-offset_right = 248.0
-offset_bottom = -7.0
-theme_override_fonts/font = ExtResource("5_1ut6q")
-theme_override_font_sizes/font_size = 12
-text = "Level:"
+offset_left = 267.0
+offset_top = 4.0
+offset_right = 756.0
+offset_bottom = 31.0
+theme_override_styles/fill = ExtResource("12_5npch")
+max_value = 1.0
+step = 0.001
+show_percentage = false
+script = ExtResource("14_v2mlw")
 
 [node name="EndRun" type="Button" parent="N64Layer/Control"]
 process_mode = 3
 layout_mode = 2
-offset_left = 318.0
-offset_top = 490.0
-offset_right = 525.0
-offset_bottom = 521.0
-focus_neighbor_left = NodePath("../HealthUpgrade")
-focus_neighbor_top = NodePath("../SpellStrength")
-focus_neighbor_right = NodePath("../HealthUpgrade")
-focus_neighbor_bottom = NodePath("../ShieldUpgrade")
+offset_left = 1005.0
+offset_top = 826.0
+offset_right = 1219.0
+offset_bottom = 857.0
+focus_neighbor_left = NodePath("../Resume")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../Resume")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../DoubleBlaster")
+focus_previous = NodePath("../Resume")
 theme_override_fonts/font = ExtResource("5_1ut6q")
 theme_override_styles/normal = SubResource("StyleBoxFlat_c212v")
 theme_override_styles/focus = ExtResource("7_c52r2")
@@ -385,30 +500,40 @@ text = "End Run"
 
 [node name="HealthLabel" type="Label" parent="N64Layer/Control"]
 layout_mode = 0
-offset_left = 558.0
-offset_top = 426.0
-offset_right = 667.0
-offset_bottom = 452.0
+offset_left = 907.0
+offset_top = 94.0
+offset_right = 1088.0
+offset_bottom = 120.0
 theme_override_fonts/font = ExtResource("5_1ut6q")
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 20
 text = "Health: 100"
+
+[node name="ProgressBar" type="ProgressBar" parent="N64Layer/Control/HealthLabel"]
+layout_mode = 0
+offset_left = -4.0
+offset_top = -45.0
+offset_right = 328.0
+offset_bottom = -15.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_fiv08")
+value = 100.0
+show_percentage = false
 
 [node name="ExpLabel" type="Label" parent="N64Layer/Control"]
 layout_mode = 0
-offset_left = 558.0
-offset_top = 452.0
-offset_right = 615.0
-offset_bottom = 478.0
+offset_left = 911.0
+offset_top = 207.0
+offset_right = 1005.0
+offset_bottom = 233.0
 theme_override_fonts/font = ExtResource("5_1ut6q")
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 20
 text = "Exp: 0"
 
 [node name="KeyLabel" type="Label" parent="N64Layer/Control"]
 layout_mode = 0
-offset_left = 558.0
-offset_top = 478.0
-offset_right = 868.0
-offset_bottom = 530.0
+offset_left = 913.0
+offset_top = 374.0
+offset_right = 1223.0
+offset_bottom = 426.0
 theme_override_fonts/font = ExtResource("5_1ut6q")
 theme_override_font_sizes/font_size = 12
 text = "Have you found the key chest?
@@ -420,6 +545,5 @@ Not yet..."
 [connection signal="pressed" from="N64Layer/Control/SpellSpeed" to="N64Layer/Control" method="_on_spell_speed_pressed"]
 [connection signal="pressed" from="N64Layer/Control/SpellStrength" to="N64Layer/Control" method="_on_spell_strength_pressed"]
 [connection signal="pressed" from="N64Layer/Control/RunSpeed" to="N64Layer/Control" method="_on_run_speed_pressed"]
-[connection signal="pressed" from="N64Layer/Control/HealthUpgrade" to="N64Layer/Control" method="_on_health_upgrade_pressed"]
 [connection signal="pressed" from="N64Layer/Control/EndRun" to="." method="_on_end_run_pressed"]
 [connection signal="pressed" from="N64Layer/Control/EndRun" to="N64Layer/Control" method="_on_end_run_pressed"]

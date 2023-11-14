@@ -6,6 +6,6 @@
 [resource]
 shader = ExtResource("1")
 shader_parameter/col_depth = 24.0
-shader_parameter/dither_banding = true
-shader_parameter/enabled = true
+shader_parameter/dither_banding = false
+shader_parameter/enabled = false
 shader_parameter/dither_tex = ExtResource("2")

@@ -36,6 +36,7 @@ var knockback = Vector3(0, 0, 0)
 
 func _ready():
 #	energy_shield.play()
+	spring_arm.add_excluded_object(self)
 	pass
 
 func _process(_delta):
@@ -52,9 +53,18 @@ func _process(_delta):
 
 
 func sync_spell_speed():
-	if global.increase_spell_speed:
-		$MagicCooldown.wait_time -= 0.05
-		global.increase_spell_speed = false
+	# convert to if wait time != formula set to formula
+	
+	var expected_cooldown = 0.435 - (0.05 * ((global.spell_speed_modifier * 2) - 1))
+	if $MagicCooldown.wait_time != expected_cooldown:
+		print('sync cooldown')
+		print($MagicCooldown.wait_time)
+		print(expected_cooldown)
+		$MagicCooldown.wait_time = expected_cooldown
+	
+#	if global.increase_spell_speed:
+#		$MagicCooldown.wait_time -= 0.05
+#		global.increase_spell_speed = false
 
 
 func show_door_text():

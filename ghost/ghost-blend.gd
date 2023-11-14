@@ -253,6 +253,7 @@ func take_damage(amount):
 func _on_flame_cooldown_timeout():
 	if not dead and player_in_proximity and player_hittable:
 		var flameball = flameball_scene.instantiate()
+		flameball.set_damage_modifier(damage_modifier)
 		flameball.transform.origin = global_transform.origin - Vector3(0.0, -0.5, 0.0)
 		flameball.rotation.y = rotation.y + PI
 		flameball.rotation.x = 0
