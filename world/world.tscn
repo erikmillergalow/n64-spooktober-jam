@@ -946,7 +946,7 @@ anchor_bottom = 0.137
 theme_override_fonts/font = ExtResource("2_m6y7h")
 theme_override_font_sizes/font_size = 28
 text = "Choose the number of areas generated in 
-the playing field."
+the playing field and game type."
 horizontal_alignment = 1
 vertical_alignment = 1
 
