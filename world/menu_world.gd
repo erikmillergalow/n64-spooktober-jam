@@ -36,11 +36,12 @@ func _process(_delta):
 
 
 func _on_begin_button_pressed():
-	$Control/GridSizeRect/RowsSlider.value = global.room_rows
-	$Control/GridSizeRect/ColsSlider.value = global.room_cols
+#	$Control/GridSizeRect/RowsSlider.value = global.room_rows
+#	$Control/GridSizeRect/ColsSlider.value = global.room_cols
 	$Control/GridSizeRect/MazeModeCheckbox.button_pressed = global.maze_mode
 	$Control/GridSizeRect.visible = true
-	$Control/GridSizeRect/RowsSlider.grab_focus()
+	$Control/GridSizeRect/GridSizeSlider.value = 1
+	$Control/GridSizeRect/GridSizeSlider.grab_focus()
 
 # game config menu
 func _on_rows_slider_value_changed(value):
@@ -102,17 +103,33 @@ func _on_fx_slider_value_changed(value):
 func _on_begin_button_focus_entered():
 	$Control/AnimationPlayer.play("begin")
 
-
 func _on_help_button_focus_entered():
 	$Control/AnimationPlayer.play("help")
-
 
 func _on_settings_button_focus_entered():
 	$Control/AnimationPlayer.play("settings")
 
+func _on_leaderboards_button_focus_entered():
+	$Control/AnimationPlayer.play("leaderboards")
 
 func _on_quit_button_focus_entered():
 	$Control/AnimationPlayer.play("quit")
+
+func _on_begin_button_focus_exited():
+	$Control/BeginButton.scale = Vector2(1, 1)
+
+func _on_help_button_focus_exited():
+	$Control/HelpButton.scale = Vector2(1, 1)
+
+func _on_settings_button_focus_exited():
+	$Control/SettingsButton.scale = Vector2(1, 1)
+
+func _on_leaderboards_button_focus_exited():
+	$Control/LeaderboardsButton.scale = Vector2(1, 1)
+
+func _on_quit_button_focus_exited():
+	$Control/QuitButton.scale = Vector2(1, 1)
+
 
 # help screen
 func _on_help_button_pressed():
@@ -163,3 +180,30 @@ func _on_seed_text_edit_text_changed(new_text):
 
 func _on_mouse_look_slider_value_changed(value):
 	global.mouse_camera_sensitiviy = 0.01 + (0.001 * value)
+
+
+func _on_grid_size_slider_value_changed(value):
+	if value == 1:
+		$Control/GridSizeRect/GridSizeLabel.text = "Grid size: 3x3"
+		global.room_rows = 3
+		global.room_cols = 3
+		
+	if value == 2:
+		$Control/GridSizeRect/GridSizeLabel.text = "Grid size: 5x5"
+		global.room_rows = 5
+		global.room_cols = 5
+		
+	if value == 3:
+		$Control/GridSizeRect/GridSizeLabel.text = "Grid size: 10x10"
+		global.room_rows = 10
+		global.room_cols = 10
+
+
+func _on_leaderboard_done_button_pressed():
+	$Control/LeaderboardsRect.close()
+	$Control/BeginButton.grab_focus()
+
+
+func _on_leaderboards_button_pressed():
+	$Control/LeaderboardsRect.open()
+	$Control/LeaderboardsRect/SizeSlider.grab_focus()

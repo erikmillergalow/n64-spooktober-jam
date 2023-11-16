@@ -1,6 +1,7 @@
-[gd_scene load_steps=33 format=3 uid="uid://d1w51ia4nwluc"]
+[gd_scene load_steps=46 format=3 uid="uid://d1w51ia4nwluc"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_lx0as"]
+[ext_resource type="Texture2D" uid="uid://2sm8pie633ge" path="res://objects/crate/crate.png" id="2_2k1pi"]
 [ext_resource type="FontFile" uid="uid://clvfdpwuiqgui" path="res://fonts/RoSpritendoSemiboldBeta-vmVwZ.otf" id="2_cibyo"]
 [ext_resource type="Shader" path="res://shaders/GodotRetro/Screen Shaders/Grain.gdshader" id="3_28j33"]
 [ext_resource type="PackedScene" uid="uid://tj837phb2kfp" path="res://shield/shield.tscn" id="3_imjhw"]
@@ -13,6 +14,55 @@
 [ext_resource type="AudioStream" uid="uid://coup8w3myt0qn" path="res://sounds/fx/cast-002.ogg" id="10_sj83s"]
 [ext_resource type="AudioStream" uid="uid://th2wtqg4hbq1" path="res://sounds/music/perished-002.ogg" id="11_5wmgc"]
 [ext_resource type="AudioStream" uid="uid://beb5rdcxtboa0" path="res://sounds/music/win-002.ogg" id="12_478el"]
+[ext_resource type="Texture2D" uid="uid://demma3483dfu" path="res://player/heart-burst.png" id="14_j28mf"]
+
+[sub_resource type="Curve" id="Curve_e5722"]
+_data = [Vector2(0, 0), 0.0, 1.4, 0, 0, Vector2(0.720779, 0.926316), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_mhn2v"]
+curve = SubResource("Curve_e5722")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mhmlw"]
+direction = Vector3(1, 1, 1)
+spread = 85.45
+gravity = Vector3(0, 5, 0)
+initial_velocity_min = 1.0
+initial_velocity_max = 1.0
+angle_max = 258.9
+anim_speed_min = 0.3
+anim_speed_max = 1.0
+anim_speed_curve = SubResource("CurveTexture_mhn2v")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qiadx"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("14_j28mf")
+billboard_mode = 3
+particles_anim_h_frames = 10
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_75olq"]
+material = SubResource("StandardMaterial3D_qiadx")
+size = Vector2(0.6, 0.6)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r7yo4"]
+transparency = 1
+albedo_texture = ExtResource("14_j28mf")
+billboard_mode = 3
+particles_anim_h_frames = 10
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_sheum"]
+material = SubResource("StandardMaterial3D_r7yo4")
+size = Vector2(0.6, 0.6)
+
+[sub_resource type="Curve" id="Curve_yxbp1"]
+max_value = 2.0
+_data = [Vector2(0, 0), 0.0, 1.4, 0, 0, Vector2(0.478022, 0.336842), 0.0, 0.0, 0, 0, Vector2(0.697802, 0.357895), 0.0, 0.0, 0, 0, Vector2(0.725275, 1.15789), 0.0, 0.0, 0, 0, Vector2(0.983517, 1.49474), 0.0, 0.0, 0, 0]
+point_count = 5
 
 [sub_resource type="Animation" id="Animation_sq4sq"]
 resource_name = "hit_flicker"
@@ -146,10 +196,53 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kd2sf"]
+albedo_color = Color(0.74902, 0.713726, 0.694118, 1)
+albedo_texture = ExtResource("2_2k1pi")
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_dv0o7"]
+material = SubResource("StandardMaterial3D_kd2sf")
+size = Vector3(2, 2, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pdq4e"]
+size = Vector3(2, 2, 2)
+
 [node name="Player" type="CharacterBody3D" groups=["player"]]
 collision_mask = 17
 axis_lock_linear_y = true
 script = ExtResource("1_lx0as")
+
+[node name="HealingParticles" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.34283, 0)
+visible = false
+emitting = false
+amount = 21
+one_shot = true
+explosiveness = 0.52
+randomness = 0.61
+process_material = SubResource("ParticleProcessMaterial_mhmlw")
+draw_pass_1 = SubResource("QuadMesh_75olq")
+
+[node name="HealingParticles2" type="CPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.34283, 0)
+emitting = false
+amount = 21
+one_shot = true
+explosiveness = 0.52
+randomness = 0.61
+mesh = SubResource("QuadMesh_sheum")
+direction = Vector3(2, 2, 2)
+spread = 148.63
+flatness = 0.26
+gravity = Vector3(0, 5, 0)
+initial_velocity_min = 0.4
+initial_velocity_max = 0.4
+linear_accel_min = 2.0
+linear_accel_max = 3.0
+anim_speed_min = 0.3
+anim_speed_max = 1.0
+anim_speed_curve = SubResource("Curve_yxbp1")
 
 [node name="HitAnimation" type="AnimationPlayer" parent="."]
 libraries = {
@@ -197,14 +290,27 @@ show_percentage = false
 [node name="ExpLabel" type="Label" parent="Control"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.772
-anchor_top = 0.102
-anchor_right = 0.962
-anchor_bottom = 0.159
+anchor_left = 0.397
+anchor_top = 0.193
+anchor_right = 0.97
+anchor_bottom = 0.227
 theme_override_fonts/font = ExtResource("2_cibyo")
 theme_override_font_sizes/font_size = 32
 text = "0 EXP"
-horizontal_alignment = 1
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="TimeLabel" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.269
+anchor_top = 0.113
+anchor_right = 0.967
+anchor_bottom = 0.113
+theme_override_fonts/font = ExtResource("2_cibyo")
+theme_override_font_sizes/font_size = 32
+text = "00:00"
+horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="WinLabel" type="Label" parent="Control"]
@@ -214,9 +320,16 @@ anchors_preset = -1
 anchor_top = 0.398
 anchor_right = 1.0
 anchor_bottom = 0.398
+offset_top = -0.160004
+offset_bottom = 248.84
 theme_override_fonts/font = ExtResource("2_cibyo")
 theme_override_font_sizes/font_size = 32
-text = "YOU'VE SAVED THIS REALM OF EXISTENCE"
+text = "YOU'VE SAVED THIS REALM OF EXISTENCE
+
+
+
+
+PRESS A / [E] TO CONTINUE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -324,7 +437,26 @@ pixel_size = 0.04
 sprite_frames = SubResource("SpriteFrames_hyahn")
 speed_scale = 4.0
 
+[node name="CarriedCrate" type="Area3D" parent="ShieldPivot" groups=["walls_objects"]]
+visible = false
+collision_layer = 80
+collision_mask = 0
+monitorable = false
+
+[node name="CrateMesh" type="MeshInstance3D" parent="ShieldPivot/CarriedCrate"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.56124, 2.12034)
+mesh = SubResource("BoxMesh_dv0o7")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ShieldPivot/CarriedCrate"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.56124, 2.12034)
+shape = SubResource("BoxShape3D_pdq4e")
+
 [node name="player_spooky" parent="." instance=ExtResource("5_j08mn")]
+
+[node name="CrateCast" type="RayCast3D" parent="player_spooky"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.768644, 0.319656)
+collision_mask = 64
 
 [node name="MagicCooldown" type="Timer" parent="."]
 wait_time = 0.435
@@ -354,6 +486,9 @@ bus = &"music"
 [node name="WinMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("12_478el")
 bus = &"music"
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6857, 0)
 
 [connection signal="timeout" from="Control/KeyAlertTimer" to="." method="_on_key_alert_timer_timeout"]
 [connection signal="finished" from="Music" to="." method="_on_music_finished"]

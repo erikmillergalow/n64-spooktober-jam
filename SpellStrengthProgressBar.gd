@@ -2,14 +2,14 @@ extends ProgressBar
 
 
 func _ready():
-	pass # Replace with function body.
+	max_value = 1.0
 
 
 func _process(delta):
-	var tween = create_tween()
 	if max_value != global.max_stats_level:
+		var tween = create_tween()
 		tween.tween_property(self, "max_value", global.max_stats_level, 0.5)
 	
-	var fill_tween = create_tween()
 	if value != global.spell_power_modifier:
+		var fill_tween = create_tween()
 		fill_tween.tween_property(self, "value", global.spell_power_modifier, 0.5)

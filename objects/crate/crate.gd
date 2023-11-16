@@ -8,3 +8,12 @@ func _ready():
 
 func spawn_at_location(location):
 	global_transform.origin = location
+
+
+func grab_crate():
+	global_transform.origin.y = -10.0
+
+
+func place_crate(position, rotation):
+	global_rotation = rotation
+	global_transform.origin = position

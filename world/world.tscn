@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://dcy86n4si7d7v"]
+[gd_scene load_steps=40 format=3 uid="uid://dcy86n4si7d7v"]
 
 [ext_resource type="Script" path="res://world/orbit_camera.gd" id="1"]
 [ext_resource type="Script" path="res://world/menu_world.gd" id="1_qder5"]
@@ -6,11 +6,12 @@
 [ext_resource type="Script" path="res://world/box/spatial_sin_pan.gd" id="3"]
 [ext_resource type="StyleBox" uid="uid://cwapqfihydmnm" path="res://world/main-menu-button-style.tres" id="3_bcovx"]
 [ext_resource type="PackedScene" path="res://world/floor/floor.tscn" id="4"]
-[ext_resource type="PackedScene" uid="uid://dy02fdb77e812" path="res://world/shadow/shadow.tscn" id="6"]
+[ext_resource type="PackedScene" uid="uid://cc8c407tkfg8i" path="res://UserManagement/user_management.tscn" id="4_mkjqh"]
+[ext_resource type="Script" path="res://world/LeaderboardsRect.gd" id="4_vfnkt"]
+[ext_resource type="PackedScene" uid="uid://fcpkbdbqr12k" path="res://Leaderboard/leaderboard.tscn" id="5_86c3e"]
 [ext_resource type="Shader" path="res://shaders/GodotRetro/Screen Shaders/Grain.gdshader" id="6_dh8xt"]
 [ext_resource type="Material" uid="uid://1k4iirdl0qtf" path="res://world/box/sparkle_mat.tres" id="7"]
 [ext_resource type="Material" uid="uid://blpnruy0dhpw5" path="res://world/light-shaft/light-shaft_mat.tres" id="10"]
-[ext_resource type="PackedScene" uid="uid://bqksudore6gkp" path="res://world/crystal/crystal_mesh.tscn" id="11"]
 [ext_resource type="ArrayMesh" uid="uid://cng2y3he7v7b8" path="res://world/light-shaft/light-shaft_Mesh.mesh" id="12"]
 [ext_resource type="ArrayMesh" uid="uid://dh4nw5qd6jcdp" path="res://world/stairs/stairs_Mesh.mesh" id="14"]
 [ext_resource type="Texture2D" uid="uid://c7yqmbdcqkcw0" path="res://world/floor/floor.png" id="14_ep1q3"]
@@ -96,6 +97,23 @@ tracks/0/keys = {
 "values": [Vector2(0.884, 0.884), Vector2(1.161, 1.161), Vector2(0.884, 0.884)]
 }
 
+[sub_resource type="Animation" id="Animation_fbvja"]
+resource_name = "leaderboards"
+length = 1.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LeaderboardsButton:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.884, 0.884), Vector2(1.161, 1.161), Vector2(0.884, 0.884)]
+}
+
 [sub_resource type="Animation" id="Animation_hpnxm"]
 resource_name = "quit"
 length = 1.5
@@ -134,9 +152,32 @@ tracks/0/keys = {
 _data = {
 "begin": SubResource("Animation_g7blm"),
 "help": SubResource("Animation_qdtma"),
+"leaderboards": SubResource("Animation_fbvja"),
 "quit": SubResource("Animation_hpnxm"),
 "settings": SubResource("Animation_xqvgb")
 }
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q6lqf"]
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_55h5c"]
+bg_color = Color(0.180392, 0.188235, 0.388235, 1)
+border_width_left = 6
+border_width_top = 4
+border_width_right = 6
+border_width_bottom = 4
+border_color = Color(0.709804, 0.443137, 0.133333, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 2.0
+expand_margin_top = 5.0
+expand_margin_right = 2.0
+expand_margin_bottom = 5.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bdm40"]
 bg_color = Color(0.501961, 0.501961, 0.501961, 1)
@@ -205,10 +246,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Title" type="Label" parent="Control"]
 visible = false
-layout_mode = 2
+layout_mode = 0
 offset_left = -1.0
 offset_top = 16.0
 offset_right = 327.0
@@ -227,12 +269,19 @@ anchor_left = 0.046
 anchor_top = 0.695
 anchor_right = 0.299
 anchor_bottom = 0.761
+offset_left = 5.12
+offset_top = -0.399963
+offset_right = 42.28
+offset_bottom = 12.88
+scale = Vector2(0.884, 0.884)
 focus_neighbor_left = NodePath("../SettingsButton")
 focus_neighbor_top = NodePath(".")
 focus_neighbor_right = NodePath("../HelpButton")
-focus_neighbor_bottom = NodePath(".")
+focus_neighbor_bottom = NodePath("../LeaderboardsButton")
+focus_next = NodePath("../HelpButton")
+focus_previous = NodePath("../QuitButton")
 theme_override_fonts/font = ExtResource("2_m6y7h")
-theme_override_font_sizes/font_size = 36
+theme_override_font_sizes/font_size = 26
 theme_override_styles/normal = ExtResource("3_bcovx")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_66tac")
 text = "Begin"
@@ -241,15 +290,21 @@ text = "Begin"
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.375
-anchor_top = 0.692
-anchor_right = 0.626
-anchor_bottom = 0.761
+anchor_top = 0.697
+anchor_right = 0.625
+anchor_bottom = 0.765
+offset_left = -3.05176e-05
+offset_top = -4.24005
+offset_bottom = 0.199951
+scale = Vector2(0.884, 0.884)
 focus_neighbor_left = NodePath("../BeginButton")
-focus_neighbor_top = NodePath("../QuitButton")
+focus_neighbor_top = NodePath(".")
 focus_neighbor_right = NodePath("../SettingsButton")
-focus_neighbor_bottom = NodePath("../QuitButton")
+focus_neighbor_bottom = NodePath("../LeaderboardsButton")
+focus_next = NodePath("../SettingsButton")
+focus_previous = NodePath("../BeginButton")
 theme_override_fonts/font = ExtResource("2_m6y7h")
-theme_override_font_sizes/font_size = 36
+theme_override_font_sizes/font_size = 26
 theme_override_styles/normal = ExtResource("3_bcovx")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_66tac")
 text = "Help"
@@ -261,31 +316,61 @@ anchor_left = 0.699
 anchor_top = 0.693
 anchor_right = 0.955
 anchor_bottom = 0.761
+offset_left = 0.280029
+offset_top = -0.559998
+offset_right = -6.40002
+offset_bottom = 3.88
 focus_neighbor_left = NodePath("../HelpButton")
 focus_neighbor_top = NodePath(".")
 focus_neighbor_right = NodePath("../BeginButton")
-focus_neighbor_bottom = NodePath(".")
-focus_next = NodePath("../QuitButton")
+focus_neighbor_bottom = NodePath("../QuitButton")
+focus_next = NodePath("../LeaderboardsButton")
 focus_previous = NodePath("../HelpButton")
 theme_override_fonts/font = ExtResource("2_m6y7h")
-theme_override_font_sizes/font_size = 36
+theme_override_font_sizes/font_size = 26
 theme_override_styles/normal = ExtResource("3_bcovx")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_66tac")
 text = "Settings"
 
+[node name="LeaderboardsButton" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.841
+anchor_right = 0.45
+anchor_bottom = 0.903
+offset_top = -5.72003
+offset_bottom = 0.239929
+focus_neighbor_left = NodePath("../QuitButton")
+focus_neighbor_top = NodePath("../BeginButton")
+focus_neighbor_right = NodePath("../QuitButton")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../QuitButton")
+focus_previous = NodePath("../SettingsButton")
+theme_override_fonts/font = ExtResource("2_m6y7h")
+theme_override_font_sizes/font_size = 26
+theme_override_styles/normal = ExtResource("3_bcovx")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_66tac")
+text = "Leaderboards"
+
 [node name="QuitButton" type="Button" parent="Control"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.375
-anchor_top = 0.84
-anchor_right = 0.626
-anchor_bottom = 0.909
-focus_neighbor_left = NodePath(".")
+anchor_left = 0.55
+anchor_top = 0.835
+anchor_right = 0.8
+anchor_bottom = 0.903
+offset_top = -0.200012
+offset_right = 1.0
+offset_bottom = 0.239929
+focus_neighbor_left = NodePath("../LeaderboardsButton")
 focus_neighbor_top = NodePath("../HelpButton")
-focus_neighbor_right = NodePath(".")
-focus_neighbor_bottom = NodePath("../HelpButton")
+focus_neighbor_right = NodePath("../LeaderboardsButton")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../BeginButton")
+focus_previous = NodePath("../LeaderboardsButton")
 theme_override_fonts/font = ExtResource("2_m6y7h")
-theme_override_font_sizes/font_size = 36
+theme_override_font_sizes/font_size = 26
 theme_override_styles/normal = ExtResource("3_bcovx")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_iku18")
 text = "Quit"
@@ -305,6 +390,7 @@ anchor_right = 0.955
 anchor_bottom = 0.943
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0.462745, 0.462745, 0.462745, 1)
 
 [node name="Title" type="Label" parent="Control/SettingsRect"]
@@ -483,6 +569,7 @@ anchor_left = 0.05
 anchor_top = 0.068
 anchor_right = 0.95
 anchor_bottom = 0.932
+mouse_filter = 2
 color = Color(0.501961, 0.501961, 0.501961, 1)
 
 [node name="Controls" type="Label" parent="Control/HelpRect"]
@@ -746,6 +833,97 @@ theme_override_font_sizes/font_size = 28
 theme_override_styles/normal = ExtResource("3_bcovx")
 text = "Next"
 
+[node name="LeaderboardsRect" type="Panel" parent="Control"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.068
+anchor_right = 0.95
+anchor_bottom = 0.932
+offset_left = -48.0
+offset_top = -46.56
+offset_right = 48.0
+offset_bottom = 46.56
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_q6lqf")
+script = ExtResource("4_vfnkt")
+
+[node name="UserManagement" parent="Control/LeaderboardsRect" instance=ExtResource("4_mkjqh")]
+position = Vector2(32, 26)
+
+[node name="CreateAccount" parent="Control/LeaderboardsRect/UserManagement/Panel" index="5"]
+focus_neighbor_bottom = NodePath("../../../SizeSlider")
+focus_next = NodePath("../../../SizeSlider")
+
+[node name="Leaderboard" parent="Control/LeaderboardsRect" instance=ExtResource("5_86c3e")]
+position = Vector2(576, 26)
+
+[node name="3Label" type="Label" parent="Control/LeaderboardsRect"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 562.0
+offset_right = 97.0
+offset_bottom = 585.0
+theme_override_fonts/font = ExtResource("2_m6y7h")
+theme_override_font_sizes/font_size = 24
+text = "3x3"
+
+[node name="5Label" type="Label" parent="Control/LeaderboardsRect"]
+layout_mode = 0
+offset_left = 248.0
+offset_top = 562.0
+offset_right = 326.0
+offset_bottom = 590.0
+theme_override_fonts/font = ExtResource("2_m6y7h")
+theme_override_font_sizes/font_size = 24
+text = "5x5"
+
+[node name="10Label" type="Label" parent="Control/LeaderboardsRect"]
+layout_mode = 0
+offset_left = 440.0
+offset_top = 560.0
+offset_right = 518.0
+offset_bottom = 588.0
+theme_override_fonts/font = ExtResource("2_m6y7h")
+theme_override_font_sizes/font_size = 24
+text = "10x10"
+
+[node name="SizeSlider" type="HSlider" parent="Control/LeaderboardsRect"]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 608.0
+offset_right = 520.0
+offset_bottom = 624.0
+focus_neighbor_top = NodePath("../UserManagement/Panel/CreateAccount")
+focus_neighbor_bottom = NodePath("../LeaderboardDoneButton")
+focus_next = NodePath("../LeaderboardDoneButton")
+focus_previous = NodePath("../UserManagement/Panel/CreateAccount")
+theme_override_styles/slider = SubResource("StyleBoxFlat_55h5c")
+min_value = 1.0
+max_value = 3.0
+value = 1.0
+tick_count = 2
+
+[node name="LeaderboardDoneButton" type="Button" parent="Control/LeaderboardsRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.75
+anchor_top = 0.885
+anchor_right = 0.974
+anchor_bottom = 0.987
+offset_left = -776.0
+offset_top = -68.8799
+offset_right = -776.0
+offset_bottom = -68.8799
+scale = Vector2(0.884, 0.884)
+focus_neighbor_top = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
+theme_override_fonts/font = ExtResource("2_m6y7h")
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = ExtResource("3_bcovx")
+text = "Done"
+
 [node name="GridSizeRect" type="Panel" parent="Control"]
 visible = false
 layout_mode = 1
@@ -756,6 +934,7 @@ anchor_right = 0.95
 anchor_bottom = 0.898
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_bdm40")
 
 [node name="Info" type="Label" parent="Control/GridSizeRect"]
@@ -771,7 +950,45 @@ the playing field."
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="GridSizeLabel" type="Label" parent="Control/GridSizeRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.36
+anchor_right = 0.5
+anchor_bottom = 0.375
+offset_top = 109.544
+offset_bottom = 126.09
+focus_neighbor_bottom = NodePath("../ColsSlider")
+theme_override_fonts/font = ExtResource("2_m6y7h")
+theme_override_font_sizes/font_size = 24
+text = "Grid size: 3x3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GridSizeSlider" type="HSlider" parent="Control/GridSizeRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.371
+anchor_right = 0.95
+anchor_bottom = 0.371
+offset_left = 8.0
+offset_top = 107.144
+offset_right = 8.0
+offset_bottom = 123.144
+focus_neighbor_top = NodePath(".")
+focus_neighbor_bottom = NodePath("../ColsSlider")
+focus_next = NodePath("../ColsSlider")
+focus_previous = NodePath("../Back")
+theme_override_styles/grabber_area = ExtResource("3_bcovx")
+theme_override_styles/grabber_area_highlight = ExtResource("3_bcovx")
+min_value = 1.0
+max_value = 3.0
+value = 1.0
+tick_count = 3
+
 [node name="RowsLabel" type="Label" parent="Control/GridSizeRect"]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.36
@@ -785,6 +1002,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="RowsSlider" type="HSlider" parent="Control/GridSizeRect"]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -802,6 +1020,7 @@ max_value = 15.0
 value = 3.0
 
 [node name="ColsLabel" type="Label" parent="Control/GridSizeRect"]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.475
@@ -816,6 +1035,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ColsSlider" type="HSlider" parent="Control/GridSizeRect"]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -833,6 +1053,7 @@ max_value = 15.0
 value = 3.0
 
 [node name="MazeModeLabel" type="Label" parent="Control/GridSizeRect"]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.58
@@ -847,6 +1068,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="MazeModeCheckbox" type="CheckBox" parent="Control/GridSizeRect"]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.487
@@ -947,6 +1169,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.524194, -0.536217, 0.661583, 0, 0.776871, 0.62966, -0.851599, -0.330064, 0.407231, 4.40183, 2.79045, 2.57139)
@@ -969,10 +1192,6 @@ fract_delta = false
 process_material = SubResource("1")
 draw_pass_1 = SubResource("2")
 
-[node name="BoxShadow" parent="." groups=["can_pause", "can_restart"] instance=ExtResource("6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.052, 0, 0.04)
-visible = false
-
 [node name="LightShaft" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.728, 4.585)
 mesh = ExtResource("12")
@@ -988,22 +1207,6 @@ surface_material_override/1 = ExtResource("20")
 [node name="Floor" parent="." instance=ExtResource("4")]
 mesh = SubResource("PlaneMesh_s67y8")
 
-[node name="crystal" parent="." instance=ExtResource("11")]
-transform = Transform3D(0.719146, 0, 0.694859, 0, 1, 0, -0.694859, 0, 0.719146, 2.32347, 0, 1.434)
-visible = false
-
-[node name="crystal2" parent="." instance=ExtResource("11")]
-transform = Transform3D(0.826285, 0, -0.563252, 0, 1, 0, 0.563252, 0, 0.826285, -1.32247, 0, 1.77809)
-visible = false
-
-[node name="crystal3" parent="." instance=ExtResource("11")]
-transform = Transform3D(0.864371, 0, 0.502854, 0, 1, 0, -0.502854, 0, 0.864371, -2.32825, 0, -0.999177)
-visible = false
-
-[node name="crystal4" parent="." instance=ExtResource("11")]
-transform = Transform3D(-0.632935, 0, 0.774205, 0, 1, 0, -0.774205, 0, -0.632935, 2.30476, 0, -1.16371)
-visible = false
-
 [node name="MenuMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("18_51kic")
 autoplay = true
@@ -1011,12 +1214,19 @@ bus = &"music"
 
 [connection signal="animation_finished" from="Title/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="focus_entered" from="Control/BeginButton" to="." method="_on_begin_button_focus_entered"]
+[connection signal="focus_exited" from="Control/BeginButton" to="." method="_on_begin_button_focus_exited"]
 [connection signal="pressed" from="Control/BeginButton" to="." method="_on_begin_button_pressed"]
 [connection signal="focus_entered" from="Control/HelpButton" to="." method="_on_help_button_focus_entered"]
+[connection signal="focus_exited" from="Control/HelpButton" to="." method="_on_help_button_focus_exited"]
 [connection signal="pressed" from="Control/HelpButton" to="." method="_on_help_button_pressed"]
 [connection signal="focus_entered" from="Control/SettingsButton" to="." method="_on_settings_button_focus_entered"]
+[connection signal="focus_exited" from="Control/SettingsButton" to="." method="_on_settings_button_focus_exited"]
 [connection signal="pressed" from="Control/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="focus_entered" from="Control/LeaderboardsButton" to="." method="_on_leaderboards_button_focus_entered"]
+[connection signal="focus_exited" from="Control/LeaderboardsButton" to="." method="_on_leaderboards_button_focus_exited"]
+[connection signal="pressed" from="Control/LeaderboardsButton" to="." method="_on_leaderboards_button_pressed"]
 [connection signal="focus_entered" from="Control/QuitButton" to="." method="_on_quit_button_focus_entered"]
+[connection signal="focus_exited" from="Control/QuitButton" to="." method="_on_quit_button_focus_exited"]
 [connection signal="pressed" from="Control/QuitButton" to="." method="_on_quit_button_pressed"]
 [connection signal="value_changed" from="Control/SettingsRect/MusicSlider" to="." method="_on_music_slider_value_changed"]
 [connection signal="value_changed" from="Control/SettingsRect/FXSlider" to="." method="_on_fx_slider_value_changed"]
@@ -1028,9 +1238,13 @@ bus = &"music"
 [connection signal="pressed" from="Control/HelpRect/HelpDoneButton" to="." method="_on_help_done_button_pressed"]
 [connection signal="pressed" from="Control/HelpRect/HelpBackButton" to="." method="_on_help_back_button_pressed"]
 [connection signal="pressed" from="Control/HelpRect/HelpNextButton" to="." method="_on_help_next_button_pressed"]
+[connection signal="pressed" from="Control/LeaderboardsRect/LeaderboardDoneButton" to="." method="_on_leaderboard_done_button_pressed"]
+[connection signal="value_changed" from="Control/GridSizeRect/GridSizeSlider" to="." method="_on_grid_size_slider_value_changed"]
 [connection signal="value_changed" from="Control/GridSizeRect/RowsSlider" to="." method="_on_rows_slider_value_changed"]
 [connection signal="value_changed" from="Control/GridSizeRect/ColsSlider" to="." method="_on_cols_slider_value_changed"]
 [connection signal="toggled" from="Control/GridSizeRect/MazeModeCheckbox" to="." method="_on_maze_mode_checkbox_toggled"]
 [connection signal="text_changed" from="Control/GridSizeRect/SeedTextEdit" to="." method="_on_seed_text_edit_text_changed"]
 [connection signal="pressed" from="Control/GridSizeRect/Back" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="Control/GridSizeRect/Start" to="." method="_on_start_pressed"]
+
+[editable path="Control/LeaderboardsRect/UserManagement"]

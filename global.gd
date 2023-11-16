@@ -3,6 +3,7 @@ extends Node
 # player values
 var player_health = 100.0
 var player_exp = 0.0
+var total_run_exp = 0.0
 var double_blaster = false
 var shield_reflect = false
 var spell_speed_modifier = 1.0
@@ -22,19 +23,34 @@ var mouse_camera_sensitiviy = 0.01
 var paused = false
 var win = false
 var done = false
+var elapsed_time = 0
 
 # settings
 var invert = false
 var quality = false
 var music_volume = 100
 var fx_volume = 100
-var maze_mode = false
+var maze_mode = true
+
+var apiKey = ""
+func _ready():
+	var f = FileAccess.open('res://apiKey.env', FileAccess.READ)
+	self.apiKey = f.get_line()
+	f.close()
+	
+	SilentWolf.configure({
+		"api_key": apiKey,
+		"game_id": "super_monster_smash_64",
+		"log_level": 1
+	})
 
 func initialize():
+	global.total_run_exp = 0
+	global.elapsed_time = 0
 	global.max_stats_level = 1.0
 	global.increase_spell_speed = false
 	global.player_health = 100.0
-	global.player_exp = 0
+	global.player_exp = 30000
 	global.double_blaster = false
 	global.shield_reflect = false
 	global.spell_speed_modifier = 1.0

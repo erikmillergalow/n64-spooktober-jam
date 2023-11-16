@@ -17,6 +17,11 @@ var dead = false
 
 var knockback = Vector3(0, 0, 0)
 
+var carrying_crate = false
+@onready var carried_crate = $ShieldPivot/CarriedCrate
+@onready var crate_cast = $player_spooky/CrateCast
+var player_crate
+
 # camera
 @onready var spring_arm = $CamRoot/h/v/SpringArm3D
 @onready var h = $CamRoot/h
@@ -50,11 +55,37 @@ func _process(_delta):
 			spring_arm.spring_length = 12
 		else:
 			spring_arm.spring_length = 12#lerp(spring_arm.spring_length, 12.0, 0.4)
+			
+	if Input.is_action_just_pressed("buy_health") and not dead:
+		if global.player_health < 100.0 and global.player_exp >= 1000:
+			global.player_health = clamp( global.player_health + 50.0, 0.0, 100.0)
+			health_bar.value = clamp(health_bar.value + 50.0, 0.0, 100.0)
+			$HealingParticles2.emitting = true
+			global.player_exp -= 1000
+	
+	if Input.is_action_just_pressed('interact'):
 
+		if crate_cast.is_colliding() and not carrying_crate:
+			if crate_cast.get_collider().is_in_group('crates'):
+				player_crate = crate_cast.get_collider()
+				player_crate.grab_crate()
+				carried_crate.scale = player_crate.scale
+				carried_crate.visible = true
+				carried_crate.monitorable = true
+				carrying_crate = true
+		elif carrying_crate:
+			drop_crate()
+
+func drop_crate():
+	var position = carried_crate.global_transform.origin
+	var rotation = carried_crate.global_rotation
+	position.y = 0.0
+	player_crate.place_crate(position, rotation)
+	carried_crate.visible = false
+	carried_crate.monitorable = false
+	carrying_crate = false
 
 func sync_spell_speed():
-	# convert to if wait time != formula set to formula
-	
 	var expected_cooldown = 0.435 - (0.05 * ((global.spell_speed_modifier * 2) - 1))
 	if $MagicCooldown.wait_time != expected_cooldown:
 		print('sync cooldown')
@@ -100,11 +131,15 @@ func stop_music():
 
 
 func add_exp(amount):
+	global.total_run_exp += amount * 3
 	global.player_exp += amount * 3
 
 
 func take_damage(amount):
 	if not hit_animation.is_playing():
+		if carrying_crate:
+			drop_crate()
+		
 		if not dead:
 			$Oof.play()
 		global.player_health -= amount
@@ -151,9 +186,21 @@ func _input(event):
 			shield_pivot.rotate(Vector3.DOWN, camera_rotation.x)
 
 
+func set_time_label():
+	var seconds = fmod(global.elapsed_time, 60)
+	var minutes = fmod(global.elapsed_time, 3600) / 60
+#	var milliseconds = (fmod(global.elapsed_time , 1) * 1000) / 10 
+#	var elapsed = "%02d : %02d : %02d" % [minutes, seconds, milliseconds]
+	var elapsed = "%02d : %02d" % [minutes, seconds]
+	$Control/TimeLabel.text = elapsed
+
+
 func _physics_process(delta):
 
 	if not dead:
+		global.elapsed_time += delta
+		set_time_label()
+		
 		sync_spell_speed()
 		
 		exp_label.text = "%s EXP" % global.player_exp
@@ -222,7 +269,7 @@ func _physics_process(delta):
 				shield_pivot.rotation.y = $player_spooky.rotation.y
 		
 		# handle magic attack
-		if (Input.is_action_pressed('magic') and not Input.is_action_pressed('shield')) and magic_cooldown.is_stopped():
+		if (Input.is_action_pressed('magic') and not Input.is_action_pressed('shield')) and magic_cooldown.is_stopped() and not carrying_crate:
 			$Cast.pitch_scale = 1.0 + randf()
 			$Cast.play()
 			

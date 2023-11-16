@@ -1,8 +1,19 @@
-[gd_scene load_steps=9 format=3 uid="uid://njb36gsi3tuu"]
+[gd_scene load_steps=14 format=3 uid="uid://njb36gsi3tuu"]
 
 [ext_resource type="Script" path="res://win_room/win_room.gd" id="1_n7527"]
 [ext_resource type="Texture2D" uid="uid://bgcnbej3gix2p" path="res://win_room/IMG_9681.jpg" id="1_qdfjs"]
 [ext_resource type="PackedScene" uid="uid://d1w51ia4nwluc" path="res://player/player.tscn" id="2_4d8fk"]
+[ext_resource type="FontFile" uid="uid://clvfdpwuiqgui" path="res://fonts/RoSpritendoSemiboldBeta-vmVwZ.otf" id="2_gpic2"]
+[ext_resource type="PackedScene" uid="uid://cc8c407tkfg8i" path="res://UserManagement/user_management.tscn" id="3_jcoc7"]
+[ext_resource type="PackedScene" uid="uid://fcpkbdbqr12k" path="res://Leaderboard/leaderboard.tscn" id="4_tmrf7"]
+[ext_resource type="StyleBox" uid="uid://cwapqfihydmnm" path="res://world/main-menu-button-style.tres" id="5_6n473"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jb1y1"]
+bg_color = Color(0.419608, 0.419608, 0.419608, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y6t62"]
 albedo_texture = ExtResource("1_qdfjs")
@@ -26,6 +37,67 @@ sky_rotation = Vector3(4.65479, -1.78547, 3.47146)
 
 [node name="WinRoom" type="Node3D"]
 script = ExtResource("1_n7527")
+
+[node name="Panel" type="Panel" parent="."]
+z_index = 4
+offset_left = 23.0
+offset_top = 23.0
+offset_right = 1255.0
+offset_bottom = 896.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_jb1y1")
+
+[node name="StatsTitle" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = 46.0
+offset_right = 537.0
+offset_bottom = 87.0
+theme_override_fonts/font = ExtResource("2_gpic2")
+theme_override_font_sizes/font_size = 36
+text = "3x3 Run Stats:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ElapsedTime" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 65.0
+offset_top = 110.0
+offset_right = 502.0
+offset_bottom = 151.0
+theme_override_fonts/font = ExtResource("2_gpic2")
+theme_override_font_sizes/font_size = 24
+text = "Elapsed time:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TotalExp" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 62.0
+offset_top = 168.0
+offset_right = 505.0
+offset_bottom = 220.0
+theme_override_fonts/font = ExtResource("2_gpic2")
+theme_override_font_sizes/font_size = 24
+text = "Total Exp:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="UserManagement" parent="Panel" instance=ExtResource("3_jcoc7")]
+position = Vector2(28, 242)
+
+[node name="Leaderboard" parent="Panel" instance=ExtResource("4_tmrf7")]
+position = Vector2(565, 25)
+
+[node name="MainMenuButton" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 135.0
+offset_top = 741.0
+offset_right = 400.0
+offset_bottom = 803.0
+theme_override_fonts/font = ExtResource("2_gpic2")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = ExtResource("5_6n473")
+text = "Main Menu"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("PlaneMesh_5fl4j")

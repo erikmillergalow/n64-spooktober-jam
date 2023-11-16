@@ -110,6 +110,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="N64Layer" type="CanvasLayer" parent="."]
 layer = 0
@@ -120,6 +121,7 @@ material = SubResource("ShaderMaterial_mhjag")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 2
 stretch = true
 stretch_shrink = 2
 
@@ -134,6 +136,7 @@ material = ExtResource("2")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 2
 
 [node name="SubViewport" type="SubViewport" parent="N64Layer/HBlur/SubViewport/DitherBand"]
 handle_input_locally = false

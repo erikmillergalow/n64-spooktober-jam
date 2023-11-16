@@ -1,0 +1,354 @@
+[gd_scene load_steps=5 format=3 uid="uid://cc8c407tkfg8i"]
+
+[ext_resource type="FontFile" uid="uid://clvfdpwuiqgui" path="res://fonts/RoSpritendoSemiboldBeta-vmVwZ.otf" id="1_1m250"]
+[ext_resource type="Script" path="res://UserManagement/user_management.gd" id="1_arafs"]
+[ext_resource type="StyleBox" uid="uid://cwapqfihydmnm" path="res://world/main-menu-button-style.tres" id="2_yyp4u"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qo4r0"]
+bg_color = Color(0.364706, 0.364706, 0.364706, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="UserManagement" type="Node2D"]
+script = ExtResource("1_arafs")
+
+[node name="Panel" type="Panel" parent="."]
+offset_right = 512.0
+offset_bottom = 450.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_qo4r0")
+
+[node name="Title" type="Label" parent="Panel"]
+layout_mode = 0
+offset_top = 8.0
+offset_right = 512.0
+offset_bottom = 56.0
+theme_override_fonts/font = ExtResource("1_1m250")
+theme_override_font_sizes/font_size = 18
+text = "Sign In"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="UsernameEdit" type="LineEdit" parent="Panel"]
+layout_mode = 0
+offset_left = 184.0
+offset_top = 80.0
+offset_right = 496.0
+offset_bottom = 119.0
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../PasswordEdit")
+focus_next = NodePath("../PasswordEdit")
+focus_previous = NodePath("../ForgotPassword")
+theme_override_fonts/font = ExtResource("1_1m250")
+theme_override_font_sizes/font_size = 18
+
+[node name="UsernameLabel" type="Label" parent="Panel/UsernameEdit"]
+layout_mode = 0
+offset_left = -168.0
+offset_top = -2.0
+offset_right = -13.0
+offset_bottom = 38.0
+theme_override_fonts/font = ExtResource("1_1m250")
+theme_override_font_sizes/font_size = 18
+text = "Username:"
+vertical_alignment = 1
+
+[node name="PasswordEdit" type="LineEdit" parent="Panel"]
+layout_mode = 0
+offset_left = 184.0
+offset_top = 136.0
+offset_right = 496.0
+offset_bottom = 175.0
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../UsernameEdit")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../SignIn")
+focus_next = NodePath("../SignIn")
+focus_previous = NodePath("../UsernameEdit")
+theme_override_fonts/font = ExtResource("1_1m250")
+theme_override_font_sizes/font_size = 18
+secret = true
+
+[node name="PasswordLabel" type="Label" parent="Panel/PasswordEdit"]
+layout_mode = 0
+offset_left = -152.0
+offset_top = -2.0
+offset_right = -8.0
+offset_bottom = 39.0
+theme_override_fonts/font = ExtResource("1_1m250")
+theme_override_font_sizes/font_size = 18
+text = "Password:"
+vertical_alignment = 1
+
+[node name="WolfStatus" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 184.0
+offset_right = 504.0
+offset_bottom = 256.0
+theme_override_fonts/font = ExtResource("1_1m250")
+theme_override_font_sizes/font_size = 10
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="SignIn" type="Button" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.295
+anchor_top = 0.638
+anchor_right = 0.574
+anchor_bottom = 0.692
+offset_left = -87.04
+offset_top = -21.1
+offset_right = 204.112
+offset_bottom = -0.399994
+scale = Vector2(0.884, 0.884)
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../PasswordEdit")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../CreateAccount")
+focus_next = NodePath("../CreateAccount")
+focus_previous = NodePath("../PasswordEdit")
+theme_override_fonts/font = ExtResource("1_1m250")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = ExtResource("2_yyp4u")
+text = "Sign In"
+
+[node name="CreateAccount" type="Button" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.295
+anchor_top = 0.638
+anchor_right = 0.574
+anchor_bottom = 0.692
+offset_left = -87.04
+offset_top = 42.9
+offset_right = 204.112
+offset_bottom = 63.6
+scale = Vector2(0.884, 0.884)
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../SignIn")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../UsernameEdit")
+focus_previous = NodePath("../SignIn")
+theme_override_fonts/font = ExtResource("1_1m250")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = ExtResource("2_yyp4u")
+text = "Create Account
+"
+
+[node name="ForgotPassword" type="Button" parent="Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.295
+anchor_top = 0.638
+anchor_right = 0.574
+anchor_bottom = 0.692
+offset_left = -87.04
+offset_top = 106.9
+offset_right = 204.112
+offset_bottom = 127.6
+scale = Vector2(0.884, 0.884)
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../CreateAccount")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../UsernameEdit")
+focus_previous = NodePath("../CreateAccount")
+theme_override_fonts/font = ExtResource("1_1m250")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = ExtResource("2_yyp4u")
+text = "Forgot Password
+"
+
+[node name="CreateAccountPanel" type="Panel" parent="Panel"]
+visible = false
+layout_mode = 0
+offset_right = 512.0
+offset_bottom = 450.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_qo4r0")
+
+[node name="Title" type="Label" parent="Panel/CreateAccountPanel"]
+layout_mode = 0
+offset_top = 8.0
+offset_right = 512.0
+offset_bottom = 46.0
+theme_override_fonts/font = ExtResource("1_1m250")
+theme_override_font_sizes/font_size = 18
+text = "Create Account"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EmailEdit" type="LineEdit" parent="Panel/CreateAccountPanel"]
+visible = false
+layout_mode = 0
+offset_left = 176.0
+offset_top = 48.0
+offset_right = 488.0
+offset_bottom = 87.0
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../UsernameEdit")
+focus_next = NodePath("../UsernameEdit")
+focus_previous = NodePath("../Cancel")
+theme_override_fonts/font = ExtResource("1_1m250")
+theme_override_font_sizes/font_size = 18
+
+[node name="EmailLabel" type="Label" parent="Panel/CreateAccountPanel/EmailEdit"]
+layout_mode = 0
+offset_left = -104.0
+offset_right = -16.0
+offset_bottom = 40.0
+theme_override_fonts/font = ExtResource("1_1m250")
+theme_override_font_sizes/font_size = 18
+text = "Email:"
+vertical_alignment = 1
+
+[node name="UsernameEdit" type="LineEdit" parent="Panel/CreateAccountPanel"]
+layout_mode = 0
+offset_left = 176.0
+offset_top = 64.0
+offset_right = 488.0
+offset_bottom = 103.0
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../EmailEdit")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../PasswordEdit")
+focus_next = NodePath("../PasswordEdit")
+focus_previous = NodePath("../EmailEdit")
+theme_override_fonts/font = ExtResource("1_1m250")
+theme_override_font_sizes/font_size = 18
+
+[node name="UsernameLabel" type="Label" parent="Panel/CreateAccountPanel/UsernameEdit"]
+layout_mode = 0
+offset_left = -168.0
+offset_right = -8.0
+offset_bottom = 40.0
+theme_override_fonts/font = ExtResource("1_1m250")
+theme_override_font_sizes/font_size = 18
+text = "Username:"
+vertical_alignment = 1
+
+[node name="PasswordEdit" type="LineEdit" parent="Panel/CreateAccountPanel"]
+layout_mode = 0
+offset_left = 176.0
+offset_top = 128.0
+offset_right = 488.0
+offset_bottom = 167.0
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../UsernameEdit")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../ConfirmPasswordEdit")
+focus_next = NodePath("../ConfirmPasswordEdit")
+focus_previous = NodePath("../UsernameEdit")
+theme_override_fonts/font = ExtResource("1_1m250")
+theme_override_font_sizes/font_size = 18
+secret = true
+
+[node name="PasswordLabel" type="Label" parent="Panel/CreateAccountPanel/PasswordEdit"]
+layout_mode = 0
+offset_left = -152.0
+offset_right = -8.0
+offset_bottom = 40.0
+theme_override_fonts/font = ExtResource("1_1m250")
+theme_override_font_sizes/font_size = 18
+text = "Password:"
+vertical_alignment = 1
+
+[node name="ConfirmPasswordEdit" type="LineEdit" parent="Panel/CreateAccountPanel"]
+layout_mode = 0
+offset_left = 176.0
+offset_top = 192.0
+offset_right = 488.0
+offset_bottom = 231.0
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../PasswordEdit")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Submit")
+focus_next = NodePath("../Submit")
+focus_previous = NodePath("../PasswordEdit")
+theme_override_fonts/font = ExtResource("1_1m250")
+theme_override_font_sizes/font_size = 18
+secret = true
+
+[node name="PasswordLabel" type="Label" parent="Panel/CreateAccountPanel/ConfirmPasswordEdit"]
+layout_mode = 0
+offset_left = -160.0
+offset_top = -8.0
+offset_right = -16.0
+offset_bottom = 40.0
+theme_override_fonts/font = ExtResource("1_1m250")
+theme_override_font_sizes/font_size = 18
+text = "Confirm
+Password:"
+vertical_alignment = 1
+
+[node name="WolfStatus" type="Label" parent="Panel/CreateAccountPanel"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 240.0
+offset_right = 504.0
+offset_bottom = 320.0
+theme_override_fonts/font = ExtResource("1_1m250")
+theme_override_font_sizes/font_size = 10
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Submit" type="Button" parent="Panel/CreateAccountPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.295
+anchor_top = 0.638
+anchor_right = 0.574
+anchor_bottom = 0.692
+offset_left = -87.04
+offset_top = 42.9
+offset_right = 204.112
+offset_bottom = 63.6
+scale = Vector2(0.884, 0.884)
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../ConfirmPasswordEdit")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Cancel")
+focus_next = NodePath("../Cancel")
+focus_previous = NodePath("../ConfirmPasswordEdit")
+theme_override_fonts/font = ExtResource("1_1m250")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = ExtResource("2_yyp4u")
+text = "Submit"
+
+[node name="Cancel" type="Button" parent="Panel/CreateAccountPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.295
+anchor_top = 0.638
+anchor_right = 0.574
+anchor_bottom = 0.692
+offset_left = -87.04
+offset_top = 106.9
+offset_right = 204.112
+offset_bottom = 127.6
+scale = Vector2(0.884, 0.884)
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Submit")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../EmailEdit")
+focus_previous = NodePath("../Submit")
+theme_override_fonts/font = ExtResource("1_1m250")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = ExtResource("2_yyp4u")
+text = "Back"
+
+[connection signal="pressed" from="Panel/SignIn" to="." method="_on_sign_in_pressed"]
+[connection signal="pressed" from="Panel/CreateAccount" to="." method="_on_create_account_pressed"]
+[connection signal="pressed" from="Panel/CreateAccountPanel/Submit" to="." method="_on_submit_pressed"]
+[connection signal="pressed" from="Panel/CreateAccountPanel/Cancel" to="." method="_on_cancel_pressed"]
