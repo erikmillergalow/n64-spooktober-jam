@@ -16,3 +16,7 @@ mono_crash.*.json
 
 windows_build/
 linux_build/
+
+*.env
+
+addons/*
