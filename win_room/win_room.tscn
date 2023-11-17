@@ -85,15 +85,39 @@ vertical_alignment = 1
 [node name="UserManagement" parent="Panel" instance=ExtResource("3_jcoc7")]
 position = Vector2(28, 242)
 
+[node name="UsernameEdit" parent="Panel/UserManagement/Panel" index="1"]
+focus_previous = NodePath("../../../MainMenuButton")
+
+[node name="CreateAccount" parent="Panel/UserManagement/Panel" index="5"]
+focus_neighbor_bottom = NodePath("../../../MainMenuButton")
+focus_next = NodePath("../../../MainMenuButton")
+
 [node name="Leaderboard" parent="Panel" instance=ExtResource("4_tmrf7")]
 position = Vector2(565, 25)
 
+[node name="WolfResponse" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 698.0
+offset_right = 555.0
+offset_bottom = 778.0
+theme_override_fonts/font = ExtResource("2_gpic2")
+theme_override_font_sizes/font_size = 14
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="MainMenuButton" type="Button" parent="Panel"]
 layout_mode = 0
-offset_left = 135.0
-offset_top = 741.0
-offset_right = 400.0
-offset_bottom = 803.0
+offset_left = 155.0
+offset_top = 786.0
+offset_right = 420.0
+offset_bottom = 848.0
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../UserManagement/Panel/CreateAccount")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../UserManagement/Panel/UsernameEdit")
+focus_previous = NodePath("../UserManagement/Panel/CreateAccount")
 theme_override_fonts/font = ExtResource("2_gpic2")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = ExtResource("5_6n473")
@@ -106,3 +130,5 @@ mesh = SubResource("PlaneMesh_5fl4j")
 environment = SubResource("Environment_iuojt")
 
 [node name="Player" parent="." instance=ExtResource("2_4d8fk")]
+
+[editable path="Panel/UserManagement"]

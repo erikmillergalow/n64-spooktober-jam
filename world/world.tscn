@@ -1238,6 +1238,7 @@ bus = &"music"
 [connection signal="pressed" from="Control/HelpRect/HelpDoneButton" to="." method="_on_help_done_button_pressed"]
 [connection signal="pressed" from="Control/HelpRect/HelpBackButton" to="." method="_on_help_back_button_pressed"]
 [connection signal="pressed" from="Control/HelpRect/HelpNextButton" to="." method="_on_help_next_button_pressed"]
+[connection signal="value_changed" from="Control/LeaderboardsRect/SizeSlider" to="Control/LeaderboardsRect" method="_on_size_slider_value_changed"]
 [connection signal="pressed" from="Control/LeaderboardsRect/LeaderboardDoneButton" to="." method="_on_leaderboard_done_button_pressed"]
 [connection signal="value_changed" from="Control/GridSizeRect/GridSizeSlider" to="." method="_on_grid_size_slider_value_changed"]
 [connection signal="value_changed" from="Control/GridSizeRect/RowsSlider" to="." method="_on_rows_slider_value_changed"]

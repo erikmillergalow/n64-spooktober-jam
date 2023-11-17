@@ -198,8 +198,9 @@ func set_time_label():
 func _physics_process(delta):
 
 	if not dead:
-		global.elapsed_time += delta
-		set_time_label()
+		if not global.win:
+			global.elapsed_time += delta
+			set_time_label()
 		
 		sync_spell_speed()
 		

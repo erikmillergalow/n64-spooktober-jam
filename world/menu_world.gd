@@ -187,16 +187,19 @@ func _on_grid_size_slider_value_changed(value):
 		$Control/GridSizeRect/GridSizeLabel.text = "Grid size: 3x3"
 		global.room_rows = 3
 		global.room_cols = 3
+		global.grid_size = 1
 		
 	if value == 2:
 		$Control/GridSizeRect/GridSizeLabel.text = "Grid size: 5x5"
 		global.room_rows = 5
 		global.room_cols = 5
+		global.grid_size = 2
 		
 	if value == 3:
 		$Control/GridSizeRect/GridSizeLabel.text = "Grid size: 10x10"
 		global.room_rows = 10
 		global.room_cols = 10
+		global.grid_size = 3
 
 
 func _on_leaderboard_done_button_pressed():
