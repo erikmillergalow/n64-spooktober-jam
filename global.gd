@@ -31,7 +31,7 @@ var quality = false
 var music_volume = 100
 var fx_volume = 100
 var maze_mode = true
-var grid_size = 1
+var grid_size = 3
 
 var apiKey = ""
 func _ready():

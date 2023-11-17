@@ -45,7 +45,8 @@ func _ready():
 	pass
 
 func _process(_delta):
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	if not global.win and not global.paused:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	if Input.is_action_just_pressed('zoom'):
 		if spring_arm.spring_length == 12:
 			spring_arm.spring_length = 7#lerp(spring_arm.spring_length, 7.0, 0.4)
@@ -207,9 +208,12 @@ func _physics_process(delta):
 		exp_label.text = "%s EXP" % global.player_exp
 		
 		if Input.is_action_just_pressed("start"):
-			global.paused = true
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-			get_tree().paused = true
+			print('start')
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+			if not global.win:
+				global.paused = true
+				get_tree().paused = true
+
 		
 		if global.win == true:
 			win_label.visible = true

@@ -39,6 +39,7 @@ sky_rotation = Vector3(4.65479, -1.78547, 3.47146)
 script = ExtResource("1_n7527")
 
 [node name="Panel" type="Panel" parent="."]
+visible = false
 z_index = 4
 offset_left = 23.0
 offset_top = 23.0
@@ -54,7 +55,7 @@ offset_right = 537.0
 offset_bottom = 87.0
 theme_override_fonts/font = ExtResource("2_gpic2")
 theme_override_font_sizes/font_size = 36
-text = "3x3 Run Stats:"
+text = "Run Stats:"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -130,5 +131,7 @@ mesh = SubResource("PlaneMesh_5fl4j")
 environment = SubResource("Environment_iuojt")
 
 [node name="Player" parent="." instance=ExtResource("2_4d8fk")]
+
+[connection signal="pressed" from="Panel/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
 
 [editable path="Panel/UserManagement"]
