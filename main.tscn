@@ -1,6 +1,5 @@
 [gd_scene load_steps=26 format=3 uid="uid://dp26i51kj0tvp"]
 
-[ext_resource type="FontFile" uid="uid://dc4mm784qpajc" path="res://gui/font/Oswald-Bold.ttf" id="1"]
 [ext_resource type="Shader" path="res://shaders/gaussian-blur.gdshader" id="1_0jd2d"]
 [ext_resource type="Script" path="res://main.gd" id="1_bcocx"]
 [ext_resource type="Material" uid="uid://c8e7ck31g8wbs" path="res://post-process/pp_dither-band.tres" id="2"]
@@ -28,17 +27,6 @@ shader = ExtResource("1_0jd2d")
 shader_parameter/h = 0.6
 shader_parameter/v = 0.8
 shader_parameter/enabled = false
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f8ke5"]
-bg_color = Color(0.494118, 0.270588, 0.529412, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
-
-[sub_resource type="FontVariation" id="FontVariation_j0k5a"]
-base_font = ExtResource("1")
-spacing_glyph = 2
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_f8h3r"]
 shader = ExtResource("10_fc4oy")
@@ -100,6 +88,29 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_av30i"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6dbvf"]
+bg_color = Color(0.184314, 0.184314, 0.184314, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.709804, 0.443137, 0.133333, 1)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pqymo"]
+shader = ExtResource("9_ae2lb")
+shader_parameter/range = 0.03
+shader_parameter/noiseQuality = 49.66
+shader_parameter/noiseIntensity = 0.012
+shader_parameter/offsetIntensity = 0.01
+shader_parameter/colorOffsetIntensity = 0.3
+
 [node name="Main" type="Node"]
 script = ExtResource("1_bcocx")
 
@@ -121,14 +132,12 @@ material = SubResource("ShaderMaterial_mhjag")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-mouse_filter = 2
 stretch = true
-stretch_shrink = 2
 
 [node name="SubViewport" type="SubViewport" parent="N64Layer/HBlur"]
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
-size = Vector2i(640, 460)
+size = Vector2i(1280, 920)
 render_target_update_mode = 4
 
 [node name="DitherBand" type="SubViewportContainer" parent="N64Layer/HBlur/SubViewport"]
@@ -136,7 +145,6 @@ material = ExtResource("2")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-mouse_filter = 2
 
 [node name="SubViewport" type="SubViewport" parent="N64Layer/HBlur/SubViewport/DitherBand"]
 handle_input_locally = false
@@ -149,28 +157,6 @@ render_target_update_mode = 4
 
 [node name="World" parent="N64Layer/HBlur/SubViewport/DitherBand/SubViewport" instance=ExtResource("4")]
 
-[node name="Panel" type="Panel" parent="N64Layer/HBlur/SubViewport/DitherBand/SubViewport"]
-visible = false
-anchors_preset = -1
-anchor_left = 0.803
-anchor_top = 0.839
-anchor_right = 0.86
-anchor_bottom = 0.892
-offset_right = 40.0
-offset_bottom = 20.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_f8ke5")
-
-[node name="Label" type="Label" parent="N64Layer/HBlur/SubViewport/DitherBand/SubViewport/Panel"]
-visible = false
-layout_mode = 0
-anchor_right = 1.0
-anchor_bottom = 1.0
-size_flags_horizontal = 4
-theme_override_fonts/font = SubResource("FontVariation_j0k5a")
-text = "TEXT"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="Control" type="Control" parent="N64Layer"]
 process_mode = 3
 visible = false
@@ -181,6 +167,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("5_uujxg")
 
 [node name="ColorRect" type="Panel" parent="N64Layer/Control"]
@@ -190,6 +177,7 @@ anchor_left = 0.011
 anchor_top = 0.011
 anchor_right = 0.988
 anchor_bottom = 0.988
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_rd87v")
 
 [node name="ColorRect3" type="ColorRect" parent="N64Layer/Control/ColorRect"]
@@ -204,6 +192,7 @@ offset_right = -14.08
 offset_bottom = -10.12
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="UpgradesRect" type="Panel" parent="N64Layer/Control"]
 layout_mode = 0
@@ -211,6 +200,7 @@ offset_left = 49.0
 offset_top = 36.0
 offset_right = 866.0
 offset_bottom = 783.0
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_4ql4b")
 
 [node name="Label" type="Label" parent="N64Layer/Control/UpgradesRect"]
@@ -542,6 +532,88 @@ theme_override_font_sizes/font_size = 12
 text = "Have you found the key chest?
 Not yet..."
 
+[node name="AreYouSure" type="Panel" parent="N64Layer/Control"]
+visible = false
+z_index = 6
+material = SubResource("ShaderMaterial_av30i")
+layout_mode = 0
+offset_left = 271.0
+offset_top = 216.0
+offset_right = 1036.0
+offset_bottom = 655.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6dbvf")
+
+[node name="Title" type="Label" parent="N64Layer/Control/AreYouSure"]
+layout_mode = 0
+offset_left = 85.0
+offset_top = 51.0
+offset_right = 676.0
+offset_bottom = 170.0
+theme_override_fonts/font = ExtResource("5_1ut6q")
+theme_override_font_sizes/font_size = 24
+text = "End run and return to the 
+
+main menu?"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Yes" type="Button" parent="N64Layer/Control/AreYouSure"]
+process_mode = 3
+layout_mode = 2
+offset_left = 451.0
+offset_top = 334.0
+offset_right = 665.0
+offset_bottom = 365.0
+focus_neighbor_left = NodePath("../No")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../No")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../No")
+focus_previous = NodePath("../No")
+theme_override_fonts/font = ExtResource("5_1ut6q")
+theme_override_styles/normal = SubResource("StyleBoxFlat_c212v")
+theme_override_styles/focus = ExtResource("7_c52r2")
+text = "Yes"
+
+[node name="No" type="Button" parent="N64Layer/Control/AreYouSure"]
+process_mode = 3
+layout_mode = 2
+offset_left = 100.0
+offset_top = 336.0
+offset_right = 314.0
+offset_bottom = 367.0
+focus_neighbor_left = NodePath("../Yes")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../Yes")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../Yes")
+focus_previous = NodePath("../Yes")
+theme_override_fonts/font = ExtResource("5_1ut6q")
+theme_override_styles/normal = SubResource("StyleBoxFlat_c212v")
+theme_override_styles/focus = ExtResource("7_c52r2")
+text = "No"
+
+[node name="Panel" type="Panel" parent="N64Layer/Control/AreYouSure"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ColorRect" type="ColorRect" parent="N64Layer/Control/AreYouSure/Panel"]
+material = SubResource("ShaderMaterial_pqymo")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [connection signal="pressed" from="N64Layer/Control/Resume" to="N64Layer/Control" method="_on_resume_pressed"]
 [connection signal="pressed" from="N64Layer/Control/ShieldUpgrade" to="N64Layer/Control" method="_on_shield_upgrade_pressed"]
 [connection signal="pressed" from="N64Layer/Control/DoubleBlaster" to="N64Layer/Control" method="_on_double_blaster_pressed"]
@@ -550,3 +622,6 @@ Not yet..."
 [connection signal="pressed" from="N64Layer/Control/RunSpeed" to="N64Layer/Control" method="_on_run_speed_pressed"]
 [connection signal="pressed" from="N64Layer/Control/EndRun" to="." method="_on_end_run_pressed"]
 [connection signal="pressed" from="N64Layer/Control/EndRun" to="N64Layer/Control" method="_on_end_run_pressed"]
+[connection signal="pressed" from="N64Layer/Control/AreYouSure/Yes" to="." method="_on_yes_pressed"]
+[connection signal="pressed" from="N64Layer/Control/AreYouSure/Yes" to="N64Layer/Control" method="_on_yes_pressed"]
+[connection signal="pressed" from="N64Layer/Control/AreYouSure/No" to="." method="_on_no_pressed"]

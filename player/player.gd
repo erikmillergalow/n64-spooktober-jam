@@ -13,6 +13,7 @@ var dead = false
 @onready var hit_animation = $HitAnimation
 @onready var exp_label = $Control/ExpLabel
 @onready var win_label = $Control/WinLabel
+@onready var time_label = $Control/TimeLabel
 @onready var dead_label = $Control/DeadLabel
 
 var knockback = Vector3(0, 0, 0)
@@ -44,9 +45,13 @@ func _ready():
 	spring_arm.add_excluded_object(self)
 	pass
 
-func _process(_delta):
+func _process(delta):
+	
 	if not global.win and not global.paused:
+		global.elapsed_time += delta
+		set_time_label()
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	
 	if Input.is_action_just_pressed('zoom'):
 		if spring_arm.spring_length == 12:
 			spring_arm.spring_length = 7#lerp(spring_arm.spring_length, 7.0, 0.4)
@@ -199,10 +204,6 @@ func set_time_label():
 func _physics_process(delta):
 
 	if not dead:
-		if not global.win:
-			global.elapsed_time += delta
-			set_time_label()
-		
 		sync_spell_speed()
 		
 		exp_label.text = "%s EXP" % global.player_exp
@@ -219,6 +220,8 @@ func _physics_process(delta):
 			win_label.visible = true
 			health_bar.visible = false
 			exp_label.visible = false
+			time_label.visible = false
+			
 		
 		if (health_bar.value != global.player_health):
 			health_bar.value = global.player_health
@@ -336,3 +339,12 @@ func _on_music_finished():
 
 func _on_win_music_finished():
 	$WinMusic.play()
+
+
+func read_sign(text):
+	$Control/SignText.text = text
+	$Control/SignText.visible = true
+
+
+func stop_reading():
+	$Control/SignText.visible = false

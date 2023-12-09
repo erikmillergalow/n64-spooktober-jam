@@ -13,19 +13,24 @@ func _process(delta):
 
 
 func set_scores(scores):
-	for child in $Panel/VBoxContainer.get_children():
+	for child in $Panel/ScrollContainer/VBoxContainer.get_children():
 		child.queue_free()
 	
 	for i in range(0, scores.size()):
 		print(scores[i])
 		var entry = entry_scene.instantiate()
 		entry.set_fields(i, scores[i])
-		$Panel/VBoxContainer.add_child(entry)
+		$Panel/ScrollContainer/VBoxContainer.add_child(entry)
+
+
+func focus_at_top():
+	if $Panel/ScrollContainer/VBoxContainer.get_children().size():
+		$Panel/ScrollContainer/VBoxContainer.get_children()[0].challenge_focus()
 
 
 func fetch_scores(size):
 	if !$Panel/Loading.visible:
-		$Panel/VBoxContainer.visible = false
+		$Panel/ScrollContainer/VBoxContainer.visible = false
 		$Panel/Loading.visible = true
 		
 		if size == 1:
@@ -33,19 +38,19 @@ func fetch_scores(size):
 			var sw_result = await SilentWolf.Scores.get_scores(0, "3x3").sw_get_scores_complete
 			var scores = sw_result.scores
 			set_scores(scores)
-			$Panel/VBoxContainer.visible = true
+			$Panel/ScrollContainer/VBoxContainer.visible = true
 			$Panel/Loading.visible = false
 		elif size == 2:
 			$Panel/Title.text = "5x5 WORLD RECORDS"
 			var sw_result = await SilentWolf.Scores.get_scores(0, "5x5").sw_get_scores_complete
 			var scores = sw_result.scores
 			set_scores(scores)
-			$Panel/VBoxContainer.visible = true
+			$Panel/ScrollContainer/VBoxContainer.visible = true
 			$Panel/Loading.visible = false
 		elif size == 3:
 			$Panel/Title.text = "10x10 WORLD RECORDS"
 			var sw_result = await SilentWolf.Scores.get_scores(0, "10x10").sw_get_scores_complete
 			var scores = sw_result.scores
 			set_scores(scores)
-			$Panel/VBoxContainer.visible = true
+			$Panel/ScrollContainer/VBoxContainer.visible = true
 			$Panel/Loading.visible = false

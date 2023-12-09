@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://world/menu_world.gd" id="1_qder5"]
 [ext_resource type="FontFile" uid="uid://clvfdpwuiqgui" path="res://fonts/RoSpritendoSemiboldBeta-vmVwZ.otf" id="2_m6y7h"]
 [ext_resource type="Script" path="res://world/box/spatial_sin_pan.gd" id="3"]
+[ext_resource type="Script" path="res://world/main-menu-input-forwading.gd" id="3_0ma8l"]
 [ext_resource type="StyleBox" uid="uid://cwapqfihydmnm" path="res://world/main-menu-button-style.tres" id="3_bcovx"]
 [ext_resource type="PackedScene" path="res://world/floor/floor.tscn" id="4"]
 [ext_resource type="PackedScene" uid="uid://cc8c407tkfg8i" path="res://UserManagement/user_management.tscn" id="4_mkjqh"]
@@ -16,7 +17,6 @@
 [ext_resource type="ArrayMesh" uid="uid://dh4nw5qd6jcdp" path="res://world/stairs/stairs_Mesh.mesh" id="14"]
 [ext_resource type="Texture2D" uid="uid://c7yqmbdcqkcw0" path="res://world/floor/floor.png" id="14_ep1q3"]
 [ext_resource type="Environment" uid="uid://cw6ddwwbnli2q" path="res://world/world_env.tres" id="15"]
-[ext_resource type="Script" path="res://world/scene_controls.gd" id="16"]
 [ext_resource type="AudioStream" uid="uid://d25kmlveabu0p" path="res://sounds/music/main-menu-theme-002.ogg" id="18_51kic"]
 [ext_resource type="Material" uid="uid://dunie376iltt6" path="res://world/stairs/stairs_side_mat.tres" id="19"]
 [ext_resource type="Material" uid="uid://bnlvnprnho5gc" path="res://world/stairs/stairs_top_mat.tres" id="20"]
@@ -246,7 +246,28 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
+mouse_filter = 1
+script = ExtResource("3_0ma8l")
+
+[node name="BeginButton" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 112.0
+offset_top = 648.0
+offset_right = 393.0
+offset_bottom = 711.0
+scale = Vector2(0.884, 0.884)
+focus_neighbor_left = NodePath("../SettingsButton")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../HelpButton")
+focus_neighbor_bottom = NodePath("../LeaderboardsButton")
+focus_next = NodePath("../HelpButton")
+focus_previous = NodePath("../QuitButton")
+mouse_filter = 1
+theme_override_fonts/font = ExtResource("2_m6y7h")
+theme_override_font_sizes/font_size = 26
+theme_override_styles/normal = ExtResource("3_bcovx")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_66tac")
+text = "Begin"
 
 [node name="Title" type="Label" parent="Control"]
 visible = false
@@ -261,30 +282,6 @@ text = "SUPER MONSTER SMASH
 64"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="BeginButton" type="Button" parent="Control"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.046
-anchor_top = 0.695
-anchor_right = 0.299
-anchor_bottom = 0.761
-offset_left = 5.12
-offset_top = -0.399963
-offset_right = 42.28
-offset_bottom = 12.88
-scale = Vector2(0.884, 0.884)
-focus_neighbor_left = NodePath("../SettingsButton")
-focus_neighbor_top = NodePath(".")
-focus_neighbor_right = NodePath("../HelpButton")
-focus_neighbor_bottom = NodePath("../LeaderboardsButton")
-focus_next = NodePath("../HelpButton")
-focus_previous = NodePath("../QuitButton")
-theme_override_fonts/font = ExtResource("2_m6y7h")
-theme_override_font_sizes/font_size = 26
-theme_override_styles/normal = ExtResource("3_bcovx")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_66tac")
-text = "Begin"
 
 [node name="HelpButton" type="Button" parent="Control"]
 layout_mode = 1
@@ -852,9 +849,15 @@ script = ExtResource("4_vfnkt")
 [node name="UserManagement" parent="Control/LeaderboardsRect" instance=ExtResource("4_mkjqh")]
 position = Vector2(32, 26)
 
-[node name="CreateAccount" parent="Control/LeaderboardsRect/UserManagement/Panel" index="5"]
+[node name="SignIn" parent="Control/LeaderboardsRect/UserManagement/Panel" index="6" groups=["left_of_leaderboard"]]
+
+[node name="CreateAccount" parent="Control/LeaderboardsRect/UserManagement/Panel" index="7" groups=["left_of_leaderboard"]]
 focus_neighbor_bottom = NodePath("../../../SizeSlider")
 focus_next = NodePath("../../../SizeSlider")
+
+[node name="Submit" parent="Control/LeaderboardsRect/UserManagement/Panel/CreateAccountPanel" index="6" groups=["left_of_leaderboard"]]
+
+[node name="Cancel" parent="Control/LeaderboardsRect/UserManagement/Panel/CreateAccountPanel" index="7" groups=["left_of_leaderboard"]]
 
 [node name="Leaderboard" parent="Control/LeaderboardsRect" instance=ExtResource("5_86c3e")]
 position = Vector2(576, 26)
@@ -905,7 +908,7 @@ max_value = 3.0
 value = 1.0
 tick_count = 2
 
-[node name="LeaderboardDoneButton" type="Button" parent="Control/LeaderboardsRect"]
+[node name="LeaderboardDoneButton" type="Button" parent="Control/LeaderboardsRect" groups=["left_of_leaderboard"]]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.75
@@ -917,8 +920,12 @@ offset_top = -68.8799
 offset_right = -776.0
 offset_bottom = -68.8799
 scale = Vector2(0.884, 0.884)
-focus_neighbor_top = NodePath(".")
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../SizeSlider")
+focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../UserManagement/Panel/UsernameEdit")
+focus_previous = NodePath("../SizeSlider")
 theme_override_fonts/font = ExtResource("2_m6y7h")
 theme_override_font_sizes/font_size = 28
 theme_override_styles/normal = ExtResource("3_bcovx")
@@ -1105,11 +1112,11 @@ anchor_top = 0.675
 anchor_right = 0.95
 anchor_bottom = 0.758
 focus_neighbor_left = NodePath(".")
-focus_neighbor_top = NodePath("../MazeModeCheckbox")
+focus_neighbor_top = NodePath("../GridSizeSlider")
 focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Start")
 focus_next = NodePath("../Start")
-focus_previous = NodePath("../MazeModeCheckbox")
+focus_previous = NodePath("../GridSizeSlider")
 theme_override_fonts/font = ExtResource("2_m6y7h")
 theme_override_font_sizes/font_size = 24
 placeholder_text = "Enter seed"
@@ -1151,9 +1158,6 @@ theme_override_fonts/font = ExtResource("2_m6y7h")
 theme_override_font_sizes/font_size = 28
 theme_override_styles/normal = ExtResource("3_bcovx")
 text = "Start"
-
-[node name="SceneControls" type="Node" parent="."]
-script = ExtResource("16")
 
 [node name="OrbitPoint" type="Node3D" parent="." groups=["can_pause", "can_restart"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.38419e-07, -4.76837e-07)
@@ -1218,6 +1222,7 @@ bus = &"music"
 [connection signal="pressed" from="Control/BeginButton" to="." method="_on_begin_button_pressed"]
 [connection signal="focus_entered" from="Control/HelpButton" to="." method="_on_help_button_focus_entered"]
 [connection signal="focus_exited" from="Control/HelpButton" to="." method="_on_help_button_focus_exited"]
+[connection signal="mouse_entered" from="Control/HelpButton" to="." method="_on_help_button_mouse_entered"]
 [connection signal="pressed" from="Control/HelpButton" to="." method="_on_help_button_pressed"]
 [connection signal="focus_entered" from="Control/SettingsButton" to="." method="_on_settings_button_focus_entered"]
 [connection signal="focus_exited" from="Control/SettingsButton" to="." method="_on_settings_button_focus_exited"]
@@ -1249,3 +1254,4 @@ bus = &"music"
 [connection signal="pressed" from="Control/GridSizeRect/Start" to="." method="_on_start_pressed"]
 
 [editable path="Control/LeaderboardsRect/UserManagement"]
+[editable path="Control/LeaderboardsRect/Leaderboard"]

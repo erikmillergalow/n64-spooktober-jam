@@ -1,13 +1,15 @@
-[gd_scene load_steps=18 format=3 uid="uid://l5vl4ias6edp"]
+[gd_scene load_steps=20 format=3 uid="uid://l5vl4ias6edp"]
 
 [ext_resource type="Script" path="res://Overworld.gd" id="1_cdfcf"]
 [ext_resource type="Texture2D" uid="uid://crxcjkepo20a3" path="res://overworld/tree4.png" id="2_200q8"]
+[ext_resource type="PackedScene" uid="uid://cmtlejpxuhnyf" path="res://sign/sign.tscn" id="2_550d2"]
 [ext_resource type="PackedScene" uid="uid://d1w51ia4nwluc" path="res://player/player.tscn" id="3_kw6ax"]
 [ext_resource type="Texture2D" uid="uid://citavidpluk3j" path="res://overworld/IMG_9652.jpg" id="4_roomm"]
 [ext_resource type="Script" path="res://overworld/RoomSpawner.gd" id="5_v5s1o"]
 [ext_resource type="PackedScene" uid="uid://cn8dijnpr8dbo" path="res://objects/crate/crate.tscn" id="7_0svn2"]
 [ext_resource type="PackedScene" uid="uid://cmj3mv32pe1uw" path="res://objects/tree/tree.tscn" id="8_7ipc5"]
 [ext_resource type="Texture2D" uid="uid://b6s8gviyq3mkh" path="res://overworld/witchy-woods.png" id="8_a4mb0"]
+[ext_resource type="PackedScene" uid="uid://bkpuvfcd0mmyg" path="res://key_chest/key_chest.tscn" id="9_5q2lq"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dxtds"]
 albedo_texture = ExtResource("2_200q8")
@@ -47,11 +49,19 @@ size = Vector3(10000, 200, 1)
 [node name="Overworld" type="Node3D"]
 script = ExtResource("1_cdfcf")
 
+[node name="SpellsSign" parent="." instance=ExtResource("2_550d2")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, -25.6209)
+text = "Press A (controller) or E (mouse + keyboard) to cast spells."
+
+[node name="CameraSign" parent="." instance=ExtResource("2_550d2")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -5.00012, 0, -20.0816)
+text = "Press Y (controller) or Z (mouse + keyboard) to change ccamera zoom level."
+
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("PlaneMesh_k6csp")
 
 [node name="Player" parent="." instance=ExtResource("3_kw6ax")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 40.8249)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -35.2107)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_7fdbm")
@@ -66,7 +76,7 @@ light_bake_mode = 0
 sky_mode = 1
 
 [node name="Crate" parent="." instance=ExtResource("7_0svn2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.04104, 0, -16.4284)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.1041, 0, 29.9693)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 1, 0)
@@ -114,6 +124,7 @@ collision_mask = 5
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="FirstRowWall"]
 shape = SubResource("BoxShape3D_u23ma")
+disabled = true
 
 [node name="FirstRowWall2" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5050, 0, 49.431)
@@ -122,3 +133,7 @@ collision_mask = 5
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="FirstRowWall2"]
 shape = SubResource("BoxShape3D_u23ma")
+disabled = true
+
+[node name="KeyChest" parent="." instance=ExtResource("9_5q2lq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 45.6833)

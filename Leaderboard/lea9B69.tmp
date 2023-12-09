@@ -1,0 +1,96 @@
+[gd_scene load_steps=5 format=3 uid="uid://dp205hp0fcwc3"]
+
+[ext_resource type="FontFile" uid="uid://clvfdpwuiqgui" path="res://fonts/RoSpritendoSemiboldBeta-vmVwZ.otf" id="1_3mjlk"]
+[ext_resource type="Script" path="res://Leaderboard/leaderboard_entry.gd" id="1_6n2ph"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_capx3"]
+bg_color = Color(0.180392, 0.188235, 0.388235, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.709804, 0.443137, 0.133333, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fxpj3"]
+bg_color = Color(0.333333, 0.0627451, 0.286275, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[node name="LeaderboardEntry" type="Panel"]
+custom_minimum_size = Vector2(580, 63)
+offset_right = 580.0
+offset_bottom = 64.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_capx3")
+script = ExtResource("1_6n2ph")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+offset_left = 8.0
+offset_right = 575.0
+offset_bottom = 64.0
+
+[node name="PlaceLabel" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("1_3mjlk")
+theme_override_font_sizes/font_size = 14
+text = "#1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VSeparator2" type="VSeparator" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="NameLabel" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("1_3mjlk")
+theme_override_font_sizes/font_size = 14
+text = "Username"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VSeparator3" type="VSeparator" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TimeLabel" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("1_3mjlk")
+theme_override_font_sizes/font_size = 14
+text = "00:54:32"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VSeparator" type="VSeparator" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ExpLabel" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("1_3mjlk")
+theme_override_font_sizes/font_size = 14
+text = "123987"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VSeparator4" type="VSeparator" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="HBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_3mjlk")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_fxpj3")
+text = "Challenge"

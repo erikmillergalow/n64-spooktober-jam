@@ -41,55 +41,53 @@ script = ExtResource("1_n7527")
 [node name="Panel" type="Panel" parent="."]
 visible = false
 z_index = 4
-offset_left = 23.0
-offset_top = 23.0
-offset_right = 1255.0
-offset_bottom = 896.0
+offset_left = -6.0
+offset_top = -2.0
+offset_right = 1285.0
+offset_bottom = 925.0
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_jb1y1")
 
 [node name="StatsTitle" type="Label" parent="Panel"]
 layout_mode = 0
-offset_left = 55.0
-offset_top = 46.0
+offset_left = 31.0
+offset_top = 30.0
 offset_right = 537.0
-offset_bottom = 87.0
+offset_bottom = 71.0
 theme_override_fonts/font = ExtResource("2_gpic2")
 theme_override_font_sizes/font_size = 36
 text = "Run Stats:"
-horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ElapsedTime" type="Label" parent="Panel"]
 layout_mode = 0
-offset_left = 65.0
-offset_top = 110.0
-offset_right = 502.0
-offset_bottom = 151.0
+offset_left = 62.0
+offset_top = 86.0
+offset_right = 538.0
+offset_bottom = 127.0
 theme_override_fonts/font = ExtResource("2_gpic2")
 theme_override_font_sizes/font_size = 24
 text = "Elapsed time:"
-horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TotalExp" type="Label" parent="Panel"]
 layout_mode = 0
 offset_left = 62.0
-offset_top = 168.0
-offset_right = 505.0
-offset_bottom = 220.0
+offset_top = 131.0
+offset_right = 537.0
+offset_bottom = 183.0
 theme_override_fonts/font = ExtResource("2_gpic2")
 theme_override_font_sizes/font_size = 24
 text = "Total Exp:"
-horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="UserManagement" parent="Panel" instance=ExtResource("3_jcoc7")]
-position = Vector2(28, 242)
+position = Vector2(23, 205)
 
 [node name="UsernameEdit" parent="Panel/UserManagement/Panel" index="1"]
 focus_previous = NodePath("../../../MainMenuButton")
 
-[node name="CreateAccount" parent="Panel/UserManagement/Panel" index="5"]
+[node name="CreateAccount" parent="Panel/UserManagement/Panel" index="7"]
 focus_neighbor_bottom = NodePath("../../../MainMenuButton")
 focus_next = NodePath("../../../MainMenuButton")
 

@@ -1,0 +1,59 @@
+[gd_scene load_steps=10 format=3 uid="uid://cmtlejpxuhnyf"]
+
+[ext_resource type="Script" path="res://sign/sign.gd" id="1_ik2x3"]
+[ext_resource type="Texture2D" uid="uid://bty7emfaegtal" path="res://sign/sign-wood.png" id="1_umoad"]
+[ext_resource type="Texture2D" uid="uid://6tmrby0eybli" path="res://sign/sign-face.png" id="2_oy1ut"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sg8hn"]
+size = Vector3(0.1, 1, 0.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2e71k"]
+albedo_texture = ExtResource("1_umoad")
+
+[sub_resource type="BoxMesh" id="BoxMesh_8lgre"]
+material = SubResource("StandardMaterial3D_2e71k")
+size = Vector3(0.15, 0.8, 0.15)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_07iea"]
+albedo_texture = ExtResource("1_umoad")
+uv1_scale = Vector3(51.66, 51.66, 51.66)
+
+[sub_resource type="BoxMesh" id="BoxMesh_nqi2c"]
+material = SubResource("StandardMaterial3D_07iea")
+size = Vector3(0.08, 0.6, 0.9)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hi3kg"]
+size = Vector3(3, 1, 3)
+
+[node name="Sign" type="StaticBody3D"]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("1_ik2x3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.422095, 0)
+shape = SubResource("BoxShape3D_sg8hn")
+
+[node name="Post" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.363135, 0)
+mesh = SubResource("BoxMesh_8lgre")
+
+[node name="Face" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0676323, 0.868958, 0)
+mesh = SubResource("BoxMesh_nqi2c")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.139721, 0.880432, 0)
+pixel_size = 0.009
+texture = ExtResource("2_oy1ut")
+
+[node name="Area3D" type="Area3D" parent="." groups=["read_sign"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.70883, 0.671656, 0)
+shape = SubResource("BoxShape3D_hi3kg")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]

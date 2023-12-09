@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://dp205hp0fcwc3"]
+[gd_scene load_steps=11 format=3 uid="uid://dp205hp0fcwc3"]
 
 [ext_resource type="FontFile" uid="uid://clvfdpwuiqgui" path="res://fonts/RoSpritendoSemiboldBeta-vmVwZ.otf" id="1_3mjlk"]
 [ext_resource type="Script" path="res://Leaderboard/leaderboard_entry.gd" id="1_6n2ph"]
+[ext_resource type="StyleBox" uid="uid://cwapqfihydmnm" path="res://world/main-menu-button-style.tres" id="3_njto6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_capx3"]
 bg_color = Color(0.180392, 0.188235, 0.388235, 1)
@@ -15,17 +16,50 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fxpj3"]
-bg_color = Color(0.333333, 0.0627451, 0.286275, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yhd0p"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4v1e6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_otrj8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lhwly"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_54q1u"]
+content_margin_left = 10.0
+content_margin_right = 10.0
+bg_color = Color(0.521569, 0.192157, 0.203922, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.180392, 0.188235, 0.388235, 1)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gmcax"]
+bg_color = Color(0.258824, 0.270588, 0.298039, 1)
+border_width_left = 6
+border_width_top = 4
+border_width_right = 6
+border_width_bottom = 4
+border_color = Color(0.709804, 0.443137, 0.133333, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 1.0
 
 [node name="LeaderboardEntry" type="Panel"]
 custom_minimum_size = Vector2(580, 63)
-offset_right = 580.0
-offset_bottom = 64.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 585.0
+offset_bottom = 69.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_capx3")
 script = ExtResource("1_6n2ph")
 
@@ -34,6 +68,7 @@ layout_mode = 2
 offset_left = 8.0
 offset_right = 575.0
 offset_bottom = 64.0
+alignment = 1
 
 [node name="PlaceLabel" type="Label" parent="HBoxContainer"]
 layout_mode = 2
@@ -47,6 +82,7 @@ vertical_alignment = 1
 [node name="VSeparator2" type="VSeparator" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_styles/separator = SubResource("StyleBoxFlat_yhd0p")
 
 [node name="NameLabel" type="Label" parent="HBoxContainer"]
 layout_mode = 2
@@ -60,6 +96,7 @@ vertical_alignment = 1
 [node name="VSeparator3" type="VSeparator" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_styles/separator = SubResource("StyleBoxFlat_4v1e6")
 
 [node name="TimeLabel" type="Label" parent="HBoxContainer"]
 layout_mode = 2
@@ -73,6 +110,7 @@ vertical_alignment = 1
 [node name="VSeparator" type="VSeparator" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_styles/separator = SubResource("StyleBoxFlat_otrj8")
 
 [node name="ExpLabel" type="Label" parent="HBoxContainer"]
 layout_mode = 2
@@ -86,11 +124,163 @@ vertical_alignment = 1
 [node name="VSeparator4" type="VSeparator" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_styles/separator = SubResource("StyleBoxFlat_lhwly")
 
 [node name="Button" type="Button" parent="HBoxContainer"]
-custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_3mjlk")
 theme_override_font_sizes/font_size = 14
-theme_override_styles/normal = SubResource("StyleBoxFlat_fxpj3")
+theme_override_styles/normal = SubResource("StyleBoxFlat_54q1u")
 text = "Challenge"
+
+[node name="ChallengeRun" type="Panel" parent="."]
+visible = false
+z_index = 6
+layout_mode = 0
+offset_left = 19.0
+offset_top = 67.0
+offset_right = 595.0
+offset_bottom = 419.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_gmcax")
+
+[node name="Title" type="Label" parent="ChallengeRun"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 568.0
+offset_bottom = 48.0
+theme_override_fonts/font = ExtResource("1_3mjlk")
+theme_override_font_sizes/font_size = 20
+text = "Challenge this run? "
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayerName" type="Label" parent="ChallengeRun"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 56.0
+offset_right = 184.0
+offset_bottom = 103.0
+theme_override_fonts/font = ExtResource("1_3mjlk")
+theme_override_font_sizes/font_size = 20
+text = "Player:"
+vertical_alignment = 1
+
+[node name="PlayerValue" type="Label" parent="ChallengeRun"]
+layout_mode = 0
+offset_left = 160.0
+offset_top = 56.0
+offset_right = 552.0
+offset_bottom = 103.0
+theme_override_fonts/font = ExtResource("1_3mjlk")
+theme_override_font_sizes/font_size = 20
+text = "------"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Time" type="Label" parent="ChallengeRun"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 104.0
+offset_right = 296.0
+offset_bottom = 151.0
+theme_override_fonts/font = ExtResource("1_3mjlk")
+theme_override_font_sizes/font_size = 20
+text = "Elapsed time:"
+vertical_alignment = 1
+
+[node name="TimeValue" type="Label" parent="ChallengeRun"]
+layout_mode = 0
+offset_left = 256.0
+offset_top = 104.0
+offset_right = 552.0
+offset_bottom = 151.0
+theme_override_fonts/font = ExtResource("1_3mjlk")
+theme_override_font_sizes/font_size = 20
+text = "------"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Exp" type="Label" parent="ChallengeRun"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 152.0
+offset_right = 144.0
+offset_bottom = 199.0
+theme_override_fonts/font = ExtResource("1_3mjlk")
+theme_override_font_sizes/font_size = 20
+text = "Exp:"
+vertical_alignment = 1
+
+[node name="ExpValue" type="Label" parent="ChallengeRun"]
+layout_mode = 0
+offset_left = 104.0
+offset_top = 152.0
+offset_right = 552.0
+offset_bottom = 199.0
+theme_override_fonts/font = ExtResource("1_3mjlk")
+theme_override_font_sizes/font_size = 20
+text = "------"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Seed" type="Label" parent="ChallengeRun"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 200.0
+offset_right = 144.0
+offset_bottom = 247.0
+theme_override_fonts/font = ExtResource("1_3mjlk")
+theme_override_font_sizes/font_size = 20
+text = "Seed:"
+vertical_alignment = 1
+
+[node name="SeedValue" type="Label" parent="ChallengeRun"]
+layout_mode = 0
+offset_left = 128.0
+offset_top = 200.0
+offset_right = 552.0
+offset_bottom = 247.0
+theme_override_fonts/font = ExtResource("1_3mjlk")
+theme_override_font_sizes/font_size = 20
+text = "------"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="BeginButton" type="Button" parent="ChallengeRun"]
+layout_mode = 0
+offset_left = 368.0
+offset_top = 264.0
+offset_right = 512.0
+offset_bottom = 312.0
+focus_neighbor_left = NodePath("../BackButton")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../BackButton")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../BackButton")
+focus_previous = NodePath("../BackButton")
+theme_override_fonts/font = ExtResource("1_3mjlk")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = ExtResource("3_njto6")
+text = "Begin"
+
+[node name="BackButton" type="Button" parent="ChallengeRun"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 264.0
+offset_right = 208.0
+offset_bottom = 312.0
+focus_neighbor_left = NodePath("../BeginButton")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../BeginButton")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../BeginButton")
+focus_previous = NodePath("../BeginButton")
+theme_override_fonts/font = ExtResource("1_3mjlk")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = ExtResource("3_njto6")
+text = "Cancel"
+
+[connection signal="pressed" from="HBoxContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="ChallengeRun/BeginButton" to="." method="_on_begin_button_pressed"]
+[connection signal="pressed" from="ChallengeRun/BackButton" to="." method="_on_back_button_pressed"]

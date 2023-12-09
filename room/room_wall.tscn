@@ -1,8 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://bg3e318qf7atc"]
+[gd_scene load_steps=19 format=3 uid="uid://bg3e318qf7atc"]
 
 [ext_resource type="Material" uid="uid://d2g0830lpvqbu" path="res://fence_material.tres" id="1_a1ikd"]
 [ext_resource type="Script" path="res://room/room_wall.gd" id="1_o5kyl"]
 [ext_resource type="Texture2D" uid="uid://crab1nrkaas4p" path="res://room/gate.png" id="3_mcrux"]
+[ext_resource type="Script" path="res://room/LaserGate.gd" id="3_q4gda"]
+[ext_resource type="Script" path="res://room/BlockSensor.gd" id="4_mt12j"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_y2vdn"]
 size = Vector3(45, 2, 0.8)
@@ -107,8 +109,9 @@ mesh = SubResource("PlaneMesh_i6dsc")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0271989)
 collision_layer = 32
 collision_mask = 14
+script = ExtResource("3_q4gda")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="LaserGate"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LaserGate" groups=["laser_wall"]]
 shape = SubResource("BoxShape3D_tnq24")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="LaserGate"]
@@ -122,6 +125,7 @@ libraries = {
 }
 
 [node name="BlockSensor" type="Area3D" parent="LaserGate"]
+script = ExtResource("4_mt12j")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LaserGate/BlockSensor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -52.4388)

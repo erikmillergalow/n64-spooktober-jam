@@ -213,9 +213,11 @@ func create_maze():
 			if y == room_cols - 1:
 				if x != 1 and ((boss_room_chance > 0.9 and not boss_room_spawned) or (is_last and not boss_room_spawned)):
 					var placement = Vector3(50.0, 0.0, -50.0)
-					spawn_boss_room(placement, 180.0)
-					maze[y][x]['bottom'] = false
+#					spawn_boss_room(placement, 180.0)
+#					maze[y][x]['bottom'] = false
 					spawn_room_from_tuple(maze[y][x], is_last, x)
+					spawn_boss_room(placement, 180.0)
+					
 				else:
 					spawn_room_from_tuple(maze[y][x], is_last, x)
 					
@@ -231,9 +233,10 @@ func create_maze():
 			elif y == 0:
 				if (boss_room_chance > 0.6 and not boss_room_spawned) or (is_last and not boss_room_spawned):
 					var placement = Vector3(50.0 , 0.0, 150)
-					spawn_boss_room(placement, 0.0)
-					maze[y][x]['top'] = false
+#					spawn_boss_room(placement, 0.0)
+#					maze[y][x]['top'] = false
 					spawn_room_from_tuple(maze[y][x], is_last, x)
+					spawn_boss_room(placement, 0.0)					
 				else:
 					spawn_room_from_tuple(maze[y][x], is_last, x)
 					
@@ -246,9 +249,10 @@ func create_maze():
 			elif x == 0:
 				if (boss_room_chance > 0.6 and not boss_room_spawned) or (is_last and not boss_room_spawned):
 					var placement = Vector3(150.0, 0.0, 50.0)
-					spawn_boss_room(placement, 90.0)
-					maze[y][x]['left'] = false
+#					spawn_boss_room(placement, 90.0)
+#					maze[y][x]['left'] = false
 					spawn_room_from_tuple(maze[y][x], is_last, x)
+					spawn_boss_room(placement, 90.0)
 				else:
 					spawn_room_from_tuple(maze[y][x], is_last, x)
 					
@@ -261,9 +265,10 @@ func create_maze():
 			elif x == room_rows - 1:
 				if (boss_room_chance > 0.8 and not boss_room_spawned) or (is_last and not boss_room_spawned):
 					var placement = Vector3(-50.0, 0.0, 50.0)
-					maze[y][x]['right'] = false
-					spawn_boss_room(placement, 270.0)
+#					maze[y][x]['right'] = false
+#					spawn_boss_room(placement, 270.0)
 					spawn_room_from_tuple(maze[y][x], is_last, x)
+					spawn_boss_room(placement, 270.0)
 				else:
 					spawn_room_from_tuple(maze[y][x], is_last, x)
 					

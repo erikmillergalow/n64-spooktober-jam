@@ -36,6 +36,6 @@ func _on_animated_sprite_3d_animation_finished():
 		queue_free()
 
 
-func _on_area_entered(area):
+func _on_area_entered(_area):
 	moving = false
 	$AnimatedSprite3D.animation = 'collide'

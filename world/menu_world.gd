@@ -19,6 +19,8 @@ var helpIndex = 0
 func _ready():
 	$Title/AnimationPlayer.play('zoom')
 	$Control/BeginButton.grab_focus()
+#	Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
+#	$Control.grab_focus()
 	randomize()
 	global.seed = str(randi())
 	$Control/GridSizeRect/SeedTextEdit.text = global.seed
@@ -27,12 +29,15 @@ func _ready():
 	$Control/SettingsRect/MusicSlider.value = global.music_volume
 	$Control/SettingsRect/InvertCheck.button_pressed = global.invert
 #	$Control/SettingsRect/QualityCheck.button_pressed = !global.quality
-	pass 
 
 
 func _process(_delta):
 	$Floor.mesh.material.uv1_offset.z -= 0.03
 	$WorldEnvironment.environment.sky_rotation.y -= 0.002
+	
+	if global.challenge_start:
+		global.challenge_start = false
+		start_game()
 
 
 func _on_begin_button_pressed():
@@ -52,7 +57,7 @@ func _on_cols_slider_value_changed(value):
 	global.room_cols = value
 
 
-func _on_start_pressed():
+func start_game():
 	$MenuMusic.stop()
 	
 	global.initialize()
@@ -60,6 +65,17 @@ func _on_start_pressed():
 	var overworld = overworld_scene.instantiate()
 	get_parent().add_child(overworld)
 	self.queue_free()
+
+
+func _on_start_pressed():
+	start_game()
+#	$MenuMusic.stop()
+#
+#	global.initialize()
+#
+#	var overworld = overworld_scene.instantiate()
+#	get_parent().add_child(overworld)
+#	self.queue_free()
 
 
 func _on_back_pressed():
@@ -129,6 +145,10 @@ func _on_leaderboards_button_focus_exited():
 
 func _on_quit_button_focus_exited():
 	$Control/QuitButton.scale = Vector2(1, 1)
+	
+# mouse
+func _on_help_button_mouse_entered():
+	$Control/AnimationPlayer.play("help")
 
 
 # help screen
@@ -210,3 +230,4 @@ func _on_leaderboard_done_button_pressed():
 func _on_leaderboards_button_pressed():
 	$Control/LeaderboardsRect.open()
 	$Control/LeaderboardsRect/SizeSlider.grab_focus()
+

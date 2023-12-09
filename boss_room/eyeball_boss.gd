@@ -56,14 +56,13 @@ func _physics_process(delta):
 	var collision = move_and_collide(velocity * delta)
 	if collision:
 		if (collision.get_collider().is_in_group('player')):
-			print('DETECTED')
 			
 			if not active:
 				activate()
 			
-			var player = collision.get_collider()
-			player.add_knockback(-global_transform.basis.z * 15)
-			player.take_damage(20)
+			var player_collide = collision.get_collider()
+			player_collide.add_knockback(-global_transform.basis.z * 15)
+			player_collide.take_damage(20)
 		
 	if dead:
 		rotation_degrees.x = lerp(rotation_degrees.x, 90.0, 0.2)
@@ -89,16 +88,16 @@ func take_damage(amount):
 	
 	health -= amount 
 	
-	var head_sat = $Head.get_active_material(0).albedo_color.s
-	var new_head_color = Color().from_hsv(0.0, 1.0 - health / max_health, 0.68, 1.0)
+#	var head_sat = $Head.get_active_material(0).albedo_color.s
+	var new_head_color = Color.from_hsv(0.0, 1.0 - health / max_health, 0.68, 1.0)
 	$Head.get_active_material(0).albedo_color = new_head_color
 	
-	var arm_sat = $Arm.get_active_material(0).albedo_color.s
-	var new_arm_color = Color().from_hsv(0.0, 1.0 - health / max_health, 0.68, 1.0)
+#	var arm_sat = $Arm.get_active_material(0).albedo_color.s
+	var new_arm_color = Color.from_hsv(0.0, 1.0 - health / max_health, 0.68, 1.0)
 	$Arm.get_active_material(0).albedo_color = new_arm_color
 	
-	var arm2_sat = $Arm2.get_active_material(0).albedo_color.s
-	var new_arm2_color = Color().from_hsv(0.0, 1.0 - health / max_health, 0.68, 1.0)
+#	var arm2_sat = $Arm2.get_active_material(0).albedo_color.s
+	var new_arm2_color = Color.from_hsv(0.0, 1.0 - health / max_health, 0.68, 1.0)
 	$Arm2.get_active_material(0).albedo_color = new_arm2_color
 	
 	if health <= 0:

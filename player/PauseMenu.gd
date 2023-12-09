@@ -85,5 +85,12 @@ func _on_run_speed_pressed():
 
 
 func _on_end_run_pressed():
+#	global.initialize()
+#	unpause()
+	pass
+
+
+func _on_yes_pressed():
+	$AreYouSure.visible = false
 	global.initialize()
 	unpause()

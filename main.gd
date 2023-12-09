@@ -6,7 +6,8 @@ var win_scene = preload('res://win_room/win_room.tscn')
 @onready var global = get_node('/root/global')
 
 func _ready():
-	pass # Replace with function body.
+	pass
+#	SilentWolf.Auth.auto_login_player()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -24,6 +25,11 @@ func _process(_delta):
 
 
 func _on_end_run_pressed():
+	$N64Layer/Control/AreYouSure.visible = true
+	$N64Layer/Control/AreYouSure/No.grab_focus()
+
+
+func _on_yes_pressed():
 	var menu_world = menu_world_scene.instantiate()
 	print($N64Layer/HBlur/SubViewport/DitherBand/SubViewport.get_children())
 	$N64Layer/HBlur/SubViewport/DitherBand/SubViewport.add_child(menu_world)
@@ -33,3 +39,7 @@ func _on_end_run_pressed():
 	else:
 		$N64Layer/HBlur/SubViewport/DitherBand/SubViewport/Overworld.queue_free()
 
+
+func _on_no_pressed():
+	$N64Layer/Control/AreYouSure.visible = false
+	$N64Layer/Control/EndRun.grab_focus()

@@ -5,12 +5,13 @@
 [ext_resource type="AudioStream" uid="uid://d311jqw81tr2m" path="res://sounds/fx/open-chest-002.ogg" id="3_fe5ab"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8jbrr"]
+size = Vector3(1.4, 1.4, 1.4)
 
 [node name="KeyChest" type="Area3D"]
 script = ExtResource("1_w5rox")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.721859, 0)
 shape = SubResource("BoxShape3D_8jbrr")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]

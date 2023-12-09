@@ -14,6 +14,8 @@ var increase_spell_speed = false
 var room_rows = 3
 var room_cols = 3
 var max_stats_level = 1.0
+var challenge_start = false
+var challenge_options_open = false
 var seed
 
 var horizontal_cam_speed = 2.0
@@ -31,7 +33,7 @@ var quality = false
 var music_volume = 100
 var fx_volume = 100
 var maze_mode = true
-var grid_size = 3
+var grid_size = 1
 
 var apiKey = ""
 func _ready():
@@ -50,13 +52,13 @@ func initialize():
 	global.elapsed_time = 0
 	global.max_stats_level = 1.0
 	global.increase_spell_speed = false
-	global.player_health = 100.0
-	global.player_exp = 30000
+	global.player_health = 100000.0
+	global.player_exp = 0
 	global.double_blaster = false
 	global.shield_reflect = false
 	global.spell_speed_modifier = 1.0
-	global.spell_power_modifier = 1.0
-	global.run_speed_modifier = 1.0
+	global.spell_power_modifier = 20.0
+	global.run_speed_modifier = 10.0
 	global.has_key = false
 	global.done = false
 	global.win = false

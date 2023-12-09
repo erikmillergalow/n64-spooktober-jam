@@ -8,6 +8,7 @@ func _ready():
 	$RoomWall2.close_laser_gate()
 	$RoomWall3.close_laser_gate()
 	$EyeballBoss.set_player(get_parent().get_node('Player'))
+	$Entrance/LaserCheck/AnimationPlayer.play("rise")
 
 
 func _process(delta):
@@ -31,7 +32,14 @@ func _on_player_sensor_body_exited(body):
 		body.hide_door_text()
 
 
-#func _on_player_entered_sensor_body_entered(body):
-#	if body.is_in_group('player'):
-		
-#		body.play_boss_music()
+func _on_laser_check_area_entered(area):
+	if area.is_in_group('laser_wall'):
+		print('is laser check area entered')
+		area.open_gate()
+		$Entrance/LaserCheck/CollisionShape3D.queue_free()
+
+
+func _on_laser_check_body_entered(body):
+	if body.is_in_group('laser_wall'):
+		print('is laser check body entered')
+		body.open_gate()
